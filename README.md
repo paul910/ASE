@@ -1,5 +1,3 @@
-# ASE
-
+# ASE 2023 - Travel Planner
 ## Setup
-
-- Get API Key from [Open Weather Map](https://openweathermap.org/api) and add key as first argument when running Main.java
+Add API Key as```WEATHER_API_KEY``` to System Environment Variables (DemoKey: ```83295de4f821683d81829044bf82d3eb```)
