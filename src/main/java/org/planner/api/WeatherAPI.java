@@ -15,7 +15,6 @@ public class WeatherAPI {
 
     public WeatherAPI() {
         this.logger = Logger.getLogger(WeatherAPI.class.getName());
-        String credentials = "83295de4f821683d81829044bf82d3eb"; // TODO: get API key from file"
         this.API_KEY = System.getenv("WEATHER_API_KEY");
     }
 
