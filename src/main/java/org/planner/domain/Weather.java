@@ -1,13 +1,13 @@
 package org.planner.domain;
 
+import org.planner.helper.ParseHelper;
+
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Weather {
-    private String city;
-    private String JSONString;
+    private ParseHelper parseHelper;
 
+    private String city;
     // Weather
     private String main;
     private String description;
@@ -36,7 +36,7 @@ public class Weather {
     private Date sysSunset;
 
     public Weather(String JSONString) {
-        this.JSONString = JSONString;
+        this.parseHelper = new ParseHelper(JSONString);
         this.extractWeatherInfo();
     }
 
@@ -125,7 +125,6 @@ public class Weather {
     public String toString() {
         return "Weather{" +
                 "city='" + city + '\'' +
-                ", JSONString='" + JSONString + '\'' +
                 ", main='" + main + '\'' +
                 ", description='" + description + '\'' +
                 ", temp=" + temp +
@@ -145,59 +144,21 @@ public class Weather {
     }
 
     private void extractWeatherInfo() {
-        this.city = this.getValueByRegex("name");
-        this.main = this.getValueByRegex("main");
-        this.description = this.getValueByRegex("description");
-        this.temp = this.getDoubleValueByRegex("temp");
-        this.feelsLike = this.getDoubleValueByRegex("feels_like");
-        this.pressure = this.getIntegerValueByRegex("pressure");
-        this.humidity = this.getIntegerValueByRegex("humidity");
-        this.tempMin = this.getDoubleValueByRegex("temp_min");
-        this.tempMax = this.getDoubleValueByRegex("temp_max");
-        this.visibility = this.getIntegerValueByRegex("visibility");
-        this.windSpeed = this.getDoubleValueByRegex("speed");
-        this.windDeg = this.getIntegerValueByRegex("deg");
-        this.windGust = this.getDoubleValueByRegex("gust");
-        this.cloudsAll = this.getIntegerValueByRegex("all");
-        this.sysSunrise = this.getDateValueByRegex("sunrise");
-        this.sysSunset = this.getDateValueByRegex("sunset");
-    }
-
-    private String getValueByRegex(String value) {
-        Matcher matcher = regexMatcher(value);
-        if (matcher.find()) {
-            return matcher.group(1).replace("\"", "");
-        }
-        return "";
-    }
-
-    private Double getDoubleValueByRegex(String value) {
-        Matcher matcher = regexMatcher(value);
-        if (matcher.find()) {
-            return Double.parseDouble(matcher.group(1));
-        }
-        return 0.0;
-    }
-
-    private Integer getIntegerValueByRegex(String value) {
-        Matcher matcher = regexMatcher(value);
-        if (matcher.find()) {
-            return Integer.parseInt(matcher.group(1));
-        }
-        return 0;
-    }
-
-    private Date getDateValueByRegex(String value) {
-        Matcher matcher = regexMatcher(value);
-        if (matcher.find()) {
-            return new Date(Long.parseLong(matcher.group(1)) * 1000);
-        }
-        return new Date();
-    }
-
-    private Matcher regexMatcher(String value) {
-        Pattern pattern = Pattern.compile("\"" + value + "\"\\s*:\\s*((\"([^\"]*)\")|((\\d+(?:\\.\\d+)?)))");
-        Matcher matcher = pattern.matcher(this.JSONString);
-        return matcher;
+        this.city = this.parseHelper.getValueByRegex("name");
+        this.main = this.parseHelper.getValueByRegex("main");
+        this.description = this.parseHelper.getValueByRegex("description");
+        this.temp = this.parseHelper.getDoubleValueByRegex("temp");
+        this.feelsLike = this.parseHelper.getDoubleValueByRegex("feels_like");
+        this.pressure = this.parseHelper.getIntegerValueByRegex("pressure");
+        this.humidity = this.parseHelper.getIntegerValueByRegex("humidity");
+        this.tempMin = this.parseHelper.getDoubleValueByRegex("temp_min");
+        this.tempMax = this.parseHelper.getDoubleValueByRegex("temp_max");
+        this.visibility = this.parseHelper.getIntegerValueByRegex("visibility");
+        this.windSpeed = this.parseHelper.getDoubleValueByRegex("speed");
+        this.windDeg = this.parseHelper.getIntegerValueByRegex("deg");
+        this.windGust = this.parseHelper.getDoubleValueByRegex("gust");
+        this.cloudsAll = this.parseHelper.getIntegerValueByRegex("all");
+        this.sysSunrise = this.parseHelper.getDateValueByRegex("sunrise");
+        this.sysSunset = this.parseHelper.getDateValueByRegex("sunset");
     }
 }

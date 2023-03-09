@@ -18,7 +18,7 @@ public class WeatherServiceTest {
     @BeforeEach
     public void setup() {
         weatherAPI = mock(WeatherAPI.class);
-        weatherService = new WeatherService("test_credentials");
+        weatherService = new WeatherService();
         weatherService.setWeatherAPI(weatherAPI);
     }
 

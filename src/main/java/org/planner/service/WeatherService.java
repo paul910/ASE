@@ -8,9 +8,9 @@ public class WeatherService {
     private Logger logger;
     private WeatherAPI weatherAPI;
 
-    public WeatherService(String credentials) {
+    public WeatherService() {
         this.logger = Logger.getLogger(WeatherService.class.getName());
-        this.weatherAPI = new WeatherAPI(credentials);
+        this.weatherAPI = new WeatherAPI();
     }
 
     public Weather getWeather(String city) throws Exception {

@@ -13,9 +13,10 @@ public class WeatherAPI {
 
     private Logger logger;
 
-    public WeatherAPI(String credentials) {
+    public WeatherAPI() {
         this.logger = Logger.getLogger(WeatherAPI.class.getName());
-        this.API_KEY = credentials;
+        String credentials = "83295de4f821683d81829044bf82d3eb"; // TODO: get API key from file"
+        this.API_KEY = System.getenv("WEATHER_API_KEY");
     }
 
     public String getWeatherData(String city) throws IOException {

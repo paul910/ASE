@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import org.planner.domain.User;
+import org.planner.helper.PasswordHasher;
 import org.planner.persistence.UserRepository;
 
 import java.io.IOException;

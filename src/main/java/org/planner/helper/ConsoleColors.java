@@ -1,4 +1,4 @@
-package org.planner.service;
+package org.planner.helper;
 
 public enum ConsoleColors {
     // Reset
