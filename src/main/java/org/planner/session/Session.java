@@ -1,17 +1,17 @@
 package org.planner.session;
 
-import java.util.logging.Logger;
-
 import org.planner.domain.User;
 import org.planner.domain.Weather;
 import org.planner.helper.ConsoleHelper;
 import org.planner.service.WeatherService;
 
+import java.util.logging.Logger;
+
 public class Session {
-    private Logger logger;
+    private final Logger logger;
     private User activeUser;
-    private WeatherService weatherService;
-    private ConsoleHelper consoleHelper;
+    private final WeatherService weatherService;
+    private final ConsoleHelper consoleHelper;
 
     public Session(User user) throws Exception {
         this.logger = Logger.getLogger(Session.class.getName());
@@ -34,15 +34,15 @@ public class Session {
                 + "5. Logout\n"
                 + "Enter: ");
 
-        if(input.equals("1")){
+        if (input.equals("1")) {
             // addDestination();
-        } else if(input.equals("2")){
+        } else if (input.equals("2")) {
             // addActivity();
-        } else if(input.equals("3")){
+        } else if (input.equals("3")) {
             // addTravel();
-        } else if(input.equals("4")){
+        } else if (input.equals("4")) {
             checkWeather();
-        } else if(input.equals("5")){
+        } else if (input.equals("5")) {
             this.logout();
             return;
         } else {

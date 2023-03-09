@@ -1,23 +1,18 @@
 package org.planner.persistence;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.List;
-import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.logging.Logger;
-
 import org.planner.domain.User;
 
+import java.io.*;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 public class UserRepository {
-    private Logger logger;
-    private String filePath;
-    private File file;
-    private String header;
+    private final Logger logger;
+    private final String filePath;
+    private final File file;
+    private final String header;
 
     public UserRepository(String rootPath) throws IOException {
         this.logger = Logger.getLogger(UserRepository.class.getName());

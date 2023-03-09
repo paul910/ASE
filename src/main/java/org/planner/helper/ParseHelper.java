@@ -5,11 +5,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ParseHelper {
-    private String JSONString;
+    private final String JSONString;
 
-    public ParseHelper(String JSONString){
+    public ParseHelper(String JSONString) {
         this.JSONString = JSONString;
     }
+
     public String getValueByRegex(String value) {
         Matcher matcher = regexMatcher(value);
         if (matcher.find()) {

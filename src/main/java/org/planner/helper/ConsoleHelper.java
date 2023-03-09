@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ConsoleHelper {
-    private BufferedReader reader;
+    private final BufferedReader reader;
 
     public ConsoleHelper() {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
@@ -39,13 +39,6 @@ public class ConsoleHelper {
     }
 
     public void printWelcomeLogo() {
-        System.out.println(ConsoleColors.BLUE_UNDERLINED.getColorValue()
-                + "Welcome to Travel Planner!\n"
-                + ConsoleColors.BLUE.getColorValue()
-                + "    ________________\n"
-                + "   /                \\\n"
-                + "  |  TRAVEL PLANNER  |\n"
-                + "   \\________________/\n"
-                + ConsoleColors.BLACK.getColorValue());
+        System.out.println(ConsoleColors.BLUE_UNDERLINED.getColorValue() + "Welcome to Travel Planner!\n" + ConsoleColors.BLUE.getColorValue() + "    ________________\n" + "   /                \\\n" + "  |  TRAVEL PLANNER  |\n" + "   \\________________/\n" + ConsoleColors.BLACK.getColorValue());
     }
 }

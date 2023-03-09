@@ -1,14 +1,15 @@
 package org.planner.service;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.planner.domain.User;
 
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import org.planner.domain.User;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest {
     private static final String ROOT_PATH = "src/test/resources";

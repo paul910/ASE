@@ -7,9 +7,9 @@ import org.planner.service.UserService;
 import java.util.logging.Logger;
 
 public class Start {
-    private Logger logger;
-    private ConsoleHelper consoleHelper;
-    private UserService userService;
+    private final Logger logger;
+    private final ConsoleHelper consoleHelper;
+    private final UserService userService;
     private Session session;
 
     public Start() throws Exception {
@@ -18,23 +18,20 @@ public class Start {
         this.userService = new UserService("src/main/resources");
 
         consoleHelper.printWelcomeLogo();
-        while (true){
+        while (true) {
             this.session = null;
             this.printMenu();
         }
     }
 
     private void printMenu() throws Exception {
-        String input = this.consoleHelper.readFromConsole("1. Register new user\n"
-                + "2. Login\n"
-                + "3. Exit\n"
-                + "Enter: ");
+        String input = this.consoleHelper.readFromConsole("1. Register new user\n" + "2. Login\n" + "3. Exit\n" + "Enter: ");
 
-        if (input.equals("1")){
+        if (input.equals("1")) {
             register();
-        } else if (input.equals("2")){
+        } else if (input.equals("2")) {
             login();
-        } else if (input.equals("3")){
+        } else if (input.equals("3")) {
             consoleHelper.printPurple("Goodbye!");
             System.exit(0);
         } else {

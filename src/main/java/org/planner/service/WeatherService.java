@@ -2,10 +2,11 @@ package org.planner.service;
 
 import org.planner.api.WeatherAPI;
 import org.planner.domain.Weather;
+
 import java.util.logging.Logger;
 
 public class WeatherService {
-    private Logger logger;
+    private final Logger logger;
     private WeatherAPI weatherAPI;
 
     public WeatherService() {

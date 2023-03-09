@@ -73,8 +73,8 @@ public enum ConsoleColors {
     PURPLE_BACKGROUND_BRIGHT("\033[0;105m"), // PURPLE
     CYAN_BACKGROUND_BRIGHT("\033[0;106m"), // CYAN
     WHITE_BACKGROUND_BRIGHT("\033[0;107m"); // WHITE
-    
-    private String colorValue;
+
+    private final String colorValue;
 
     ConsoleColors(String colorValue) {
         this.colorValue = colorValue;

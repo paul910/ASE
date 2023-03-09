@@ -5,7 +5,7 @@ import org.planner.helper.ParseHelper;
 import java.util.Date;
 
 public class Weather {
-    private ParseHelper parseHelper;
+    private final ParseHelper parseHelper;
 
     private String city;
     // Weather
@@ -106,41 +106,12 @@ public class Weather {
 
     public String getInfoText() {
         String celcius = "\u00B0C";
-        return "The main weather condition is " + this.main + ", which means it\n"
-                + "is " + this.description + ". The temperature is " + this.temp + "" + celcius
-                + ", but it \n"
-                + "feels like " + this.feelsLike + "" + celcius + " due to wind and humidity. The \n"
-                + "air pressure is " + this.pressure + " hPa and the humidity " + this.humidity + "%. The \n"
-                + "maximum temperature will be " + this.tempMax + "" + celcius + ", and the minimum \n"
-                + "temperature will be " + this.tempMin + "" + celcius + ". The visibility is " + this.visibility
-                + "\n"
-                + "meters, and the wind speed is " + this.windSpeed + " m/s with a wind \n"
-                + "direction of " + this.windDeg + " degrees. Wind gusts of up to " + this.windGust + " meters per \n"
-                + "second may occur. The cloud coverage is " + this.cloudsAll + "%. The sun \n"
-                + "will rise today at " + this.sysSunrise.getHours() + ":" + this.sysSunrise.getMinutes()
-                + " and set at " + this.sysSunset.getHours() + ":" + this.sysSunset.getMinutes() + ".\n";
+        return "The main weather condition is " + this.main + ", which means it\n" + "is " + this.description + ". The temperature is " + this.temp + "" + celcius + ", but it \n" + "feels like " + this.feelsLike + "" + celcius + " due to wind and humidity. The \n" + "air pressure is " + this.pressure + " hPa and the humidity " + this.humidity + "%. The \n" + "maximum temperature will be " + this.tempMax + "" + celcius + ", and the minimum \n" + "temperature will be " + this.tempMin + "" + celcius + ". The visibility is " + this.visibility + "\n" + "meters, and the wind speed is " + this.windSpeed + " m/s with a wind \n" + "direction of " + this.windDeg + " degrees. Wind gusts of up to " + this.windGust + " meters per \n" + "second may occur. The cloud coverage is " + this.cloudsAll + "%. The sun \n" + "will rise today at " + this.sysSunrise.getHours() + ":" + this.sysSunrise.getMinutes() + " and set at " + this.sysSunset.getHours() + ":" + this.sysSunset.getMinutes() + ".\n";
     }
 
     @Override
     public String toString() {
-        return "Weather{" +
-                "city='" + city + '\'' +
-                ", main='" + main + '\'' +
-                ", description='" + description + '\'' +
-                ", temp=" + temp +
-                ", feelsLike=" + feelsLike +
-                ", pressure=" + pressure +
-                ", humidity=" + humidity +
-                ", tempMin=" + tempMin +
-                ", tempMax=" + tempMax +
-                ", visibility=" + visibility +
-                ", windSpeed=" + windSpeed +
-                ", windDeg=" + windDeg +
-                ", windGust=" + windGust +
-                ", cloudsAll=" + cloudsAll +
-                ", sysSunrise=" + sysSunrise +
-                ", sysSunset=" + sysSunset +
-                '}';
+        return "Weather{" + "city='" + city + '\'' + ", main='" + main + '\'' + ", description='" + description + '\'' + ", temp=" + temp + ", feelsLike=" + feelsLike + ", pressure=" + pressure + ", humidity=" + humidity + ", tempMin=" + tempMin + ", tempMax=" + tempMax + ", visibility=" + visibility + ", windSpeed=" + windSpeed + ", windDeg=" + windDeg + ", windGust=" + windGust + ", cloudsAll=" + cloudsAll + ", sysSunrise=" + sysSunrise + ", sysSunset=" + sysSunset + '}';
     }
 
     private void extractWeatherInfo() {

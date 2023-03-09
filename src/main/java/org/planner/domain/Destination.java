@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Destination {
     private String city;
-    private List<Activity> activities;
+    private final List<Activity> activities;
 
     public Destination(String city) {
         this.city = city;

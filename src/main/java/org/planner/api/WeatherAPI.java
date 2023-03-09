@@ -8,10 +8,10 @@ import java.net.URL;
 import java.util.logging.Logger;
 
 public class WeatherAPI {
-    private String API_URL = "https://api.openweathermap.org/data/2.5/weather?units=metric";
-    private String API_KEY;
+    private final String API_URL = "https://api.openweathermap.org/data/2.5/weather?units=metric";
+    private final String API_KEY;
 
-    private Logger logger;
+    private final Logger logger;
 
     public WeatherAPI() {
         this.logger = Logger.getLogger(WeatherAPI.class.getName());

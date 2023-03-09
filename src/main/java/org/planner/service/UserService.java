@@ -1,8 +1,5 @@
 package org.planner.service;
 
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
-
 import org.planner.domain.User;
 import org.planner.helper.PasswordHasher;
 import org.planner.persistence.UserRepository;
@@ -10,11 +7,13 @@ import org.planner.persistence.UserRepository;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class UserService {
-    private Logger logger;
-    private UserRepository userRepository;
-    private List<User> users;
+    private final Logger logger;
+    private final UserRepository userRepository;
+    private final List<User> users;
 
     public UserService(String rootPath) throws NoSuchAlgorithmException, IOException {
         this.logger = Logger.getLogger(UserService.class.getName());

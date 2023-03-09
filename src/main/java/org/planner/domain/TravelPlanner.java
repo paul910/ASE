@@ -1,11 +1,11 @@
 package org.planner.domain;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 public class TravelPlanner {
-    private List<Travel> travels;
+    private final List<Travel> travels;
     private User user;
     private TravelStatus status;
 
