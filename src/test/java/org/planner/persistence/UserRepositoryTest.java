@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.planner.domain.User;
 
 import java.io.File;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     @BeforeEach
-    public void setUp() throws IOException {
+    public void setUp() {
         userRepository = new UserRepository(ROOT_PATH);
     }
 
@@ -32,7 +30,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void testPersistUserList() throws IOException {
+    public void testPersistUserList() {
         List<User> users = new ArrayList<>();
         users.add(new User("john", "password123", "john@example.com"));
         users.add(new User("jane", "password456", "jane@example.com"));
@@ -41,7 +39,7 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void testLoadUserList() throws IOException, NoSuchAlgorithmException {
+    public void testLoadUserList() {
         List<User> users = new ArrayList<>();
         users.add(new User("john", "password123", "john@example.com"));
         users.add(new User("jane", "password456", "jane@example.com"));

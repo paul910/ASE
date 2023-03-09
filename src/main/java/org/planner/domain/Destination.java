@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Destination {
-    private String city;
     private final List<Activity> activities;
+    private String city;
 
     public Destination(String city) {
         this.city = city;

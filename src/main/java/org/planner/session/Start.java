@@ -12,7 +12,7 @@ public class Start {
     private final UserService userService;
     private Session session;
 
-    public Start() throws Exception {
+    public Start() {
         this.logger = Logger.getLogger(Start.class.getName());
         this.consoleHelper = new ConsoleHelper();
         this.userService = new UserService("src/main/resources");
@@ -24,7 +24,7 @@ public class Start {
         }
     }
 
-    private void printMenu() throws Exception {
+    private void printMenu() {
         String input = this.consoleHelper.readFromConsole("1. Register new user\n" + "2. Login\n" + "3. Exit\n" + "Enter: ");
 
         if (input.equals("1")) {
@@ -39,7 +39,7 @@ public class Start {
         }
     }
 
-    private void register() throws Exception {
+    private void register() {
         String username = this.consoleHelper.readFromConsole("Enter username: ");
         String password = this.consoleHelper.readFromConsole("Enter password: ");
         String email = this.consoleHelper.readFromConsole("Enter email: ");
@@ -54,7 +54,7 @@ public class Start {
         }
     }
 
-    private void login() throws Exception {
+    private void login() {
         String username = this.consoleHelper.readFromConsole("Enter username: ");
         String password = this.consoleHelper.readFromConsole("Enter password: ");
 

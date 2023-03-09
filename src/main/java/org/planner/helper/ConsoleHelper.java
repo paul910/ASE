@@ -3,17 +3,26 @@ package org.planner.helper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class ConsoleHelper {
+    private final Logger logger;
     private final BufferedReader reader;
 
     public ConsoleHelper() {
+        this.logger = Logger.getLogger(ConsoleHelper.class.getName());
         this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    public String readFromConsole(String message) throws IOException {
+    public String readFromConsole(String message) {
         System.out.print(ConsoleColors.RESET.getColorValue() + "" + message);
-        String input = reader.readLine();
+        String input = null;
+        try {
+            input = reader.readLine();
+        } catch (IOException e) {
+            logger.warning("Error while reading from console.");
+        }
         System.out.print(ConsoleColors.BLACK.getColorValue());
         return input;
     }

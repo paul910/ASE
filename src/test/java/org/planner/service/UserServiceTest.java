@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.planner.domain.User;
 
 import java.io.File;
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +16,7 @@ public class UserServiceTest {
     private User user1;
 
     @BeforeEach
-    public void setUp() throws IOException, NoSuchAlgorithmException {
+    public void setUp() {
         this.userService = new UserService(ROOT_PATH);
         this.user1 = userService.createUser("user1", "password", "user1@example.com");
     }
@@ -30,7 +28,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testCreateUser() throws NoSuchAlgorithmException, IOException {
+    public void testCreateUser() {
         // Test creating a user with valid credentials
         assertNotNull(this.user1);
         assertEquals("user1", user1.getUsername());
@@ -46,7 +44,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testRemoveUserByEMail() throws NoSuchAlgorithmException, IOException {
+    public void testRemoveUserByEMail() {
         // Test removing an existing user by email
         this.userService.createUser("user1", "password", "user1@example.com");
         this.userService.removeUserByEMail("user1@example.com");
@@ -58,7 +56,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testRemoveUserByUsername() throws NoSuchAlgorithmException, IOException {
+    public void testRemoveUserByUsername() {
         // Test removing an existing user by username
         this.userService.createUser("user1", "password", "user1@example.com");
         this.userService.removeUserByUsername("user1");
@@ -70,7 +68,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testLogin() throws NoSuchAlgorithmException, IOException {
+    public void testLogin() {
         // Test logging in with valid credentials
         User loggedInUser = this.userService.login("user1", "password");
         assertNotNull(loggedInUser);

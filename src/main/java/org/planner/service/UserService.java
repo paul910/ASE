@@ -4,8 +4,6 @@ import org.planner.domain.User;
 import org.planner.helper.PasswordHasher;
 import org.planner.persistence.UserRepository;
 
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -15,14 +13,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final List<User> users;
 
-    public UserService(String rootPath) throws NoSuchAlgorithmException, IOException {
+    public UserService(String rootPath) {
         this.logger = Logger.getLogger(UserService.class.getName());
         this.userRepository = new UserRepository(rootPath);
         this.users = this.userRepository.loadUserList();
     }
 
-    public User createUser(String username, String password, String emailAddress)
-            throws IOException, NoSuchAlgorithmException {
+    public User createUser(String username, String password, String emailAddress) {
         User user = new User(username, PasswordHasher.hashPassword(password), emailAddress);
         if (isUsernameOrEmailTaken(username, emailAddress) || !isValidEmail(emailAddress)) {
             logger.warning("User has not been added.");
@@ -34,7 +31,7 @@ public class UserService {
         return user;
     }
 
-    public void removeUserByEMail(String emailAddress) throws IOException {
+    public void removeUserByEMail(String emailAddress) {
         if (!doesUserExistByEmail(emailAddress)) {
             logger.warning("User has not been removed.");
             return;
@@ -44,7 +41,7 @@ public class UserService {
         logger.info("User removed successfully.");
     }
 
-    public void removeUserByUsername(String username) throws IOException {
+    public void removeUserByUsername(String username) {
         if (doesUserExistByUsername(username)) {
             logger.warning("User has not been removed.");
             return;
@@ -54,7 +51,7 @@ public class UserService {
         logger.info("User removed successfully.");
     }
 
-    public User login(String username, String password) throws NoSuchAlgorithmException {
+    public User login(String username, String password) {
         if (doesUserExistByUsername(username)) {
             if (isPasswordCorrect(username, password)) {
                 logger.info("Login successful.");
@@ -68,7 +65,7 @@ public class UserService {
         }
     }
 
-    private boolean isPasswordCorrect(String username, String password) throws NoSuchAlgorithmException {
+    private boolean isPasswordCorrect(String username, String password) {
         if (getUserByUsername(username).getPassword().equals(PasswordHasher.hashPassword(password))) {
             logger.info("Password is correct.");
             return true;

@@ -9,11 +9,11 @@ import java.util.logging.Logger;
 
 public class Session {
     private final Logger logger;
-    private User activeUser;
     private final WeatherService weatherService;
     private final ConsoleHelper consoleHelper;
+    private User activeUser;
 
-    public Session(User user) throws Exception {
+    public Session(User user) {
         this.logger = Logger.getLogger(Session.class.getName());
         this.weatherService = new WeatherService();
         this.consoleHelper = new ConsoleHelper();
@@ -22,17 +22,12 @@ public class Session {
         this.run();
     }
 
-    private void run() throws Exception {
+    private void run() {
         while (this.activeUser != null) this.printMenu();
     }
 
-    private void printMenu() throws Exception {
-        String input = this.consoleHelper.readFromConsole("1. Add destination\n"
-                + "2. Add activity\n"
-                + "3. Add travel\n"
-                + "4. Check weather\n"
-                + "5. Logout\n"
-                + "Enter: ");
+    private void printMenu() {
+        String input = this.consoleHelper.readFromConsole("1. Add destination\n" + "2. Add activity\n" + "3. Add travel\n" + "4. Check weather\n" + "5. Logout\n" + "Enter: ");
 
         if (input.equals("1")) {
             // addDestination();
@@ -51,7 +46,7 @@ public class Session {
         this.printMenu();
     }
 
-    private void checkWeather() throws Exception {
+    private void checkWeather() {
         String input = this.consoleHelper.readFromConsole("Enter city: ");
         Weather weather = weatherService.getWeather(input);
         if (weather == null) {
@@ -62,7 +57,7 @@ public class Session {
         this.consoleHelper.print(weather.getInfoText());
     }
 
-    private void logout() throws Exception {
+    private void logout() {
         this.activeUser = null;
         this.logger.info("Successfully logged out.");
         this.consoleHelper.printSuccess("Successfully logged out.");
