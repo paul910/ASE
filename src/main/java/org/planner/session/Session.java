@@ -90,7 +90,7 @@ public class Session {
                 login();
                 break;
             case "3":
-                System.out.println(ConsoleColors.PURPLE + "Goodbye!" + ConsoleColors.RESET);
+                System.out.println(ConsoleColors.PURPLE.getColorValue() + "Goodbye!" + ConsoleColors.RESET.getColorValue());
                 System.exit(0);
                 break;
             default:
@@ -123,7 +123,7 @@ public class Session {
         if (this.activeUser != null) {
             this.printSuccess("Successfully logged in.");
             System.out.println(
-                    ConsoleColors.BLUE + "Welcome " + this.activeUser.getUsername() + "!\n" + ConsoleColors.RESET);
+                    ConsoleColors.BLUE.getColorValue() + "Welcome " + this.activeUser.getUsername() + "!\n" + ConsoleColors.RESET.getColorValue());
             this.printInternalMenu();
         } else {
             this.printErr("Login failed.");
@@ -138,29 +138,29 @@ public class Session {
     }
 
     private String readFromConsole(String message) throws IOException {
-        System.out.print(ConsoleColors.RESET + "" + message);
+        System.out.print(ConsoleColors.RESET.getColorValue() + "" + message);
         String input = reader.readLine();
-        System.out.print(ConsoleColors.BLACK);
+        System.out.print(ConsoleColors.BLACK.getColorValue());
         return input;
     }
 
     private void printErr(String message) {
-        System.out.println(ConsoleColors.RED + message + ConsoleColors.BLACK);
+        System.out.println(ConsoleColors.RED.getColorValue() + message + ConsoleColors.BLACK.getColorValue());
     }
 
     private void printSuccess(String message) {
-        System.out.println(ConsoleColors.GREEN + message + ConsoleColors.BLACK);
+        System.out.println(ConsoleColors.GREEN.getColorValue() + message + ConsoleColors.BLACK.getColorValue());
     }
 
     private void print(String message) {
-        System.out.println(ConsoleColors.RESET + message + ConsoleColors.BLACK);
+        System.out.println(ConsoleColors.RESET.getColorValue() + message + ConsoleColors.BLACK.getColorValue());
     }
 
     private void welcome() {
-        System.out.println(ConsoleColors.BLUE_UNDERLINED + "Welcome to Travel Planner!\n" + ConsoleColors.BLUE
+        System.out.println(ConsoleColors.BLUE_UNDERLINED.getColorValue() + "Welcome to Travel Planner!\n" + ConsoleColors.BLUE.getColorValue()
                 + "    ________________\n"
                 + "   /                \\\n"
                 + "  |  TRAVEL PLANNER  |\n"
-                + "   \\________________/\n" + ConsoleColors.BLACK);
+                + "   \\________________/\n" + ConsoleColors.BLACK.getColorValue());
     }
 }
