@@ -121,6 +121,29 @@ public class Weather {
                 + " and set at " + this.sysSunset.getHours() + ":" + this.sysSunset.getMinutes() + ".\n";
     }
 
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "city='" + city + '\'' +
+                ", JSONString='" + JSONString + '\'' +
+                ", main='" + main + '\'' +
+                ", description='" + description + '\'' +
+                ", temp=" + temp +
+                ", feelsLike=" + feelsLike +
+                ", pressure=" + pressure +
+                ", humidity=" + humidity +
+                ", tempMin=" + tempMin +
+                ", tempMax=" + tempMax +
+                ", visibility=" + visibility +
+                ", windSpeed=" + windSpeed +
+                ", windDeg=" + windDeg +
+                ", windGust=" + windGust +
+                ", cloudsAll=" + cloudsAll +
+                ", sysSunrise=" + sysSunrise +
+                ", sysSunset=" + sysSunset +
+                '}';
+    }
+
     private void extractWeatherInfo() {
         this.city = this.getValueByRegex("name");
         this.main = this.getValueByRegex("main");

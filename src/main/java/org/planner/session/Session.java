@@ -22,7 +22,7 @@ public class Session {
     public Session(String credentials) throws NoSuchAlgorithmException, IOException {
         logger = Logger.getLogger(Session.class.getName());
         reader = new BufferedReader(new InputStreamReader(System.in));
-        userService = new UserService("database");
+        userService = new UserService("src/main/resources");
         weatherService = new WeatherService(credentials);
         activeUser = null;
 
