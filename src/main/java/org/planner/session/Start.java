@@ -15,7 +15,7 @@ public class Start {
     public Start() {
         this.logger = Logger.getLogger(Start.class.getName());
         this.consoleHelper = new ConsoleHelper();
-        this.userService = new UserService("src/main/resources");
+        this.userService = new UserService();
 
         consoleHelper.printWelcomeLogo();
         while (true) {

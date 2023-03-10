@@ -13,10 +13,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final List<User> users;
 
-    public UserService(String rootPath) {
+    public UserService() {
         this.logger = Logger.getLogger(UserService.class.getName());
-        this.userRepository = new UserRepository(rootPath);
-        this.users = this.userRepository.loadUserList();
+        this.userRepository = new UserRepository();
+        this.users = this.userRepository.loadList();
     }
 
     public User createUser(String username, String password, String emailAddress) {
@@ -26,7 +26,7 @@ public class UserService {
             return null;
         }
         this.users.add(user);
-        this.userRepository.persistUserList(this.users);
+        this.userRepository.persistList(this.users);
         logger.info("User added successfully.");
         return user;
     }
@@ -37,7 +37,7 @@ public class UserService {
             return;
         }
         this.users.remove(getUserByEmail(emailAddress));
-        this.userRepository.persistUserList(this.users);
+        this.userRepository.persistList(this.users);
         logger.info("User removed successfully.");
     }
 
@@ -47,7 +47,7 @@ public class UserService {
             return;
         }
         this.users.remove(getUserByUsername(username));
-        this.userRepository.persistUserList(this.users);
+        this.userRepository.persistList(this.users);
         logger.info("User removed successfully.");
     }
 

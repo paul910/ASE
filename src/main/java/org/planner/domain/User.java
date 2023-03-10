@@ -11,13 +11,13 @@ public class User {
         this.email = email;
     }
 
-    public static String getColums() {
+    public static String getColumns() {
         return "Username,Password,Email";
     }
 
     @Override
     public String toString() {
-        return username + ',' + password + ',' + email;
+        return this.username + ',' + this.password + ',' + this.email;
     }
 
     public String getUsername() {

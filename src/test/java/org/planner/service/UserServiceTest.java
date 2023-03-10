@@ -17,7 +17,7 @@ public class UserServiceTest {
 
     @BeforeEach
     public void setUp() {
-        this.userService = new UserService(ROOT_PATH);
+        this.userService = new UserService();
         this.user1 = userService.createUser("user1", "password", "user1@example.com");
     }
 

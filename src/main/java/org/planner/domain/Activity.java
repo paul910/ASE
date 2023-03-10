@@ -163,4 +163,9 @@ public class Activity {
     public String getDisplay_phone() {
         return display_phone;
     }
+
+    @Override
+    public String toString() {
+        return this.id + "," + this.alias + "," + this.name + "," + this.image_url + "," + this.rating + "," + this.reviewCount + "," + this.price + "," + this.country + "," + this.state + "," + this.city + "," + this.address1 + "," + this.address2 + "," + this.address3 + "," + this.zipCode + "," + this.latitude + "," + this.longitude + "," + this.url + "," + this.phone + "," + this.display_phone;
+    }
 }

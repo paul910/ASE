@@ -15,18 +15,12 @@ public class ActivityService {
     private final ActivityAPI activityAPI;
     private final int limit;
 
-    public ActivityService(String rootPath) {
+    public ActivityService() {
         this.logger = Logger.getLogger(ActivityService.class.getName());
-        this.activityRepository = new ActivityRepository(rootPath);
+        this.activityRepository = new ActivityRepository();
         this.activities = new ArrayList<>();
         this.activityAPI = new ActivityAPI();
         this.limit = 5;
-    }
-
-    public static void main(String[] args) {
-        ActivityService activityService = new ActivityService("src/main/resources");
-        activityService.loadActivitiesFromApiByCity("Wiesloch");
-        activityService.persistActivities();
     }
 
     public void loadActivitiesFromApiByCity(String city) {
@@ -36,10 +30,10 @@ public class ActivityService {
 
     public void loadActivities() {
         this.activities.clear();
-        this.activities.addAll(this.activityRepository.loadActivityList());
+        this.activities.addAll(this.activityRepository.loadList());
     }
 
     public void persistActivities() {
-        this.activityRepository.persistActivityList(this.activities);
+        this.activityRepository.persistList(this.activities);
     }
 }

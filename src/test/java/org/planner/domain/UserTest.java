@@ -26,6 +26,6 @@ public class UserTest {
 
     @Test
     public void testGetColums() {
-        assertEquals("Username,Password,Email", User.getColums());
+        assertEquals("Username,Password,Email", User.getColumns());
     }
 }
