@@ -15,7 +15,7 @@ public class UserRepository implements RepositoryInterface<User> {
         this.file = new File(this.filePath);
 
         createFolderIfNotExists();
-        createFileIfNotExists(User.getColumns());
+        createFileIfNotExists();
     }
 
     private void createFolderIfNotExists() {
@@ -24,12 +24,12 @@ public class UserRepository implements RepositoryInterface<User> {
         }
     }
 
-    private void createFileIfNotExists(String header) {
+    private void createFileIfNotExists() {
         if (!this.file.exists()) {
             try {
                 file.createNewFile();
                 FileWriter writer = new FileWriter(filePath);
-                writer.append(header);
+                writer.append(User.getColumns());
                 writer.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
