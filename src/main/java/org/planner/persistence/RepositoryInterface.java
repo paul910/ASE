@@ -18,4 +18,6 @@ public interface RepositoryInterface<T> {
     List<T> filterExisting(List<T> list);
 
     boolean existsInFile(T object);
+
+    void removeEntryById(String id);
 }

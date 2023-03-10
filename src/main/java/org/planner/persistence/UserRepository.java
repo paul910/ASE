@@ -74,6 +74,7 @@ public class UserRepository implements RepositoryInterface<User> {
     @Override
     public void deleteList() {
         this.file.delete();
+        createFileIfNotExists();
         LOGGER.info("User list deleted successfully.");
     }
 
@@ -99,5 +100,18 @@ public class UserRepository implements RepositoryInterface<User> {
             }
         }
         return false;
+    }
+
+    @Override
+    public void removeEntryById(String id) {
+        List<User> users = loadList();
+        for (User user : users) {
+            if (user.getUsername().equals(id)) {
+                users.remove(user);
+                break;
+            }
+        }
+        deleteList();
+        persistList(users);
     }
 }

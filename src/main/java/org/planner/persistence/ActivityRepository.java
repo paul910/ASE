@@ -76,6 +76,7 @@ public class ActivityRepository implements RepositoryInterface<Activity> {
     @Override
     public void deleteList() {
         this.file.delete();
+        createFileIfNotExists();
         LOGGER.info("Activity list deleted successfully.");
     }
 
@@ -101,5 +102,19 @@ public class ActivityRepository implements RepositoryInterface<Activity> {
             }
         }
         return false;
+    }
+
+    @Override
+    public void removeEntryById(String id) {
+        List<Activity> activities = loadList();
+        for (Activity activity : activities) {
+            if (activity.getId().equals(id)) {
+                activities.remove(activity);
+                break;
+            }
+        }
+        deleteList();
+        persistList(activities);
+        LOGGER.info("Activity removed successfully.");
     }
 }

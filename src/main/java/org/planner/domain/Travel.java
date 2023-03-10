@@ -1,18 +1,78 @@
 package org.planner.domain;
 
+import org.planner.persistence.TravelRepository;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Travel {
+    private final Long id;
+    private final String createdBy;
+    private final Date createdDate;
+    private String city;
+    private double budget;
     private Date startDate;
     private Date endDate;
-    private double budget;
-    private Destination destination;
+    private Date lastModifiedDate;
 
-    public Travel(Date startDate, Date endDate, double budget, Destination destination) {
+    public Travel(User user, String city, double budget, Date startDate, Date endDate) {
+        this.id = setId();
+        this.createdBy = user.getUsername();
+        this.city = city;
+        this.budget = budget;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.createdDate = new Date(System.currentTimeMillis());
+        this.lastModifiedDate = new Date(System.currentTimeMillis());
+    }
+
+    public Travel(Long id, String createdBy, String city, double budget, Date startDate, Date endDate, Date createdDate, Date lastModifiedDate) {
+        this.id = id;
+        this.createdBy = createdBy;
+        this.city = city;
         this.budget = budget;
-        this.destination = destination;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.createdDate = createdDate;
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public static String getColumns() {
+        return "id, createdBy,city,budget,startDate,endDate,createdDate,lastModifiedDate";
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return this.id + "," + this.createdBy + "," + this.city + "," + this.budget + "," + dateFormat.format(this.startDate) + "," + dateFormat.format(this.endDate) + "," + dateFormat.format(this.createdDate) + "," + dateFormat.format(this.lastModifiedDate);
+    }
+
+    private Long setId() {
+        return TravelRepository.getNewId();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public double getBudget() {
+        return budget;
+    }
+
+    public void setBudget(double budget) {
+        this.budget = budget;
     }
 
     public Date getStartDate() {
@@ -31,19 +91,15 @@ public class Travel {
         this.endDate = endDate;
     }
 
-    public double getBudget() {
-        return budget;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setBudget(double budget) {
-        this.budget = budget;
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public Destination getDestination() {
-        return destination;
-    }
-
-    public void setDestination(Destination destination) {
-        this.destination = destination;
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 }
