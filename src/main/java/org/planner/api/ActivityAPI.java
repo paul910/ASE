@@ -19,12 +19,14 @@ public class ActivityAPI {
     private final Logger logger;
     private final String API_URL;
     private final String API_KEY;
+
     public ActivityAPI() {
         this.logger = Logger.getLogger(ActivityAPI.class.getName());
         this.API_URL = "https://api.yelp.com/v3/businesses/search";
         // this.API_KEY = System.getenv("YELP_API_KEY");
         this.API_KEY = "e7Ecbfhs5HnXLq8qCBQw7O_ZVXTNoE5f_u7Cg7jR-1QSNO0_ERR-U6zXEdWcfizyDocn_WiV39d1RtAavsMFbxXWzILZEVeQWLnU2gvEAg_GcStUFcaUAUchKRwKZHYx"; //TODO: remove this line
     }
+
     public List<Activity> requestActivities(String city, int limit) {
         StringBuilder response = null;
         String term = "attractions";

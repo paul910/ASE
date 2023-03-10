@@ -23,6 +23,12 @@ public class ActivityService {
         this.limit = 5;
     }
 
+    public static void main(String[] args) {
+        ActivityService activityService = new ActivityService("src/main/resources");
+        activityService.loadActivitiesFromApiByCity("Wiesloch");
+        activityService.persistActivities();
+    }
+
     public void loadActivitiesFromApiByCity(String city) {
         this.activities.clear();
         this.activities.addAll(this.activityAPI.requestActivities(city, this.limit));
@@ -35,11 +41,5 @@ public class ActivityService {
 
     public void persistActivities() {
         this.activityRepository.persistActivityList(this.activities);
-    }
-
-    public static void main(String[] args) {
-        ActivityService activityService = new ActivityService("src/main/resources");
-        activityService.loadActivitiesFromApiByCity("Wiesloch");
-        activityService.persistActivities();
     }
 }
