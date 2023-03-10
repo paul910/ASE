@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class JsonParserTest {
 
     @Test
-    void parse() {
+    void parseObject() {
         String expectedObj = "{cars=[Audi, BMW, Fiat], name=John, age=30}";
         String response = "{\"name\":\"John\",\"age\":30,\"cars\":[\"Audi\",\"BMW\",\"Fiat\"]}";
-        Object obj = new JsonParser(response).parse();
+        Object obj = new JsonParser(response).parseObject();
         assertEquals(expectedObj, obj.toString());
     }
 }

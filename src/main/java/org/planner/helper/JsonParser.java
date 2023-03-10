@@ -14,7 +14,39 @@ public class JsonParser {
         this.index = 0;
     }
 
-    public Object parse() {
+    public Map<String, Object> parseObject() {
+        Map<String, Object> map = new HashMap<>();
+
+        consume('{');
+        while (peek() != '}') {
+            String key = parseString();
+            consume(':');
+            Object value = parseValue();
+            map.put(key, value);
+            if (peek() == ',') {
+                consume(',');
+            }
+        }
+        consume('}');
+        return map;
+    }
+
+    public List<Object> parseArray() {
+        List<Object> list = new ArrayList<>();
+
+        consume('[');
+        while (peek() != ']') {
+            Object value = parseValue();
+            list.add(value);
+            if (peek() == ',') {
+                consume(',');
+            }
+        }
+        consume(']');
+        return list;
+    }
+
+    private Object parseValue() {
         char nextChar = peek();
         if (nextChar == '{') {
             return parseObject();
@@ -29,36 +61,6 @@ public class JsonParser {
         } else {
             return parseNumber();
         }
-    }
-
-    private Map<String, Object> parseObject() {
-        Map<String, Object> object = new HashMap<>();
-        consume('{');
-        while (peek() != '}') {
-            String key = parseString();
-            consume(':');
-            Object value = parse();
-            object.put(key, value);
-            if (peek() == ',') {
-                consume(',');
-            }
-        }
-        consume('}');
-        return object;
-    }
-
-    private List<Object> parseArray() {
-        List<Object> array = new ArrayList<>();
-        consume('[');
-        while (peek() != ']') {
-            Object value = parse();
-            array.add(value);
-            if (peek() == ',') {
-                consume(',');
-            }
-        }
-        consume(']');
-        return array;
     }
 
     private String parseString() {
