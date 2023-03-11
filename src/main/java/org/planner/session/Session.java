@@ -1,6 +1,5 @@
 package org.planner.session;
 
-import org.planner.domain.Activity;
 import org.planner.domain.Travel;
 import org.planner.domain.User;
 import org.planner.domain.Weather;
@@ -12,7 +11,6 @@ import org.planner.service.WeatherService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class Session {

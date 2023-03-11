@@ -23,6 +23,7 @@ public class TravelService {
         this.activeUser = activeUser;
 
         loadTravelsForActiveUser();
+        // TODO: first load error missing travels in file
     }
 
     public static void main(String[] args) {

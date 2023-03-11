@@ -92,7 +92,7 @@ public class TravelRepository implements RepositoryInterface<Travel> {
     public List<Travel> loadListForUser(User user) {
         List<Travel> travels = loadList();
         for (Travel travel : travels) {
-            if (travel.getCreatedBy() != user.getUsername()) {
+            if (!travel.getCreatedBy().equals(user.getUsername())) {
                 travels.remove(travel);
             }
         }
