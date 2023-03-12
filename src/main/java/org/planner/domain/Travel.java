@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Travel {
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private final Long id;
     private final String createdBy;
     private final Date createdDate;
@@ -38,13 +40,12 @@ public class Travel {
     }
 
     public static String getColumns() {
-        return "id, createdBy,city,budget,startDate,endDate,createdDate,lastModifiedDate";
+        return "id,createdBy,city,budget,startDate,endDate,createdDate,lastModifiedDate";
     }
 
     @Override
     public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return this.id + "," + this.createdBy + "," + this.city + "," + this.budget + "," + dateFormat.format(this.startDate) + "," + dateFormat.format(this.endDate) + "," + dateFormat.format(this.createdDate) + "," + dateFormat.format(this.lastModifiedDate);
+        return this.id + "," + this.createdBy + "," + this.city + "," + this.budget + "," + DATE_FORMAT.format(this.startDate) + "," + DATE_FORMAT.format(this.endDate) + "," + DATE_TIME_FORMAT.format(this.createdDate) + "," + DATE_TIME_FORMAT.format(this.lastModifiedDate);
     }
 
     private Long setId() {

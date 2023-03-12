@@ -75,11 +75,9 @@ public class TravelRepository implements RepositoryInterface<Travel> {
             br.readLine(); // skip the first line (header)
 
             String line;
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
-
-                Travel travel = new Travel(Long.parseLong(data[0]), data[1], data[2], Double.parseDouble(data[3]), dateFormat.parse(data[4]), dateFormat.parse(data[5]), dateFormat.parse(data[6]), dateFormat.parse(data[7]));
+                Travel travel = new Travel(Long.parseLong(data[0]), data[1], data[2], Double.parseDouble(data[3]), Travel.DATE_FORMAT.parse(data[4]), Travel.DATE_FORMAT.parse(data[5]), Travel.DATE_TIME_FORMAT.parse(data[6]), Travel.DATE_TIME_FORMAT.parse(data[7]));
                 travels.add(travel);
             }
             this.LOGGER.info("Travel list loaded successfully.");

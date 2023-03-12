@@ -21,20 +21,18 @@ public class TravelConsole implements ConsoleInterface {
             return;
         }
         System.out.printf("%-5s%-20s%-20s%-10s%-20s%-20s%-20s%-20s%n", "ID", "Created By", "City", "Budget", "Start Date", "End Date", "Created Date", "Last Modified Date");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         for (Travel travel : this.travelService.getTravels()) {
-            System.out.printf("%-5d%-20s%-20s%-10.2f%-20s%-20s%-20s%-20s%n", travel.getId(), travel.getCreatedBy(), travel.getCity(), travel.getBudget(), dateFormat.format(travel.getStartDate()), dateFormat.format(travel.getEndDate()), dateFormat.format(travel.getCreatedDate()), dateFormat.format(travel.getLastModifiedDate()));
+            System.out.printf("%-5d%-20s%-20s%-10.2f%-20s%-20s%-20s%-20s%n", travel.getId(), travel.getCreatedBy(), travel.getCity(), travel.getBudget(), Travel.DATE_FORMAT.format(travel.getStartDate()), Travel.DATE_FORMAT.format(travel.getEndDate()), Travel.DATE_TIME_FORMAT.format(travel.getCreatedDate()), Travel.DATE_TIME_FORMAT.format(travel.getLastModifiedDate()));
         }
     }
 
     public void addTravel() {
         Travel travel;
         try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String city = this.consoleHelper.readFromConsole("Enter city: ");
             Double budget = Double.parseDouble(this.consoleHelper.readFromConsole("Enter budget: "));
-            Date startDate = dateFormat.parse(this.consoleHelper.readFromConsole("Enter start date (yyyy-MM-dd HH:mm:ss): "));
-            Date endDate = dateFormat.parse(this.consoleHelper.readFromConsole("Enter end date (yyyy-MM-dd HH:mm:ss): "));
+            Date startDate = Travel.DATE_FORMAT.parse(this.consoleHelper.readFromConsole("Enter start date (yyyy-MM-dd): "));
+            Date endDate = Travel.DATE_FORMAT.parse(this.consoleHelper.readFromConsole("Enter end date (yyyy-MM-dd): "));
             travel = new Travel(this.travelService.getActiveUser(), city, budget, startDate, endDate);
         } catch (ParseException e) {
             consoleHelper.printError("Invalid input.");
