@@ -23,6 +23,7 @@ public class TravelService {
         loadTravelsForActiveUser();
     }
 
+    //GETTER
     public List<Travel> getTravels() {
         return travels;
     }
@@ -30,6 +31,8 @@ public class TravelService {
     public User getActiveUser() {
         return activeUser;
     }
+
+    //PERISTENCE
 
     public void loadTravelsForActiveUser() {
         this.travels.clear();

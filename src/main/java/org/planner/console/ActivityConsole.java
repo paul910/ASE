@@ -2,8 +2,8 @@ package org.planner.console;
 
 import org.planner.service.ActivityService;
 
-public class ActivityConsole implements ConsoleInterface{
-    private ActivityService activityService;
+public class ActivityConsole implements ConsoleInterface {
+    private final ActivityService activityService;
 
     public ActivityConsole() {
         this.activityService = new ActivityService();
@@ -12,12 +12,13 @@ public class ActivityConsole implements ConsoleInterface{
     public void checkActivities() {
         String input = consoleHelper.readFromConsole("Enter city: ");
         this.activityService.fetchActivitiesByCity(input);
-        if(this.activityService.getActivities().size() > 0) {
+        if (this.activityService.getActivities().size() > 0) {
             this.printActivities();
         } else {
             consoleHelper.printError("No activities found for city: " + input + "!");
         }
     }
+
     public void printActivities() {
         String format = "%-30s%-10s%-20s%-40s%-20s%-50s%n";
         System.out.format(format, "Name", "Rating", "Price", "Address", "Phone", "URL");

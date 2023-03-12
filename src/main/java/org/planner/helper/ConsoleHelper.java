@@ -58,13 +58,13 @@ public class ConsoleHelper {
         System.out.println(horizontalLine);
         for (String word : words) {
             if (line.length() + word.length() + 1 > maxWidth) {
-                System.out.printf("| %-" + (maxWidth-2) + "s |\n", line.toString());
+                System.out.printf("| %-" + (maxWidth - 2) + "s |\n", line);
                 line = new StringBuilder();
             }
             line.append(word).append(" ");
         }
         if (line.length() > 0) {
-            System.out.printf("| %-" + (maxWidth-2) + "s |\n", line.toString());
+            System.out.printf("| %-" + (maxWidth - 2) + "s |\n", line);
         }
         System.out.println(horizontalLine);
     }

@@ -7,13 +7,15 @@ import org.planner.helper.JsonParser;
 import java.util.Map;
 
 public class WeatherService {
-    private WeatherAPI weatherAPI;
+    private final WeatherAPI weatherAPI;
     private Weather weather;
 
     public WeatherService() {
         this.weatherAPI = new WeatherAPI();
         this.weather = null;
     }
+
+    //API
 
     public void fetchWeatherByCity(String city) {
         String response = weatherAPI.request(city);

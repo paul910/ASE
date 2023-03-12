@@ -7,31 +7,31 @@ import java.util.Map;
 public class Weather {
     private String city;
     // Weather
-    private String main;
-    private String description;
+    private final String main;
+    private final String description;
 
     // main.Main
-    private double temp;
-    private double feelsLike;
-    private int pressure;
-    private int humidity;
-    private double tempMin;
-    private double tempMax;
+    private final double temp;
+    private final double feelsLike;
+    private final int pressure;
+    private final int humidity;
+    private final double tempMin;
+    private final double tempMax;
 
     // Visibility
-    private int visibility;
+    private final int visibility;
 
     // Wind
-    private double windSpeed;
-    private int windDeg;
-    private double windGust;
+    private final double windSpeed;
+    private final int windDeg;
+    private final double windGust;
 
     // Clouds
-    private int cloudsAll;
+    private final int cloudsAll;
 
     // Sys
-    private Date sysSunrise;
-    private Date sysSunset;
+    private final Date sysSunrise;
+    private final Date sysSunset;
 
     public Weather(Map<String, Object> obj) {
         Map<String, Object> weather = (Map<String, Object>) ((List<Object>) obj.get("weather")).get(0);

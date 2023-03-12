@@ -3,9 +3,11 @@ package org.planner.api;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 
-public class ActivityAPI implements APIInterface{
+public class ActivityAPI implements APIInterface {
     private final String API_URL;
     private final String API_KEY;
 

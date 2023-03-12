@@ -46,14 +46,13 @@ public class Session implements ConsoleInterface {
             this.logout();
             return;
         } else {
-            this.logger.warning("Invalid option.");
+            this.consoleHelper.printError("Invalid input.");
         }
         this.printMenu();
     }
 
     private void logout() {
         this.activeUser = null;
-        this.logger.info("Successfully logged out.");
         this.consoleHelper.printSuccess("Successfully logged out.");
     }
 }

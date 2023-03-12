@@ -4,7 +4,6 @@ import org.planner.domain.Travel;
 import org.planner.service.TravelService;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TravelConsole implements ConsoleInterface {
