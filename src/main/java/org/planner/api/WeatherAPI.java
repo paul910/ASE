@@ -4,33 +4,33 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.util.logging.Logger;
+import java.net.URLEncoder;
 
-public class WeatherAPI {
-    private final Logger logger;
-    private final String API_URL = "https://api.openweathermap.org/data/2.5/weather?units=metric";
+public class WeatherAPI implements APIInterface {
+    private final String API_URL;
     private final String API_KEY;
 
     public WeatherAPI() {
-        this.logger = Logger.getLogger(WeatherAPI.class.getName());
+        this.API_URL = "https://api.openweathermap.org/data/2.5/weather?units=metric";
         this.API_KEY = System.getenv("WEATHER_API_KEY");
     }
 
-    public String getWeatherData(String city) {
-        StringBuffer response;
+    @Override
+    public String request(String city) {
+        StringBuffer response = null;
         try {
-            URL url = new URL(API_URL + "&q=" + city + "&appid=" + API_KEY);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            int responseCode = con.getResponseCode();
+            URL url = new URL(this.API_URL + "&q=" + URLEncoder.encode(city) + "&appid=" + this.API_KEY);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+
+            int responseCode = connection.getResponseCode();
             if (responseCode != 200) {
                 logger.warning("GET request not worked. Response code: " + responseCode);
                 return null;
             }
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             String inputLine;
             response = new StringBuffer();
 
@@ -38,12 +38,8 @@ public class WeatherAPI {
                 response.append(inputLine);
             }
             in.close();
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (ProtocolException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            logger.warning("GET request not worked.");
         }
         return response.toString();
     }

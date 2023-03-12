@@ -1,12 +1,10 @@
 package org.planner.domain;
 
-import org.planner.helper.ParseHelper;
-
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public class Weather {
-    private final ParseHelper parseHelper;
-
     private String city;
     // Weather
     private String main;
@@ -35,9 +33,37 @@ public class Weather {
     private Date sysSunrise;
     private Date sysSunset;
 
-    public Weather(String JSONString) {
-        this.parseHelper = new ParseHelper(JSONString);
-        this.extractWeatherInfo();
+    public Weather(Map<String, Object> obj) {
+        Map<String, Object> weather = (Map<String, Object>) ((List<Object>) obj.get("weather")).get(0);
+        {
+            this.main = (String) weather.get("main");
+            this.description = (String) weather.get("description");
+        }
+        Map<String, Object> main = (Map<String, Object>) obj.get("main");
+        {
+            this.temp = (double) main.get("temp");
+            this.feelsLike = (double) main.get("feels_like");
+            this.pressure = Long.valueOf((long) main.get("pressure")).intValue();
+            this.humidity = Long.valueOf((long) main.get("humidity")).intValue();
+            this.tempMin = (double) main.get("temp_min");
+            this.tempMax = (double) main.get("temp_max");
+        }
+        this.visibility = Long.valueOf((long) obj.get("visibility")).intValue();
+        Map<String, Object> wind = (Map<String, Object>) obj.get("wind");
+        {
+            this.windSpeed = (double) (wind.get("speed") != null ? wind.get("speed") : 0.0);
+            this.windDeg = Long.valueOf((long) wind.get("deg")).intValue();
+            this.windGust = (double) (wind.get("gust") != null ? wind.get("gust") : 0.0);
+        }
+        Map<String, Object> clouds = (Map<String, Object>) obj.get("clouds");
+        {
+            this.cloudsAll = Long.valueOf((long) clouds.get("all")).intValue();
+        }
+        Map<String, Object> sys = (Map<String, Object>) obj.get("sys");
+        {
+            this.sysSunrise = new Date((long) sys.get("sunrise") * 1000);
+            this.sysSunset = new Date((long) sys.get("sunset") * 1000);
+        }
     }
 
     public String getCity() {
@@ -102,34 +128,5 @@ public class Weather {
 
     public Date getSysSunset() {
         return sysSunset;
-    }
-
-    public String getInfoText() {
-        String celcius = "\u00B0C";
-        return "The main weather condition is " + this.main + ", which means it\n" + "is " + this.description + ". The temperature is " + this.temp + "" + celcius + ", but it \n" + "feels like " + this.feelsLike + "" + celcius + " due to wind and humidity. The \n" + "air pressure is " + this.pressure + " hPa and the humidity " + this.humidity + "%. The \n" + "maximum temperature will be " + this.tempMax + "" + celcius + ", and the minimum \n" + "temperature will be " + this.tempMin + "" + celcius + ". The visibility is " + this.visibility + "\n" + "meters, and the wind speed is " + this.windSpeed + " m/s with a wind \n" + "direction of " + this.windDeg + " degrees. Wind gusts of up to " + this.windGust + " meters per \n" + "second may occur. The cloud coverage is " + this.cloudsAll + "%. The sun \n" + "will rise today at " + this.sysSunrise.getHours() + ":" + this.sysSunrise.getMinutes() + " and set at " + this.sysSunset.getHours() + ":" + this.sysSunset.getMinutes() + ".\n";
-    }
-
-    @Override
-    public String toString() {
-        return "Weather{" + "city='" + city + '\'' + ", main='" + main + '\'' + ", description='" + description + '\'' + ", temp=" + temp + ", feelsLike=" + feelsLike + ", pressure=" + pressure + ", humidity=" + humidity + ", tempMin=" + tempMin + ", tempMax=" + tempMax + ", visibility=" + visibility + ", windSpeed=" + windSpeed + ", windDeg=" + windDeg + ", windGust=" + windGust + ", cloudsAll=" + cloudsAll + ", sysSunrise=" + sysSunrise + ", sysSunset=" + sysSunset + '}';
-    }
-
-    private void extractWeatherInfo() {
-        this.city = this.parseHelper.getValueByRegex("name");
-        this.main = this.parseHelper.getValueByRegex("main");
-        this.description = this.parseHelper.getValueByRegex("description");
-        this.temp = this.parseHelper.getDoubleValueByRegex("temp");
-        this.feelsLike = this.parseHelper.getDoubleValueByRegex("feels_like");
-        this.pressure = this.parseHelper.getIntegerValueByRegex("pressure");
-        this.humidity = this.parseHelper.getIntegerValueByRegex("humidity");
-        this.tempMin = this.parseHelper.getDoubleValueByRegex("temp_min");
-        this.tempMax = this.parseHelper.getDoubleValueByRegex("temp_max");
-        this.visibility = this.parseHelper.getIntegerValueByRegex("visibility");
-        this.windSpeed = this.parseHelper.getDoubleValueByRegex("speed");
-        this.windDeg = this.parseHelper.getIntegerValueByRegex("deg");
-        this.windGust = this.parseHelper.getDoubleValueByRegex("gust");
-        this.cloudsAll = this.parseHelper.getIntegerValueByRegex("all");
-        this.sysSunrise = this.parseHelper.getDateValueByRegex("sunrise");
-        this.sysSunset = this.parseHelper.getDateValueByRegex("sunset");
     }
 }

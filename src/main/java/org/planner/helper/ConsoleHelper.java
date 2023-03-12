@@ -3,7 +3,6 @@ package org.planner.helper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class ConsoleHelper {
@@ -27,7 +26,7 @@ public class ConsoleHelper {
         return input;
     }
 
-    public void printErr(String message) {
+    public void printError(String message) {
         System.out.println(ConsoleColors.RED.getColorValue() + message + ConsoleColors.BLACK.getColorValue());
     }
 
@@ -49,5 +48,24 @@ public class ConsoleHelper {
 
     public void printWelcomeLogo() {
         System.out.println(ConsoleColors.BLUE_UNDERLINED.getColorValue() + "Welcome to Travel Planner!\n" + ConsoleColors.BLUE.getColorValue() + "    ________________\n" + "   /                \\\n" + "  |  TRAVEL PLANNER  |\n" + "   \\________________/\n" + ConsoleColors.BLACK.getColorValue());
+    }
+
+    public void printBlockText(String text) {
+        String[] words = text.split("\\s+");
+        StringBuilder line = new StringBuilder();
+        int maxWidth = 80;
+        String horizontalLine = "+" + "-".repeat(maxWidth) + "+";
+        System.out.println(horizontalLine);
+        for (String word : words) {
+            if (line.length() + word.length() + 1 > maxWidth) {
+                System.out.printf("| %-" + (maxWidth-2) + "s |\n", line.toString());
+                line = new StringBuilder();
+            }
+            line.append(word).append(" ");
+        }
+        if (line.length() > 0) {
+            System.out.printf("| %-" + (maxWidth-2) + "s |\n", line.toString());
+        }
+        System.out.println(horizontalLine);
     }
 }

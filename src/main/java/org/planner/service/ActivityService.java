@@ -2,10 +2,12 @@ package org.planner.service;
 
 import org.planner.api.ActivityAPI;
 import org.planner.domain.Activity;
+import org.planner.helper.JsonParser;
 import org.planner.persistence.ActivityRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class ActivityService {
@@ -13,21 +15,15 @@ public class ActivityService {
     private final ActivityRepository activityRepository;
     private final List<Activity> activities;
     private final ActivityAPI activityAPI;
-    private final int limit;
 
     public ActivityService() {
         this.logger = Logger.getLogger(ActivityService.class.getName());
         this.activityRepository = new ActivityRepository();
         this.activities = new ArrayList<>();
         this.activityAPI = new ActivityAPI();
-        this.limit = 5;
     }
 
-    public void loadActivitiesFromApiByCity(String city) {
-        this.activities.clear();
-        this.activities.addAll(this.activityAPI.requestActivities(city, this.limit));
-    }
-
+    //PERISTENCE
     public void loadActivities() {
         this.activities.clear();
         this.activities.addAll(this.activityRepository.loadList());
@@ -37,38 +33,29 @@ public class ActivityService {
         this.activityRepository.persistList(this.activities);
     }
 
-    public void printActivities() {
-        // Print header row
-        System.out.println("|   id  |    alias    |              name             |              image_url             | rating | review_count | price |    country    |         state        |         city         |              address1             |              address2             |              address3             | zip_code |  latitude  | longitude  |                 url                 |        phone        |      display_phone     |");
-        System.out.println("+-------+-------------+--------------------------------+------------------------------------+--------+--------------+-------+---------------+---------------------+----------------------+------------------------------------+------------------------------------+------------------------------------+----------+------------+------------+-------------------------------------+---------------------+------------------------+");
-
-        // Print rows
-        for (Activity activity : this.activities) {
-            System.out.printf("| %5s | %11s | %30s | %34s | %6.2f | %12d | %5s | %13s | %20s | %20s | %34s | %34s | %34s | %8s | %10.6f | %10.6f | %35s | %19s | %22s |\n",
-                    activity.getId(),
-                    activity.getAlias(),
-                    activity.getName(),
-                    activity.getImage_url(),
-                    activity.getRating(),
-                    activity.getReviewCount(),
-                    activity.getPrice(),
-                    activity.getCountry(),
-                    activity.getState(),
-                    activity.getCity(),
-                    activity.getAddress1(),
-                    activity.getAddress2(),
-                    activity.getAddress3(),
-                    activity.getZipCode(),
-                    activity.getLatitude(),
-                    activity.getLongitude(),
-                    activity.getUrl(),
-                    activity.getPhone(),
-                    activity.getDisplay_phone()
-            );
+    //API
+    public void fetchActivitiesByCity(String city) {
+        String activityString = this.activityAPI.request(city);
+        if (activityString == null) {
+            return;
         }
 
-        // Print footer row
-        System.out.println("+-------+-------------+--------------------------------+------------------------------------+--------+--------------+-------+---------------+---------------------+----------------------+------------------------------------+------------------------------------+------------------------------------+----------+------------+------------+-------------------------------------+---------------------+------------------------+");
+        this.activities.clear();
+        // TODO: replace all the unicode characters with their actual characters
+        // activityString = activityString.replaceAll("\\\\u0026", "&"); etc.
+        Map<String, Object> obj = new JsonParser(activityString).parseObject();
+        List<Map<String, Object>> businesses = (List<Map<String, Object>>) obj.get("businesses");
+
+        List<Activity> activities = new ArrayList<>();
+        for (Map<String, Object> activityMap : businesses) {
+            this.activities.add(new Activity(activityMap));
+        }
+        logger.info("Activities fetched successfully.");
     }
 
+    //GETTER
+
+    public List<Activity> getActivities() {
+        return this.activities;
+    }
 }

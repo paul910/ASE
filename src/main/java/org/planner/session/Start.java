@@ -46,10 +46,10 @@ public class Start {
 
         User user = this.userService.createUser(username, password, email);
         if (user != null) {
-            this.consoleHelper.printSuccess("Successfully registered.\n Login now.");
+            this.consoleHelper.printSuccess("Successfully registered.\nLogin now.");
             this.login();
         } else {
-            this.consoleHelper.printErr("Registration failed.");
+            this.consoleHelper.printError("Registration failed.");
             this.printMenu();
         }
     }
@@ -65,7 +65,7 @@ public class Start {
             consoleHelper.printBlue("Welcome " + user.getUsername() + "!\n");
             this.session = new Session(user);
         } else {
-            this.consoleHelper.printErr("Login failed.");
+            this.consoleHelper.printError("Login failed.");
             this.printMenu();
         }
     }
