@@ -1,5 +1,6 @@
 package org.planner.console;
 
+import org.planner.Debug;
 import org.planner.api.ActivityAPI;
 import org.planner.domain.Activity;
 import org.planner.domain.Travel;
@@ -18,6 +19,8 @@ public class TravelConsole implements ConsoleInterface {
     private Travel activeTravel;
 
     public TravelConsole(User user) {
+        logger.setLevel(Debug.logLevel);
+
         this.travelService = new TravelService(user);
         this.activeTravel = null;
     }
@@ -27,7 +30,7 @@ public class TravelConsole implements ConsoleInterface {
             System.out.println("No travel planned yet.");
             return;
         }
-        String format = "%-5s%-20s%-20s%-10s%-20s%-20s%-20s%-20s%-40s%n";
+        String format = "%-5s%-20s%-20s%-10s%-15s%-15s%-20s%-20s%-40s%n";
         System.out.printf(format, "ID", "Created By", "City", "Budget", "Start Date", "End Date", "Created Date", "Last Modified Date", "Activities");
         for (Travel travel : this.travelService.getTravels()) {
             System.out.printf(format, travel.getId(), travel.getCreatedBy(), travel.getCity(), travel.getBudget(), Travel.DATE_FORMAT.format(travel.getStartDate()), Travel.DATE_FORMAT.format(travel.getEndDate()), Travel.DATE_TIME_FORMAT.format(travel.getCreatedDate()), Travel.DATE_TIME_FORMAT.format(travel.getLastModifiedDate()), this.travelService.getActivitiesForTravelId(travel.getId()));
@@ -109,6 +112,11 @@ public class TravelConsole implements ConsoleInterface {
 
     public void removeActivityFromTravel() {
         List<Activity> activities = this.travelService.getActivitiesForTravelId(this.activeTravel.getId());
+        if (activities.isEmpty()) {
+            consoleHelper.printError("No activities found.");
+            return;
+        }
+
         ActivityConsole.printActivityOverview(activities);
 
         String input = consoleHelper.readFromConsole("Enter activity id, which you want to remove from travel: ");

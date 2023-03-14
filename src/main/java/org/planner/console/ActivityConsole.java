@@ -1,5 +1,6 @@
 package org.planner.console;
 
+import org.planner.Debug;
 import org.planner.domain.Activity;
 import org.planner.service.ActivityService;
 
@@ -9,6 +10,8 @@ public class ActivityConsole implements ConsoleInterface {
     private final ActivityService activityService;
 
     public ActivityConsole() {
+        logger.setLevel(Debug.logLevel);
+
         this.activityService = new ActivityService();
     }
 

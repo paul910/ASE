@@ -15,11 +15,9 @@ public class Session implements ConsoleInterface {
         this.travelConsole = new TravelConsole(this.activeUser);
         this.weatherConsole = new WeatherConsole();
         this.activityConsole = new ActivityConsole();
-
-        this.run();
     }
 
-    private void run() {
+    public void run() {
         while (this.activeUser != null) this.printMenu();
     }
 

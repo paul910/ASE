@@ -1,5 +1,6 @@
 package org.planner.service;
 
+import org.planner.Debug;
 import org.planner.api.ActivityAPI;
 import org.planner.domain.Activity;
 import org.planner.helper.JsonParser;
@@ -18,6 +19,8 @@ public class ActivityService {
 
     public ActivityService() {
         this.logger = Logger.getLogger(ActivityService.class.getName());
+        logger.setLevel(Debug.logLevel);
+
         this.activityRepository = new ActivityRepository();
         this.activities = new ArrayList<>();
         this.activityAPI = new ActivityAPI();

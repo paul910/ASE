@@ -1,5 +1,7 @@
 package org.planner.helper;
 
+import org.planner.Debug;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +13,8 @@ public class ConsoleHelper {
 
     public ConsoleHelper() {
         this.logger = Logger.getLogger(ConsoleHelper.class.getName());
+        logger.setLevel(Debug.logLevel);
+
         this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
@@ -22,32 +26,32 @@ public class ConsoleHelper {
         } catch (IOException e) {
             logger.warning("Error while reading from console.");
         }
-        System.out.print(ConsoleColors.BLACK.getColorValue());
+        System.out.print(ConsoleColors.YELLOW.getColorValue());
         return input;
     }
 
     public void printError(String message) {
-        System.out.println(ConsoleColors.RED.getColorValue() + message + ConsoleColors.BLACK.getColorValue());
+        System.out.println(ConsoleColors.RED.getColorValue() + message + ConsoleColors.YELLOW.getColorValue());
     }
 
     public void printSuccess(String message) {
-        System.out.println(ConsoleColors.GREEN.getColorValue() + message + ConsoleColors.BLACK.getColorValue());
+        System.out.println(ConsoleColors.GREEN.getColorValue() + message + ConsoleColors.YELLOW.getColorValue());
     }
 
     public void print(String message) {
-        System.out.println(ConsoleColors.RESET.getColorValue() + message + ConsoleColors.BLACK.getColorValue());
+        System.out.println(ConsoleColors.RESET.getColorValue() + message + ConsoleColors.YELLOW.getColorValue());
     }
 
     public void printBlue(String message) {
-        System.out.println(ConsoleColors.BLUE.getColorValue() + message + ConsoleColors.BLACK.getColorValue());
+        System.out.println(ConsoleColors.BLUE.getColorValue() + message + ConsoleColors.YELLOW.getColorValue());
     }
 
     public void printPurple(String message) {
-        System.out.println(ConsoleColors.PURPLE.getColorValue() + message + ConsoleColors.BLACK.getColorValue());
+        System.out.println(ConsoleColors.PURPLE.getColorValue() + message + ConsoleColors.YELLOW.getColorValue());
     }
 
     public void printWelcomeLogo() {
-        System.out.println(ConsoleColors.BLUE_UNDERLINED.getColorValue() + "Welcome to Travel Planner!\n" + ConsoleColors.BLUE.getColorValue() + "    ________________\n" + "   /                \\\n" + "  |  TRAVEL PLANNER  |\n" + "   \\________________/\n" + ConsoleColors.BLACK.getColorValue());
+        System.out.println(ConsoleColors.BLUE_UNDERLINED.getColorValue() + "Welcome to Travel Planner!\n" + ConsoleColors.BLUE.getColorValue() + "    ________________\n" + "   /                \\\n" + "  |  TRAVEL PLANNER  |\n" + "   \\________________/\n" + ConsoleColors.YELLOW.getColorValue());
     }
 
     public void printBlockText(String text) {

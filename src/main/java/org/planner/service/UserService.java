@@ -1,5 +1,6 @@
 package org.planner.service;
 
+import org.planner.Debug;
 import org.planner.domain.User;
 import org.planner.helper.PasswordHasher;
 import org.planner.persistence.UserRepository;
@@ -15,6 +16,8 @@ public class UserService {
 
     public UserService() {
         this.logger = Logger.getLogger(UserService.class.getName());
+        logger.setLevel(Debug.logLevel);
+
         this.userRepository = new UserRepository();
         this.users = this.userRepository.loadUserList();
     }

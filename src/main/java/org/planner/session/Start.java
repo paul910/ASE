@@ -6,14 +6,12 @@ import org.planner.service.UserService;
 
 public class Start implements ConsoleInterface {
     private final UserService userService;
-    private Session session;
 
     public Start() {
         this.userService = new UserService();
 
         consoleHelper.printWelcomeLogo();
         while (true) {
-            this.session = null;
             this.printMenu();
         }
     }
@@ -57,7 +55,7 @@ public class Start implements ConsoleInterface {
         if (user != null) {
             consoleHelper.printSuccess("Successfully logged in.");
             consoleHelper.printBlue("Welcome " + user.getUsername() + "!");
-            this.session = new Session(user);
+            new Session(user).run();
         } else {
             consoleHelper.printError("Login failed.");
             this.printMenu();

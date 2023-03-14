@@ -1,5 +1,7 @@
 package org.planner.api;
 
+import org.planner.Debug;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +14,8 @@ public class WeatherAPI implements APIInterface {
     private final String API_KEY;
 
     public WeatherAPI() {
+        logger.setLevel(Debug.logLevel);
+
         this.API_URL = "https://api.openweathermap.org/data/2.5/weather?units=metric";
         this.API_KEY = System.getenv("WEATHER_API_KEY");
     }

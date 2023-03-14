@@ -1,5 +1,6 @@
 package org.planner.service;
 
+import org.planner.Debug;
 import org.planner.domain.Activity;
 import org.planner.domain.Travel;
 import org.planner.domain.User;
@@ -25,6 +26,7 @@ public class TravelService {
 
     public TravelService(User activeUser) {
         this.logger = Logger.getLogger(TravelService.class.getName());
+        logger.setLevel(Debug.logLevel);
 
         this.travelRepository = new TravelRepository();
         this.travelActivitiesRepository = new TravelActivitiesRepository();

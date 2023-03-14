@@ -1,5 +1,6 @@
 package org.planner.console;
 
+import org.planner.Debug;
 import org.planner.domain.Weather;
 import org.planner.service.WeatherService;
 
@@ -7,6 +8,8 @@ public class WeatherConsole implements ConsoleInterface {
     private final WeatherService weatherService;
 
     public WeatherConsole() {
+        logger.setLevel(Debug.logLevel);
+
         this.weatherService = new WeatherService();
     }
 

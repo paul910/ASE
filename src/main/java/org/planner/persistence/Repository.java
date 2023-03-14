@@ -1,25 +1,27 @@
 package org.planner.persistence;
 
+import org.planner.Debug;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Repository {
-
+    static Logger logger = Logger.getLogger(Repository.class.getName());
     protected static final String ROOT_PATH = "src/main/resources/";
     protected static final String FILE_EXTENSION = ".csv";
-    static Logger logger = Logger.getLogger(Repository.class.getName());
     final String filePath;
     final File file;
-
     final String columns;
 
     public Repository(String className, String columns) {
-        this.columns = columns;
         logger = Logger.getLogger(className);
+        logger.setLevel(Debug.logLevel);
+
         this.filePath = ROOT_PATH + className + FILE_EXTENSION;
         this.file = new File(this.filePath);
+        this.columns = columns;
 
         createFolderIfNotExists();
         createFileIfNotExists();

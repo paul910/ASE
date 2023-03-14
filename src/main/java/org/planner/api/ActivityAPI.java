@@ -7,11 +7,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import org.planner.Debug;
+
 public class ActivityAPI implements APIInterface {
     private final String API_URL;
     private final String API_KEY;
 
     public ActivityAPI() {
+        logger.setLevel(Debug.logLevel);
+
         this.API_URL = "https://api.yelp.com/v3/businesses/search";
         this.API_KEY = System.getenv("YELP_API_KEY");
     }
