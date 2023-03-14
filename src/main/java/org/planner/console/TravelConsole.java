@@ -3,6 +3,7 @@ package org.planner.console;
 import org.planner.api.ActivityAPI;
 import org.planner.domain.Activity;
 import org.planner.domain.Travel;
+import org.planner.domain.User;
 import org.planner.persistence.ActivityRepository;
 import org.planner.service.ActivityService;
 import org.planner.service.TravelService;
@@ -16,8 +17,8 @@ public class TravelConsole implements ConsoleInterface {
     private final TravelService travelService;
     private Travel activeTravel;
 
-    public TravelConsole(TravelService travelService) {
-        this.travelService = travelService;
+    public TravelConsole(User user) {
+        this.travelService = new TravelService(user);
         this.activeTravel = null;
     }
 

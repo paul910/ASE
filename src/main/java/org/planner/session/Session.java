@@ -2,10 +2,8 @@ package org.planner.session;
 
 import org.planner.console.*;
 import org.planner.domain.User;
-import org.planner.service.TravelService;
 
 public class Session implements ConsoleInterface {
-    private TravelService travelService;
     private TravelConsole travelConsole;
     private WeatherConsole weatherConsole;
     private ActivityConsole activityConsole;
@@ -13,9 +11,8 @@ public class Session implements ConsoleInterface {
 
     public Session(User user) {
         this.activeUser = user;
-        this.travelService = new TravelService(this.activeUser);
-        this.travelConsole = new TravelConsole(this.travelService);
 
+        this.travelConsole = new TravelConsole(this.activeUser);
         this.weatherConsole = new WeatherConsole();
         this.activityConsole = new ActivityConsole();
 
@@ -51,8 +48,7 @@ public class Session implements ConsoleInterface {
     }
 
     public void refresh() {
-        this.travelService = new TravelService(this.activeUser);
-        this.travelConsole = new TravelConsole(this.travelService);
+        this.travelConsole = new TravelConsole(this.activeUser);
 
         this.weatherConsole = new WeatherConsole();
         this.activityConsole = new ActivityConsole();
