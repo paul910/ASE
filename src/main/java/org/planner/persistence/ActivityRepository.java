@@ -3,118 +3,126 @@ package org.planner.persistence;
 import org.planner.domain.Activity;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class ActivityRepository implements RepositoryInterface<Activity> {
-    private final String filePath;
-    private final File file;
+public class ActivityRepository extends Repository {
+
+    protected static final String filePath = Repository.ROOT_PATH + ActivityRepository.class.getSimpleName() + Repository.FILE_EXTENSION;
 
     public ActivityRepository() {
-        this.filePath = ROOT_PATH + "\\" + Activity.class.getName() + "" + FILE_EXTENSION;
-        this.file = new File(this.filePath);
-
-        createFolderIfNotExists();
-        createFileIfNotExists();
+        super(ActivityRepository.class.getSimpleName(), Activity.getColumns());
     }
 
-    private void createFolderIfNotExists() {
-        if (!this.file.getParentFile().exists()) {
-            this.file.getParentFile().mkdir();
-        }
-    }
+    public static List<Activity> loadList() {
+        List<Activity> activities = new CopyOnWriteArrayList<>();
 
-    private void createFileIfNotExists() {
-        if (!this.file.exists()) {
-            try {
-                file.createNewFile();
-                FileWriter writer = new FileWriter(filePath);
-                writer.append(Activity.getColumns());
-                writer.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    @Override
-    public void persistList(List<Activity> activities) {
-        List<Activity> activitiesToSave = filterExisting(activities);
-
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
-            for (Activity activity : activitiesToSave) {
-                bw.write("\n" + activity.toString());
-            }
-        } catch (IOException e) {
-            this.LOGGER.info("Activity list could not be persisted.");
-        }
-        this.LOGGER.info("Activity list persisted successfully.");
-
-    }
-
-    @Override
-    public List<Activity> loadList() {
-        List<Activity> activities = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(this.filePath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             br.readLine(); // skip the first line (header)
 
             String line;
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
 
-                Activity activity = new Activity(data[0], data[1], data[2], data[3], Double.parseDouble(data[4]), Long.parseLong(data[5]), data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13], Double.parseDouble(data[14]), Double.parseDouble(data[15]), data[16], data[17], data[18]);
+                Activity activity = new Activity(Long.parseLong(data[0]), data[1], data[2], data[3], data[4], Double.parseDouble(data[5]), Long.parseLong(data[6]), data[7], data[8], data[9], data[10], data[11], data[12], data[13], data[14], Double.parseDouble(data[15]), Double.parseDouble(data[16]), data[17], data[18], data[19]);
                 activities.add(activity);
             }
-            LOGGER.info("Activity list loaded successfully.");
+            logger.info("Activity list loaded successfully.");
         } catch (IOException e) {
-            LOGGER.info("Activity list could not be loaded.");
+            logger.info("Activity list could not be loaded.");
         }
         return activities;
     }
 
-    @Override
-    public void deleteList() {
-        this.file.delete();
-        createFileIfNotExists();
-        LOGGER.info("Activity list deleted successfully.");
-    }
-
-    @Override
-    public List<Activity> filterExisting(List<Activity> activities) {
-        List<Activity> activitiesToSave = new ArrayList<>();
+    public static long getNewId() {
+        List<Activity> activities = loadList();
+        Long activityId = 0L;
         for (Activity activity : activities) {
-            if (!existsInFile(activity)) {
-                activitiesToSave.add(activity);
+            Long id = activity.getId();
+            if (id > activityId) {
+                activityId = id;
             }
         }
-        LOGGER.info("Activity list filtered successfully.");
-        return activitiesToSave;
+        return activityId + 1;
     }
 
-    @Override
-    public boolean existsInFile(Activity activity) {
+    public static boolean existsInFile(Activity activity) {
         List<Activity> activities = loadList();
         for (Activity a : activities) {
-            if (a.getId().equals(activity.getId())) {
-                LOGGER.info("Activity already exists in file.");
+            if (a.getInternalId().equals(activity.getInternalId())) {
+                logger.info("Activity already exists in file.");
                 return true;
             }
         }
         return false;
     }
 
-    @Override
-    public void removeEntryById(String id) {
+    public static Activity getActivityById(Long actId) {
         List<Activity> activities = loadList();
         for (Activity activity : activities) {
-            if (activity.getId().equals(id)) {
+            if (activity.getId() == actId) {
+                return activity;
+            }
+        }
+        return null;
+    }
+
+    public static Activity getActivityByInternalId(String internalId) {
+        List<Activity> activities = loadList();
+        for (Activity activity : activities) {
+            if (activity.getInternalId().equals(internalId)) {
+                return activity;
+            }
+        }
+        return null;
+    }
+
+    public void persistList(List<Activity> activities) {
+        List<Activity> activitiesToSave = filterExisting(activities);
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
+            for (Activity activity : activitiesToSave) {
+                bw.write("\n" + activity.toCsv());
+            }
+        } catch (IOException e) {
+            logger.info("Activity list could not be persisted.");
+        }
+        logger.info("Activity list persisted successfully.");
+
+    }
+
+    public List<Activity> filterExisting(List<Activity> activities) {
+        List<Activity> activitiesToSave = new CopyOnWriteArrayList<>();
+        for (Activity activity : activities) {
+            if (!existsInFile(activity)) {
+                activitiesToSave.add(activity);
+            }
+        }
+        logger.info("Activity list filtered successfully.");
+        return activitiesToSave;
+    }
+
+    public void removeEntryByActivityId(Long activityId) {
+        List<Activity> activities = loadList();
+        for (Activity activity : activities) {
+            if (activity.getId() == activityId) {
                 activities.remove(activity);
                 break;
             }
         }
-        deleteList();
+        deleteFile();
         persistList(activities);
-        LOGGER.info("Activity removed successfully.");
+        logger.info("Activity removed successfully.");
+    }
+
+    public static List<Activity> loadListByCity(String city) {
+        List<Activity> activities = loadList();
+        for (Activity activity : activities) {
+            if (!activity.getCity().equals(city)) {
+                activities.add(activity);
+            }
+        }
+        logger.info("Activity list loaded successfully.");
+        return activities;
     }
 }

@@ -1,11 +1,14 @@
 package org.planner.domain;
 
+import org.planner.persistence.ActivityRepository;
+
 import java.util.Map;
 
 public class Activity {
     private final String phone;
     private final String display_phone;
-    private final String id;
+    private final Long id;
+    private final String internalId;
     private final String alias;
     private final String name;
     private final String image_url;
@@ -24,7 +27,8 @@ public class Activity {
     private final String url;
 
     public Activity(Map<String, Object> activity) {
-        this.id = checkIfStringIsEmpty(activity.get("id"));
+        this.id = ActivityRepository.getNewId();
+        this.internalId = checkIfStringIsEmpty(activity.get("id"));
         this.alias = checkIfStringIsEmpty(activity.get("alias"));
         this.name = checkIfStringIsEmpty(activity.get("name"));
         this.image_url = checkIfStringIsEmpty(activity.get("image_url"));
@@ -51,8 +55,9 @@ public class Activity {
         this.display_phone = checkIfStringIsEmpty(activity.get("display_phone"));
     }
 
-    public Activity(String id, String alias, String name, String image_url, double rating, long reviewCount, String price, String country, String state, String city, String address1, String address2, String address3, String zipCode, double latitude, double longitude, String url, String phone, String display_phone) {
-        this.id = checkIfNull(id);
+    public Activity(Long id, String internalId, String alias, String name, String image_url, double rating, long reviewCount, String price, String country, String state, String city, String address1, String address2, String address3, String zipCode, double latitude, double longitude, String url, String phone, String display_phone) {
+        this.id = id;
+        this.internalId = checkIfNull(internalId);
         this.alias = checkIfNull(alias);
         this.name = checkIfNull(name);
         this.image_url = checkIfNull(image_url);
@@ -74,7 +79,7 @@ public class Activity {
     }
 
     public static String getColumns() {
-        return "id, alias, name, image_url, rating, review_count, price, country, state, city, address1, address2, address3, zip_code, latitude, longitude, url, phone, display_phone";
+        return "id, internalId, alias, name, image_url, rating, review_count, price, country, state, city, address1, address2, address3, zip_code, latitude, longitude, url, phone, display_phone";
     }
 
     private String checkIfStringIsEmpty(Object value) {
@@ -88,8 +93,12 @@ public class Activity {
         return value.equals("null") ? null : value;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
+    }
+
+    public String getInternalId() {
+        return internalId;
     }
 
     public String getAlias() {
@@ -166,6 +175,10 @@ public class Activity {
 
     @Override
     public String toString() {
-        return this.id + "," + this.alias + "," + this.name + "," + this.image_url + "," + this.rating + "," + this.reviewCount + "," + this.price + "," + this.country + "," + this.state + "," + this.city + "," + this.address1 + "," + this.address2 + "," + this.address3 + "," + this.zipCode + "," + this.latitude + "," + this.longitude + "," + this.url + "," + this.phone + "," + this.display_phone;
+        return String.valueOf(this.name);
+    }
+
+    public String toCsv() {
+        return this.id + "," + this.internalId + "," + this.alias + "," + this.name + "," + this.image_url + "," + this.rating + "," + this.reviewCount + "," + this.price + "," + this.country + "," + this.state + "," + this.city + "," + this.address1 + "," + this.address2 + "," + this.address3 + "," + this.zipCode + "," + this.latitude + "," + this.longitude + "," + this.url + "," + this.phone + "," + this.display_phone;
     }
 }

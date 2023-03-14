@@ -42,6 +42,8 @@ public class ActivityAPI implements APIInterface {
         } catch (IOException e) {
             logger.warning("GET request not worked.");
         }
+        // TODO: replace all the unicode characters with their actual characters
+        // activityString = activityString.replaceAll("\\\\u0026", "&"); etc.
         return response.toString();
     }
 }

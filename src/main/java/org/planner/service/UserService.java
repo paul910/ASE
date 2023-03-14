@@ -16,7 +16,7 @@ public class UserService {
     public UserService() {
         this.logger = Logger.getLogger(UserService.class.getName());
         this.userRepository = new UserRepository();
-        this.users = this.userRepository.loadList();
+        this.users = this.userRepository.loadUserList();
     }
 
     public User createUser(String username, String password, String emailAddress) {
@@ -26,7 +26,7 @@ public class UserService {
             return null;
         }
         this.users.add(user);
-        this.userRepository.persistList(this.users);
+        this.userRepository.persistUserList(this.users);
         logger.info("User added successfully.");
         return user;
     }
@@ -37,7 +37,7 @@ public class UserService {
             return;
         }
         this.users.remove(getUserByEmail(emailAddress));
-        this.userRepository.persistList(this.users);
+        this.userRepository.persistUserList(this.users);
         logger.info("User removed successfully.");
     }
 
@@ -47,7 +47,7 @@ public class UserService {
             return;
         }
         this.users.remove(getUserByUsername(username));
-        this.userRepository.persistList(this.users);
+        this.userRepository.persistUserList(this.users);
         logger.info("User removed successfully.");
     }
 

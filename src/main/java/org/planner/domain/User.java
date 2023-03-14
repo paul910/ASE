@@ -15,11 +15,6 @@ public class User {
         return "Username,Password,Email";
     }
 
-    @Override
-    public String toString() {
-        return this.username + ',' + this.password + ',' + this.email;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -42,5 +37,9 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String toCsv() {
+        return this.username + ',' + this.password + ',' + this.email;
     }
 }

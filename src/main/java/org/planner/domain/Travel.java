@@ -43,11 +43,6 @@ public class Travel {
         return "id,createdBy,city,budget,startDate,endDate,createdDate,lastModifiedDate";
     }
 
-    @Override
-    public String toString() {
-        return this.id + "," + this.createdBy + "," + this.city + "," + this.budget + "," + DATE_FORMAT.format(this.startDate) + "," + DATE_FORMAT.format(this.endDate) + "," + DATE_TIME_FORMAT.format(this.createdDate) + "," + DATE_TIME_FORMAT.format(this.lastModifiedDate);
-    }
-
     private Long setId() {
         return TravelRepository.getNewId();
     }
@@ -102,5 +97,9 @@ public class Travel {
 
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String toCsv() {
+        return this.id + "," + this.createdBy + "," + this.city + "," + this.budget + "," + DATE_FORMAT.format(this.startDate) + "," + DATE_FORMAT.format(this.endDate) + "," + DATE_TIME_FORMAT.format(this.createdDate) + "," + DATE_TIME_FORMAT.format(this.lastModifiedDate);
     }
 }

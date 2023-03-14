@@ -1,17 +1,14 @@
 package org.planner.session;
 
-import org.planner.console.ActivityConsole;
-import org.planner.console.ConsoleInterface;
-import org.planner.console.TravelConsole;
-import org.planner.console.WeatherConsole;
+import org.planner.console.*;
 import org.planner.domain.User;
 import org.planner.service.TravelService;
 
 public class Session implements ConsoleInterface {
-    private final TravelService travelService;
-    private final TravelConsole travelConsole;
-    private final WeatherConsole weatherConsole;
-    private final ActivityConsole activityConsole;
+    private TravelService travelService;
+    private TravelConsole travelConsole;
+    private WeatherConsole weatherConsole;
+    private ActivityConsole activityConsole;
     private User activeUser;
 
     public Session(User user) {
@@ -30,7 +27,7 @@ public class Session implements ConsoleInterface {
     }
 
     private void printMenu() {
-        String input = consoleHelper.readFromConsole("1. Get travel overview\n" + "2. Add travel\n" + "3. Remove travel\n" + "4. Check weather\n" + "5. Check activities\n" + "6. Logout\n" + "Enter: ");
+        String input = consoleHelper.readFromConsole("1. Get travel overview\n" + "2. Add travel\n" + "3. Remove travel\n" + "4. Manage travel activities\n" + "5. Check weather\n" + "6. Check activities\n" + "7. Logout\n" + "Enter: ");
 
         if (input.equals("1")) {
             this.travelConsole.printTravelOverview();
@@ -39,16 +36,26 @@ public class Session implements ConsoleInterface {
         } else if (input.equals("3")) {
             this.travelConsole.removeTravel();
         } else if (input.equals("4")) {
-            this.weatherConsole.checkWeather();
+            this.travelConsole.manageTravelActivities();
         } else if (input.equals("5")) {
-            this.activityConsole.checkActivities();
+            this.weatherConsole.checkWeather();
         } else if (input.equals("6")) {
+            this.activityConsole.checkActivities();
+        } else if (input.equals("7")) {
             this.logout();
             return;
         } else {
             this.consoleHelper.printError("Invalid input.");
         }
-        this.printMenu();
+        this.refresh();
+    }
+
+    public void refresh() {
+        this.travelService = new TravelService(this.activeUser);
+        this.travelConsole = new TravelConsole(this.travelService);
+
+        this.weatherConsole = new WeatherConsole();
+        this.activityConsole = new ActivityConsole();
     }
 
     private void logout() {

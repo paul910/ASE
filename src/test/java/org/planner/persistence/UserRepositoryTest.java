@@ -34,7 +34,7 @@ public class UserRepositoryTest {
         List<User> users = new ArrayList<>();
         users.add(new User("john", "password123", "john@example.com"));
         users.add(new User("jane", "password456", "jane@example.com"));
-        userRepository.persistList(users);
+        userRepository.persistUserList(users);
         assertTrue(new File(FILE_PATH).exists());
     }
 
@@ -43,8 +43,8 @@ public class UserRepositoryTest {
         List<User> users = new ArrayList<>();
         users.add(new User("john", "password123", "john@example.com"));
         users.add(new User("jane", "password456", "jane@example.com"));
-        userRepository.persistList(users);
-        List<User> loadedUsers = userRepository.loadList();
+        userRepository.persistUserList(users);
+        List<User> loadedUsers = userRepository.loadUserList();
         assertEquals(2, loadedUsers.size());
         assertEquals(users.get(0).toString(), loadedUsers.get(0).toString());
         assertEquals(users.get(1).toString(), loadedUsers.get(1).toString());

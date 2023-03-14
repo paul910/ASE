@@ -1,12 +1,24 @@
 package org.planner.console;
 
+import org.planner.domain.Activity;
 import org.planner.service.ActivityService;
+
+import java.util.List;
 
 public class ActivityConsole implements ConsoleInterface {
     private final ActivityService activityService;
 
     public ActivityConsole() {
         this.activityService = new ActivityService();
+    }
+
+    public static void printActivityOverview(List<Activity> activities) {
+        String format = "%-10s%-30s%-10s%-20s%-40s%-20s%-50s%n";
+        System.out.format(format, "ID", "Name", "Rating", "Price", "Address", "Phone", "URL");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------");
+        activities.forEach(activity -> {
+            System.out.format(format, activity.getId(), activity.getName(), activity.getRating(), activity.getPrice(), activity.getAddress1(), activity.getPhone(), activity.getUrl());
+        });
     }
 
     public void checkActivities() {
@@ -20,11 +32,6 @@ public class ActivityConsole implements ConsoleInterface {
     }
 
     public void printActivities() {
-        String format = "%-30s%-10s%-20s%-40s%-20s%-50s%n";
-        System.out.format(format, "Name", "Rating", "Price", "Address", "Phone", "URL");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------");
-        this.activityService.getActivities().forEach(activity -> {
-            System.out.format(format, activity.getName(), activity.getRating(), activity.getPrice(), activity.getAddress1(), activity.getPhone(), activity.getUrl());
-        });
+        printActivityOverview(this.activityService.getActivities());
     }
 }
