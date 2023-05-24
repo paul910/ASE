@@ -17,7 +17,7 @@ public class ActivityAPI implements APIInterface {
         logger.setLevel(Debug.logLevel);
 
         this.API_URL = "https://api.yelp.com/v3/businesses/search";
-        this.API_KEY = System.getenv("YELP_API_KEY");
+        this.API_KEY = "83295de4f821683d81829044bf82d3eb";
     }
 
     @Override
