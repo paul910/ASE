@@ -25,3 +25,36 @@ Das Herzstück der TravelPlaner-Anwendung ist die personalisierte Benutzererfahr
 Die TravelPlaner-App nutzt die neuesten Technologien, einschließlich einer Reihe von APIs, um Benutzern aktuelle und genaue Informationen zu liefern. Dies umfasst alles von Wettervorhersagen bis hin zu Aktivitäten und Ereignissen an den Reisezielen. Mit TravelPlaner haben Reisende alle Informationen, die sie benötigen, zur Hand - was die Reiseplanung einfacher, stressfreier und insgesamt effizienter macht.
 
 Im Großen und Ganzen zielt TravelPlaner darauf ab, das oft chaotische und zeitaufwändige Unterfangen der Reiseplanung zu revolutionieren. Indem es eine One-Stop-Lösung für alle Reisebedürfnisse bietet, ermöglicht es den Reisenden, weniger Zeit mit der Planung zu verbringen und mehr Zeit damit, ihre Reisen zu genießen.
+
+### 1.2. Wie startet man die Applikation?
+
+TravelPlaner ist eine CLI-Anwendung, die in Java 19 geschrieben wurde. Um die Anwendung auszuführen, ist ein Computer mit Java 19 oder höher erforderlich. Die Anwendung ist bereits vollständig konfiguriert, einschließlich aller notwendigen API-Schlüssel, sodass nur der Start der Hauptanwendung erforderlich ist.
+
+Zunächst muss das GitHub-Repository auf den lokalen Rechner geklont werden. Dazu öffnen Sie ein Terminalfenster und geben folgenden Befehl ein: 
+
+```bash
+git clone https://github.com/paul910/ASE.git
+```
+
+Die Anwendung kann dann im nächsten Schritt über ein Konsolenfenster mit dem folgenden Befehl gestartet werden:
+
+```bash
+cd ASE/src/main/java/org/example
+java -jar Main.java
+```
+
+Im Anschluss kann mit der gestarteten Anwendung interagiert werden.
+
+### 1.3. Wie testet man die Applikation?
+
+Um die Funktionalität von Travel Planner zu testen, wird die Anwendung über ein Konsolenfenster gestartet. Travel Planner bietet eine klare und intuitive Benutzeroberfläche, die dem Benutzer numerische Optionen zur Interaktion präsentiert.
+
+Nach dem Start wird der Nutzer von einer Einführung in die Anwendung begrüßt, in der er die Möglichkeit hat, sich zu registrieren, sich anzumelden oder die Anwendung zu beenden. Bei der Erstnutzung wird empfohlen, einen neuen Benutzer zu registrieren. Die dafür erforderlichen Schritte werden im Dialogprozess klar kommuniziert und sind unkompliziert zu befolgen.
+
+Sobald der Nutzer angemeldet ist, wird er mit einer Reihe von Optionen begrüßt, die den Kern der Travel Planner-Funktionalität darstellen. Er hat die Möglichkeit, eine Übersicht seiner geplanten Reisen einzusehen, neue Reisen hinzuzufügen und bestehende zu entfernen. Darüber hinaus kann er Reiseaktivitäten verwalten, das Wetter an seinem Reiseziel prüfen und vorgeschlagene Aktivitäten überprüfen. Die jeweiligen Optionen werden durch numerische Eingaben ausgewählt.
+
+Es ist zu beachten, dass bei der ersten Anmeldung keine Reisen in der Übersicht vorhanden sind. Daher wird empfohlen, als ersten Schritt eine neue Reise hinzuzufügen, um alle Funktionen vollständig nutzen zu können.
+
+Travel Planner speichert persistent alle Daten, die während der Nutzung anfallen, einschließlich der Reisedetails und geplanten Aktivitäten, in einem lokalen Speicher. Stellen Sie sicher, dass Sie die entsprechenden Rechte zum Erstellen und Schreiben von Dateien und Ordnern im aktuellen Arbeitsverzeichnis haben. Andernfalls kann es zu Fehlern bei der Nutzung der Anwendung kommen.
+
+Im Großen und Ganzen lässt sich Travel Planner leicht testen und bedienen, wodurch das Organisieren Ihrer zukünftigen Reisen vereinfacht und angenehmer gestaltet wird
