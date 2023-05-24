@@ -17,7 +17,7 @@ public class WeatherAPI implements APIInterface {
         logger.setLevel(Debug.logLevel);
 
         this.API_URL = "https://api.openweathermap.org/data/2.5/weather?units=metric";
-        this.API_KEY = System.getenv("WEATHER_API_KEY");
+        this.API_KEY = "e7Ecbfhs5HnXLq8qCBQw7O_ZVXTNoE5f_u7Cg7jR-1QSNO0_ERR-U6zXEdWcfizyDocn_WiV39d1RtAavsMFbxXWzILZEVeQWLnU2gvEAg_GcStUFcaUAUchKRwKZHYx";
     }
 
     @Override
