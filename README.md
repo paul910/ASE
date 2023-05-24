@@ -101,7 +101,7 @@ Die Travel-Klasse repräsentiert eine Reise, die von einem Benutzer erstellt wur
 
 Die Travel-Klasse enthält Methoden zur Verwaltung dieser Eigenschaften, einschließlich Setzen und Abrufen von Werten, sowie zur Konvertierung der Reise in eine CSV-Zeichenkette. Sie holt auch eine neue eindeutige ID vom TravelRepository ab.
 
-Einordnung in die Clean-Architecture:
+**Einordnung in die Clean-Architecture:**
 
 Die Travel-Klasse gehört zur Schicht der "Entities" in der Clean Architecture. Die Entities repräsentieren die Geschäftsobjekte der Anwendung und enthalten die Geschäftsregeln, die für die Anwendung relevant sind.
 
@@ -115,7 +115,7 @@ Die WeatherAPI-Klasse ist ein Adapter, der es der Anwendung ermöglicht, mit der
 
 Die WeatherAPI-Klasse hat eine request-Methode, die einen Städtenamen als Eingabe nimmt und eine HTTP-GET-Anfrage an die OpenWeatherMap API sendet. Sie verarbeitet die Antwort, prüft den Antwortcode und gibt den Antwort-String zurück.
 
-Einordnung in die Clean-Architecture:
+**Einordnung in die Clean-Architecture:**
 
 Die WeatherAPI-Klasse gehört zur Schicht der "Interface Adapters" in der Clean Architecture. Diese Schicht beinhaltet Adapter, die das Außen- und Innensystem miteinander verbinden, wobei das Innensystem die Business-Logik und die Anwendungsfall-Schicht darstellt, während das Außensystem Dinge wie externe APIs, Datenbanken und Web-Frameworks darstellt.
 
