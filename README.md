@@ -58,3 +58,24 @@ Es ist zu beachten, dass bei der ersten Anmeldung keine Reisen in der Übersicht
 Travel Planner speichert persistent alle Daten, die während der Nutzung anfallen, einschließlich der Reisedetails und geplanten Aktivitäten, in einem lokalen Speicher. Stellen Sie sicher, dass Sie die entsprechenden Rechte zum Erstellen und Schreiben von Dateien und Ordnern im aktuellen Arbeitsverzeichnis haben. Andernfalls kann es zu Fehlern bei der Nutzung der Anwendung kommen.
 
 Im Großen und Ganzen lässt sich Travel Planner leicht testen und bedienen, wodurch das Organisieren Ihrer zukünftigen Reisen vereinfacht und angenehmer gestaltet wird
+
+## 2. Clean Architecture
+
+### 2.1. Was ist Clean Architecture?
+
+
+Clean Architecture ist ein Softwarearchitektur-Konzept, das von Robert C. Martin, auch bekannt als "Uncle Bob", entwickelt wurde. Dieser Ansatz zielt darauf ab, die Entwicklung von Softwareanwendungen mit hoher Wartbarkeit, Testbarkeit und Flexibilität zu fördern, indem bestimmte Prinzipien und Designmuster eingehalten werden.
+
+Im Kern der Clean Architecture steht die Idee der Trennung von Anliegen durch Schichten. Diese Architektur besteht in der Regel aus mindestens vier konzentrischen Schichten, von innen nach außen: Entitäten, Anwendungsfall, Schnittstellenadapter und Frameworks & Treiber. Jede dieser Schichten hat eine bestimmte Rolle und Verantwortung und sollte voneinander unabhängig sein. Dies wird als Regel der Abhängigkeiten bezeichnet, was bedeutet, dass die Abhängigkeiten immer von den äußeren Schichten zu den inneren Schichten gerichtet sind.
+
+Die Entitäten repräsentieren die Geschäftsregeln und -logik der Anwendung. Sie sind am zentralsten und sind völlig unabhängig von anderen Schichten.
+
+Der Anwendungsfall beschreibt, was die Software tun soll, ohne sich um die Details der Implementierung zu kümmern.
+
+Die Schnittstellenadapter-Schicht umfasst Adapter, die die Anwendungsfälle und Entitäten mit den externen Agenten wie Datenbanken, Webdiensten oder Benutzerschnittstellen verbinden.
+
+Die äußerste Schicht, Frameworks & Treiber, umfasst Tools wie Datenbanken und Web-Frameworks, die die Infrastruktur der Anwendung bereitstellen.
+
+Die Hauptvorteile der Clean Architecture liegen in ihrer Flexibilität und Testbarkeit. Da jede Schicht von den anderen entkoppelt ist, kann sie unabhängig getestet und modifiziert werden, ohne die anderen Schichten zu beeinflussen. Dies erleichtert die Wartung der Software und ermöglicht eine einfache Integration von Änderungen und neuen Technologien.
+
+Zusammenfassend kann man sagen, dass die Clean Architecture ein wirkungsvoller Ansatz zur Schaffung robuster, nachhaltiger und wartbarer Softwarelösungen ist, die auch auf lange Sicht noch effizient sind und sich gut erweitern lassen.
