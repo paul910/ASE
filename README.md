@@ -77,14 +77,14 @@ Die Dependency Rule ist ein wichtiger Grundsatz der Clean Architecture und besag
 
 Um ein besseres Verständnis von dieser Regel zu erlangen, betrachten wir zwei Klassen unserer Anwendung, eine, die die Dependency Rule einhält (Positivbeispiel), und eine, die sie verletzt (Negativbeispiel).
 
-**Positiv-Beispiel:** WeatherAPI
+#### 2.2.1 Positiv-Beispiel: WeatherAPI
 
 Die `WeatherAPI`-Klasse ist ein guter Fall für die Einhaltung der Dependency Rule in der Clean Architecture. Diese Klasse ist in einer niedrigeren Schicht unserer Anwendung platziert und definiert nur, wie eine Wetter-API-Anfrage ausgeführt wird. Das bedeutet, sie ist für die Kommunikation mit der externen Wetter-API verantwortlich und kümmert sich nicht um Details der oberen Schichten oder um die Art der Daten, die von der API zurückgegeben werden.
 
 Abhängigkeiten von WeatherAPI: Da sie sich in der äußersten Schicht der Anwendung befindet, hat sie keine Abhängigkeiten von anderen internen Klassen der Anwendung. Ihre einzige Abhängigkeit könnte eine externe Bibliothek oder ein Framework sein, das für die Kommunikation mit der Wetter-API verwendet wird. Diese Art von Abhängigkeit ist jedoch in Ordnung, da sie nicht die Trennung zwischen den Schichten der Anwendung beeinträchtigt.
-Abhängigkeiten zu WeatherAPI: Die WeatherService-Klasse in einer höheren Schicht hängt von WeatherAPI ab. Sie nutzt WeatherAPI, um Wetterdaten zu holen und diese Daten dann für die spezifischen Bedürfnisse der Anwendung zu verarbeiten. Die Abhängigkeit ist hier von der höheren zur niedrigeren Schicht gerichtet, was der Dependency Rule entspricht.
+Abhängigkeiten zu WeatherAPI: Die `WeatherService`-Klasse in einer höheren Schicht hängt von WeatherAPI ab. Sie nutzt WeatherAPI, um Wetterdaten zu holen und diese Daten dann für die spezifischen Bedürfnisse der Anwendung zu verarbeiten. Die Abhängigkeit ist hier von der höheren zur niedrigeren Schicht gerichtet, was der Dependency Rule entspricht.
 
-**Negativ-Beispiel:** Travel
+#### 2.2.2 Negativ-Beispiel: Travel
 
 Die `Travel`-Klasse stellt ein Domainobjekt dar und sollte daher keine direkte Abhängigkeit von TravelRepository haben, einer Klasse, die für die Datenpersistenz zuständig ist. Die Kopplung dieser beiden Klassen verringert die Flexibilität und Testbarkeit der Anwendung.
 
@@ -103,53 +103,49 @@ Die `Travel`-Klasse enthält Methoden zur Verwaltung dieser Eigenschaften, einsc
 
 **Einordnung in die Clean-Architecture:**
 
-Die `Travel`-Klasse gehört zur Schicht der "Entities" in der Clean Architecture. Die Entities repräsentieren die Geschäftsobjekte der Anwendung und enthalten die Geschäftsregeln, die für die Anwendung relevant sind.
-
-Die `Travel`-Klasse repräsentiert ein Geschäftsobjekt, nämlich eine Reise. Sie enthält Geschäftsregeln wie das Format der Reisedaten und das Format des Datums. Sie enthält jedoch auch eine direkte Abhängigkeit zum TravelRepository, was gegen die Dependency Rule in der Clean Architecture verstößt, da die Entities nicht von den äußeren Schichten wie der Datenzugriffsschicht abhängig sein sollten. Dies sollte durch Verwendung eines Interfaces oder einer abstrakten Klasse korrigiert werden, um die direkte Abhängigkeit von Travel zu TravelRepository zu entfernen.
+Die `Travel`-Klasse gehört zur Schicht der "Entities" in der Clean Architecture. Die Entities repräsentieren die Geschäftsobjekte der Anwendung und enthalten die Geschäftsregeln, die für die Anwendung relevant sind. Die `Travel`-Klasse repräsentiert ein Geschäftsobjekt, nämlich eine Reise. Sie enthält Geschäftsregeln wie das Format der Reisedaten und das Format des Datums. Sie enthält jedoch auch eine direkte Abhängigkeit zum TravelRepository, was gegen die Dependency Rule in der Clean Architecture verstößt, da die Entities nicht von den äußeren Schichten wie der Datenzugriffsschicht abhängig sein sollten. Dies sollte durch Verwendung eines Interfaces oder einer abstrakten Klasse korrigiert werden, um die direkte Abhängigkeit von Travel zu TravelRepository zu entfernen.
 
 #### Schicht: Interface Adapters
 
 **Klasse: WeatherAPI**
 
-Die `WeatherAPI`-Klasse ist ein Adapter, der es der Anwendung ermöglicht, mit der OpenWeatherMap API zu interagieren. Sie enthält Methoden zur Erstellung einer API-Anfrage und zur Rückgabe der Antwort als String.
-
-Die `WeatherAPI`-Klasse hat eine request-Methode, die einen Städtenamen als Eingabe nimmt und eine HTTP-GET-Anfrage an die OpenWeatherMap API sendet. Sie verarbeitet die Antwort, prüft den Antwortcode und gibt den Antwort-String zurück.
+Die `WeatherAPI`-Klasse ist ein Adapter, der es der Anwendung ermöglicht, mit der OpenWeatherMap API zu interagieren. Sie enthält Methoden zur Erstellung einer API-Anfrage und zur Rückgabe der Antwort als String. Die `WeatherAPI`-Klasse hat eine request-Methode, die einen Städtenamen als Eingabe nimmt und eine HTTP-GET-Anfrage an die OpenWeatherMap API sendet. Sie verarbeitet die Antwort, prüft den Antwortcode und gibt den Antwort-String zurück.
 
 **Einordnung in die Clean-Architecture:**
 
-Die WeatherAPI-Klasse gehört zur Schicht der "Interface Adapters" in der Clean Architecture. Diese Schicht beinhaltet Adapter, die das Außen- und Innensystem miteinander verbinden, wobei das Innensystem die Business-Logik und die Anwendungsfall-Schicht darstellt, während das Außensystem Dinge wie externe APIs, Datenbanken und Web-Frameworks darstellt.
+Die `WeatherAPI`-Klasse gehört zur Schicht der "Interface Adapters" in der Clean Architecture. Diese Schicht beinhaltet Adapter, die das Außen- und Innensystem miteinander verbinden, wobei das Innensystem die Business-Logik und die Anwendungsfall-Schicht darstellt, während das Außensystem Dinge wie externe APIs, Datenbanken und Web-Frameworks darstellt.
 
-In diesem Fall dient die WeatherAPI-Klasse als Adapter zur OpenWeatherMap API. Sie konvertiert die Details der HTTP-Kommunikation (ein Detail, das für die innere Anwendungslogik irrelevant ist) in eine einfache Methode, die von der Anwendung verwendet werden kann, um Wetterdaten zu erhalten. Daher kann diese Klasse als "Interface Adapter" klassifiziert werden, da sie das Interface (die API) zur Außenwelt bereitstellt und anpasst, um es den inneren Schichten leichter zu machen, damit zu interagieren.
+In diesem Fall dient die `WeatherAPI`-Klasse als Adapter zur OpenWeatherMap API. Sie konvertiert die Details der HTTP-Kommunikation (ein Detail, das für die innere Anwendungslogik irrelevant ist) in eine einfache Methode, die von der Anwendung verwendet werden kann, um Wetterdaten zu erhalten. Daher kann diese Klasse als "Interface Adapter" klassifiziert werden, da sie das Interface (die API) zur Außenwelt bereitstellt und anpasst, um es den inneren Schichten leichter zu machen, damit zu interagieren.
 
 ## 3. SOLID
 
 ### 3.1. Analyse Single-Responsibility-Principle (SRP)
 
-**Positives Beispiel: PasswordHasher**
+#### 3.1.1 Positives Beispiel: `PasswordHasher`
 
 *TODO: UML*
 
 Die `PasswordHasher`-Klasse hat nur eine einzige Verantwortung: Sie stellt eine Methode zur Verfügung, um ein Passwort zu hashen. Daher hält sie das Single-Responsibility-Principle ein.
 
-**Negatives Beispiel: UserService**
+#### 3.1.2 Negatives Beispiel: `UserService`
 
 *TODO: UML*
 
 Die `UserService`-Klasse ist verantwortlich für eine Vielzahl von Aufgaben. Sie kümmert sich sowohl um die Verwaltung von Usern (Erstellen, Löschen), als auch um Authentifizierungsfunktionen (Login, Passwortprüfung). Obwohl diese Funktionen eng miteinander verbunden sind, handelt es sich dabei um unterschiedliche Verantwortlichkeiten.
 
-**Lösungsweg:** Um die Einhaltung des Single-Responsibility-Prinzips sicherzustellen, könnten wir die Authentifizierungsaufgaben in eine separate Klasse verschieben. Diese neue Klasse könnte UserAuthenticationService heißen und wäre dann ausschließlich für die Authentifizierung von Benutzern verantwortlich. Methoden wie login und isPasswordCorrect wären dann in dieser neuen Klasse angesiedelt.
+**Lösungsweg:** Um die Einhaltung des Single-Responsibility-Prinzips sicherzustellen, könnten wir die Authentifizierungsaufgaben in eine separate Klasse verschieben. Diese neue Klasse könnte `UserAuthenticationService` heißen und wäre dann ausschließlich für die Authentifizierung von Benutzern verantwortlich. Methoden wie login und isPasswordCorrect wären dann in dieser neuen Klasse angesiedelt.
 
-Die UserService Klasse würde dann nur noch für die Verwaltung von User-Objekten verantwortlich sein, also für das Erstellen und Löschen von Usern. Durch diese Trennung der Verantwortlichkeiten wäre das Single-Responsibility-Prinzip erfüllt.
+Die `UserService` Klasse würde dann nur noch für die Verwaltung von User-Objekten verantwortlich sein, also für das Erstellen und Löschen von Usern. Durch diese Trennung der Verantwortlichkeiten wäre das Single-Responsibility-Prinzip erfüllt.
 
 ### 3.2. Analyse Single-Responsibility-Principle (SRP)
 
-**Positiv-Beispiel:** `APIInterface` 
+#### 3.2.1 Positiv-Beispiel: `APIInterface` 
 
 *TODO: UML*
 
 Die APIInterface Schnittstelle ist ein gutes Beispiel für das Einhalten des Open-Closed-Principles. Sie definiert die Methode `request()`, die von der `ActivityAPI` Klasse implementiert wird. Wenn man eine neue API hinzufügen möchte, kann man einfach eine neue Klasse erstellen, die das APIInterface implementiert, ohne die Schnittstelle oder die bestehende `ActivityAPI` Klasse zu ändern.
 
-**Positiv-Beispiel:** `UserService` 
+#### 3.2.2 Negativ-Beispiel: `UserService` 
 
 *TODO: UML*
 
@@ -161,13 +157,13 @@ Die `UserService` Klasse könnte als ein Beispiel gesehen werden, das das Open-C
 
 ### 3.3. Analyse Interface-Segregation-Principle (ISP) 
 
-**Positiv-Beispiel:** `ActivityAPI` 
+#### 3.3.1 Positiv-Beispiel: `ActivityAPI` 
 
 *TODO: UML*
 
 Die `ActivityAPI` Klasse implementiert das `APIInterface`, das nur eine Methode `request(city: String)` enthält. Dieses ist ein gutes Beispiel für das Interface-Segregation-Principle, da das `APIInterface` klein und spezifisch für einen bestimmten Zweck (eine HTTP-Anfrage an eine bestimmte API durchführen) ist. Das bedeutet, dass jede Klasse, die dieses Interface implementiert, nicht mit Methoden belastet wird, die sie nicht benötigt.
 
-**Negativ-Beispiel:** `UserService` 
+#### 3.3.2 Negativ-Beispiel: `UserService` 
 
 *TODO: UML*
 
@@ -179,29 +175,29 @@ Um dieses Problem zu lösen, könnten wir mehrere spezifische Interfaces erstell
 
 ### 4.1. Analyse GRASP: Geringe Kopplung
 
-**Positiv-Beispiel:** `User`
+#### 4.1.1. Positiv-Beispiel: `User`
 
 *TODO: UML*
 
-Die User Klasse ist ein gutes Beispiel für geringe Kopplung. Sie repräsentiert einen Nutzer und hat nur Informationen und Methoden, die direkt mit den Eigenschaften eines Nutzers zusammenhängen (wie Username, Passwort und Email-Adresse). Sie ist nicht von anderen Klassen abhängig, was sie zu einer unabhängigen und gut entkoppelten Klasse macht.
+Die `User` Klasse ist ein gutes Beispiel für geringe Kopplung. Sie repräsentiert einen Nutzer und hat nur Informationen und Methoden, die direkt mit den Eigenschaften eines Nutzers zusammenhängen (wie Username, Passwort und Email-Adresse). Sie ist nicht von anderen Klassen abhängig, was sie zu einer unabhängigen und gut entkoppelten Klasse macht.
 
-**Negativ-Beispiel:** `TripService` 
+#### 4.1.2. Negativ-Beispiel `TripService` 
 
 *TODO: UML*
 
-Die TripService Klasse könnte ein Beispiel für hohe Kopplung sein. Diese Klasse könnte die Aufgabe haben, Reisen zu organisieren, was bedeutet, dass sie mit vielen anderen Klassen wie User, Travel, WeatherAPI, ActivityAPI usw. interagieren müsste. Diese hohe Kopplung könnte dazu führen, dass Änderungen in einer Klasse Auswirkungen auf die TripService Klasse haben, was zu weniger stabilen und schwerer zu wartenden Code führen könnte.
+Die `TripService` Klasse könnte ein Beispiel für hohe Kopplung sein. Diese Klasse könnte die Aufgabe haben, Reisen zu organisieren, was bedeutet, dass sie mit vielen anderen Klassen wie `User`, `Travel`, `WeatherAPI`, `ActivityAPI` usw. interagieren müsste. Diese hohe Kopplung könnte dazu führen, dass Änderungen in einer Klasse Auswirkungen auf die `TripService` Klasse haben, was zu weniger stabilen und schwerer zu wartenden Code führen könnte.
 
-Um die hohe Kopplung der TripService Klasse zu reduzieren, könnte man das Prinzip der Inversion of Control (IoC) anwenden, beispielsweise durch den Einsatz eines Dependency Injection Frameworks. Dadurch könnte man die Abhängigkeiten zur Laufzeit konfigurieren, was zu einer flexibleren und weniger eng gekoppelten Architektur führt. Ein weiterer Ansatz wäre die Verwendung des Mediator-Designmusters, das zur Reduzierung der direkten Kommunikation zwischen den Klassen beitragen könnte.
+Um die hohe Kopplung der `TripService` Klasse zu reduzieren, könnte man das Prinzip der Inversion of Control (IoC) anwenden, beispielsweise durch den Einsatz eines Dependency Injection Frameworks. Dadurch könnte man die Abhängigkeiten zur Laufzeit konfigurieren, was zu einer flexibleren und weniger eng gekoppelten Architektur führt. Ein weiterer Ansatz wäre die Verwendung des Mediator-Designmusters, das zur Reduzierung der direkten Kommunikation zwischen den Klassen beitragen könnte.
 
 ### 4.2. Analyse GRASP: Hohe Kohäsion
 
-**Positiv-Beispiel:** `User`
+#### 4.2.1. Positiv-Beispiel: `User`
 
 *TODO: UML*
 
-Die User Klasse ist ein gutes Beispiel für hohe Kohäsion in der objektorientierten Programmierung. Diese Klasse ist dafür verantwortlich, den Zustand und das Verhalten eines Nutzers zu repräsentieren. Alle ihre Attribute und Methoden sind eng miteinander verbunden und arbeiten gemeinsam auf ein einheitliches Ziel hin: die Verwaltung der Nutzerinformationen. Diese starke Zusammengehörigkeit der Teile innerhalb der Klasse zeigt eine hohe Kohäsion.
+Die `User` Klasse ist ein gutes Beispiel für hohe Kohäsion in der objektorientierten Programmierung. Diese Klasse ist dafür verantwortlich, den Zustand und das Verhalten eines Nutzers zu repräsentieren. Alle ihre Attribute und Methoden sind eng miteinander verbunden und arbeiten gemeinsam auf ein einheitliches Ziel hin: die Verwaltung der Nutzerinformationen. Diese starke Zusammengehörigkeit der Teile innerhalb der Klasse zeigt eine hohe Kohäsion.
 
-Die User Klasse hat Funktionen wie getUsername(), getPassword(), getEmail(), setUsername(), setPassword() und setEmail(), die alle eng miteinander verbunden sind und gemeinsam dazu dienen, die Benutzerdaten zu verwalten. Diese Methoden haben alle einen starken Zusammenhang und wirken zusammen, um die Funktion der Klasse zu erfüllen. Dies ist eine klare Darstellung der hohen Kohäsion in der OOP.
+Die `User` Klasse hat Funktionen wie `getUsername()`, `getPassword()`, `getEmail()`, `setUsername()`, `setPassword()` und `setEmail()`, die alle eng miteinander verbunden sind und gemeinsam dazu dienen, die Benutzerdaten zu verwalten. Diese Methoden haben alle einen starken Zusammenhang und wirken zusammen, um die Funktion der Klasse zu erfüllen. Dies ist eine klare Darstellung der hohen Kohäsion in der OOP.
 
 ### 4.3. Don't Repeat Yourself (DRY)
 
@@ -232,7 +228,7 @@ Die User Klasse hat Funktionen wie getUsername(), getPassword(), getEmail(), set
 
 ### 5.2. ATRIP: Thorough 
 
-**Positives Beispiel:**
+#### 5.2.1. Positives Beispiel:
 
 Code-Beispiel:
 
@@ -255,7 +251,7 @@ public void testCreateUser() {
 ```
 Dieser Test ist ein gutes Beispiel für 'Thorough', weil er verschiedene Szenarien abdeckt. Er testet nicht nur das erfolgreiche Erzeugen eines Benutzers, sondern auch die Fälle, in denen das Erzeugen eines Benutzers fehlschlagen sollte. Auf diese Weise wird sichergestellt, dass die Methode createUser unter allen erwarteten Bedingungen korrekt funktioniert.
 
-**Negatives Beispiel:**
+#### 5.2.2. Negatives Beispiel:
 
 Code-Beispiel:
 
@@ -271,7 +267,7 @@ Dieser Test ist ein negatives Beispiel für 'Thorough', weil er nur ein Szenario
 
 ### 5.3 ATRIP: Professional
 
-**Positives Beispiel:**
+#### 5.3.1. Positives Beispiel
 
 ```Java
 @Test
@@ -293,7 +289,7 @@ public void testCreateUser() {
 
 Dieser Test ist ein gutes Beispiel für Professionalität. Er ist sauber und klar strukturiert und hat aussagekräftige Kommentare, die erklären, was jeder Teil des Tests macht. Darüber hinaus behandelt der Test mehrere Testfälle, was hilft, die Robustheit des Codes sicherzustellen.
 
-**Negatives Beispiel:**
+#### 5.3.2. Negatives Beispiel:
 
 ```Java
 @Test
@@ -327,7 +323,7 @@ Obwohl dieser Test korrekt funktioniert, könnte er als weniger professionell an
 
 *TODO UML*
 
-Die `User`-Klasse ist ein fundamentales Konzept in der Anwendung, das eine registrierte Person repräsentiert. Es hat Eigenschaften wie username, password und email, die den Zustand des Benutzers definieren. Entities sind Objekte, die über einen längeren Zeitraum kontinuierlich existieren und eine eindeutige Identität haben. In diesem Fall ist die User-Klasse eine Entity, weil sie eine eindeutige Identität in Form des username oder email hat und über einen längeren Zeitraum in der Anwendung existiert. Sie wird in verschiedenen Teilen der Anwendung verwendet, um Aktionen im Namen des Benutzers durchzuführen. Beispielsweise könnte das System den Benutzer authentifizieren, seine Daten ändern, seine Aktivitäten anzeigen oder ihn aus dem System entfernen, indem es auf diese Entity zugreift.
+Die `User`-Klasse ist ein fundamentales Konzept in der Anwendung, das eine registrierte Person repräsentiert. Es hat Eigenschaften wie username, password und email, die den Zustand des Benutzers definieren. Entities sind Objekte, die über einen längeren Zeitraum kontinuierlich existieren und eine eindeutige Identität haben. In diesem Fall ist die `User`-Klasse eine Entity, weil sie eine eindeutige Identität in Form des username oder email hat und über einen längeren Zeitraum in der Anwendung existiert. Sie wird in verschiedenen Teilen der Anwendung verwendet, um Aktionen im Namen des Benutzers durchzuführen. Beispielsweise könnte das System den Benutzer authentifizieren, seine Daten ändern, seine Aktivitäten anzeigen oder ihn aus dem System entfernen, indem es auf diese Entity zugreift.
 
 ## 6.3. Value Objects
 
