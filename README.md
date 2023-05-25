@@ -167,10 +167,190 @@ Die `UserService` Klasse könnte als ein Beispiel gesehen werden, das das Open-C
 
 Die `ActivityAPI` Klasse implementiert das `APIInterface`, das nur eine Methode `request(city: String)` enthält. Dieses ist ein gutes Beispiel für das Interface-Segregation-Principle, da das `APIInterface` klein und spezifisch für einen bestimmten Zweck (eine HTTP-Anfrage an eine bestimmte API durchführen) ist. Das bedeutet, dass jede Klasse, die dieses Interface implementiert, nicht mit Methoden belastet wird, die sie nicht benötigt.
 
-**Positiv-Beispiel:** `UserService` 
+**Negativ-Beispiel:** `UserService` 
 
 *TODO: UML*
 
 Die `UserService` Klasse kann als Negativbeispiel für das Interface-Segregation-Principle betrachtet werden, da sie viele Methoden hat, die verschiedene Aspekte der Benutzerverwaltung abdecken. Wenn wir ein Interface für diese Klasse erstellen würden, hätte es viele Methoden und würde wahrscheinlich Methoden enthalten, die nicht alle Klassen benötigen, die dieses Interface implementieren könnten.
 
 Um dieses Problem zu lösen, könnten wir mehrere spezifische Interfaces erstellen, z.B. `UserCreator`, `UserRemover`, `UserAuthenticator`, etc., die jeweils eine kleinere Anzahl von Methoden enthalten, die spezifisch für ihre Funktion sind. Die `UserService` Klasse könnte dann diese Interfaces implementieren, je nachdem welche Funktionen sie benötigt. Dies würde das Interface-Segregation-Principle erfüllen, da jede Klasse, die diese Interfaces implementiert, nur die Methoden erhält, die sie benötigt.
+
+## 4. Weitere Prinzipien
+
+### 4.1. Analyse GRASP: Geringe Kopplung
+
+**Positiv-Beispiel:** `User`
+
+*TODO: UML*
+
+Die User Klasse ist ein gutes Beispiel für geringe Kopplung. Sie repräsentiert einen Nutzer und hat nur Informationen und Methoden, die direkt mit den Eigenschaften eines Nutzers zusammenhängen (wie Username, Passwort und Email-Adresse). Sie ist nicht von anderen Klassen abhängig, was sie zu einer unabhängigen und gut entkoppelten Klasse macht.
+
+**Negativ-Beispiel:** `TripService` 
+
+*TODO: UML*
+
+Die TripService Klasse könnte ein Beispiel für hohe Kopplung sein. Diese Klasse könnte die Aufgabe haben, Reisen zu organisieren, was bedeutet, dass sie mit vielen anderen Klassen wie User, Travel, WeatherAPI, ActivityAPI usw. interagieren müsste. Diese hohe Kopplung könnte dazu führen, dass Änderungen in einer Klasse Auswirkungen auf die TripService Klasse haben, was zu weniger stabilen und schwerer zu wartenden Code führen könnte.
+
+Um die hohe Kopplung der TripService Klasse zu reduzieren, könnte man das Prinzip der Inversion of Control (IoC) anwenden, beispielsweise durch den Einsatz eines Dependency Injection Frameworks. Dadurch könnte man die Abhängigkeiten zur Laufzeit konfigurieren, was zu einer flexibleren und weniger eng gekoppelten Architektur führt. Ein weiterer Ansatz wäre die Verwendung des Mediator-Designmusters, das zur Reduzierung der direkten Kommunikation zwischen den Klassen beitragen könnte.
+
+### 4.2. Analyse GRASP: Hohe Kohäsion
+
+**Positiv-Beispiel:** `User`
+
+*TODO: UML*
+
+Die User Klasse ist ein gutes Beispiel für hohe Kohäsion in der objektorientierten Programmierung. Diese Klasse ist dafür verantwortlich, den Zustand und das Verhalten eines Nutzers zu repräsentieren. Alle ihre Attribute und Methoden sind eng miteinander verbunden und arbeiten gemeinsam auf ein einheitliches Ziel hin: die Verwaltung der Nutzerinformationen. Diese starke Zusammengehörigkeit der Teile innerhalb der Klasse zeigt eine hohe Kohäsion.
+
+Die User Klasse hat Funktionen wie getUsername(), getPassword(), getEmail(), setUsername(), setPassword() und setEmail(), die alle eng miteinander verbunden sind und gemeinsam dazu dienen, die Benutzerdaten zu verwalten. Diese Methoden haben alle einen starken Zusammenhang und wirken zusammen, um die Funktion der Klasse zu erfüllen. Dies ist eine klare Darstellung der hohen Kohäsion in der OOP.
+
+### 4.3. Don't Repeat Yourself (DRY)
+
+*TODO*
+
+## 5. Unit Tests
+
+### 5.1. 10 Unit Tests
+
+| Unit Test | Beschreibung |
+| --- | --- |
+| `testGetCity` (WeatherTest) | Prüft, ob die Methode `getCity` der Klasse `Weather` korrekt den Namen der Stadt zurückgibt. |
+| `testCreateUser` (UserServiceTest) | Prüft, ob ein Nutzer korrekt erstellt wird und verifiziert das Verhalten, wenn ein Nutzername bereits vorhanden ist oder eine ungültige E-Mail-Adresse verwendet wird. |
+| `testRemoveUserByEMail` (UserServiceTest) | Prüft, ob ein Nutzer über seine E-Mail-Adresse korrekt aus der Liste der Nutzer entfernt wird und verifiziert das Verhalten, wenn ein Nutzer mit einer bestimmten E-Mail-Adresse nicht existiert. |
+| `testGetWeather` (WeatherServiceTest) | Prüft, ob die Methode `getWeather` der Klasse `WeatherService` korrekt das Wetter für eine bestimmte Stadt zurückgibt. |
+| `testGetPassword` (UserTest) | Prüft, ob die Methode `getPassword` der Klasse `User` korrekt das Passwort des Nutzers zurückgibt. |
+| `testGetEmail` (UserTest) | Prüft, ob die Methode `getEmail` der Klasse `User` korrekt die E-Mail-Adresse des Nutzers zurückgibt. |
+| `testGetColums` (UserTest) | Prüft, ob die Methode `getColumns` der Klasse `User` korrekt die Namen der Spalten zurückgibt. |
+| `parseObject` (JsonParserTest) | Prüft, ob die Methode `parseObject` der Klasse `JsonParser` ein JSON-String korrekt in ein Objekt umwandelt. |
+| `testPersistUserList` (UserRepositoryTest) | Prüft, ob die Methode `persistUserList` der Klasse `UserRepository` eine Liste von Nutzern korrekt in eine Datei schreibt. |
+| `testLoadUserList` (UserRepositoryTest) | Prüft, ob die Methode `loadUserList` der Klasse `UserRepository` eine Liste von Nutzern korrekt aus einer Datei lädt. |
+
+### ATRIP: Automatic
+
+1. Selbständige Ausführung der Tests: Jeder Unit-Test in dem Projekt ist so konzipiert, dass er unabhängig von den anderen laufen kann. Die Tests erfordern keine manuelle Eingabe oder Ergebnisüberprüfung. Stattdessen führt das Test-Framework die Tests aus und vergleicht die Ergebnisse automatisch mit den erwarteten Werten.
+2. Automatische Setups und Teardowns: Mithilfe von @BeforeEach und @AfterEach Annotations werden spezifische Aktionen vor und nach jedem Testdurchlauf automatisch ausgeführt. Dies ermöglicht eine effiziente Testdurchführung, indem redundante manuelle Schritte vermieden werden.
+3. Automatische Assertion: Die Assertion-Mechanismen in den Tests stellen sicher, dass die Ergebnisse der getesteten Methoden automatisch mit den erwarteten Werten verglichen werden. Dies bietet eine effiziente und zuverlässige Möglichkeit, die Korrektheit des Codes zu gewährleisten.
+
+### 5.2. ATRIP: Thorough 
+
+**Positives Beispiel:**
+
+Code-Beispiel:
+
+```java
+@Test
+public void testCreateUser() {
+    // Test creating a user with valid credentials
+    assertNotNull(this.user1);
+    assertEquals("user1", user1.getUsername());
+    assertEquals("user1@example.com", user1.getEmail());
+
+    // Test creating a user with a taken username
+    User user2 = userService.createUser("user1", "password", "user2@example.com");
+    assertNull(user2);
+
+    // Test creating a user with an invalid email address
+    User user3 = userService.createUser("user3", "password", "invalid-email-address");
+    assertNull(user3);
+}
+```
+Dieser Test ist ein gutes Beispiel für 'Thorough', weil er verschiedene Szenarien abdeckt. Er testet nicht nur das erfolgreiche Erzeugen eines Benutzers, sondern auch die Fälle, in denen das Erzeugen eines Benutzers fehlschlagen sollte. Auf diese Weise wird sichergestellt, dass die Methode createUser unter allen erwarteten Bedingungen korrekt funktioniert.
+
+**Negatives Beispiel:**
+
+Code-Beispiel:
+
+```Java
+@Test
+public void testGetPassword() {
+    User user = new User("john_doe", "password123", "john_doe@example.com");
+    assertEquals("password123", user.getPassword());
+}
+```
+
+Dieser Test ist ein negatives Beispiel für 'Thorough', weil er nur ein Szenario abdeckt. Er überprüft, ob das Passwort korrekt gesetzt wurde, aber er testet nicht die Fälle, in denen das Setzen des Passworts fehlschlagen könnte, zum Beispiel, wenn das Passwort null ist oder nicht den Passwortanforderungen entspricht. Daher könnte die setPassword-Methode unter bestimmten Bedingungen fehlerhaft sein, und dieser Test würde es nicht erkennen.
+
+### 5.3 ATRIP: Professional
+
+**Positives Beispiel:**
+
+```Java
+@Test
+public void testCreateUser() {
+    // Test creating a user with valid credentials
+    assertNotNull(this.user1);
+    assertEquals("user1", user1.getUsername());
+    assertEquals("user1@example.com", user1.getEmail());
+
+    // Test creating a user with a taken username
+    User user2 = userService.createUser("user1", "password", "user2@example.com");
+    assertNull(user2);
+
+    // Test creating a user with an invalid email address
+    User user3 = userService.createUser("user3", "password", "invalid-email-address");
+    assertNull(user3);
+}
+```
+
+Dieser Test ist ein gutes Beispiel für Professionalität. Er ist sauber und klar strukturiert und hat aussagekräftige Kommentare, die erklären, was jeder Teil des Tests macht. Darüber hinaus behandelt der Test mehrere Testfälle, was hilft, die Robustheit des Codes sicherzustellen.
+
+**Negatives Beispiel:**
+
+```Java
+@Test
+public void testGetPassword() {
+    User user = new User("john_doe", "password123", "john_doe@example.com");
+    assertEquals("password123", user.getPassword());
+}
+```
+Obwohl dieser Test korrekt funktioniert, könnte er als weniger professionell angesehen werden, da er nur eine einfache Funktionalität testet und keine Kommentare oder weiteren Testfälle enthält. Ein professioneller Test sollte verschiedene mögliche Szenarien abdecken und klar kommentiert sein, um seine Absicht zu erklären. Es wäre zum Beispiel hilfreich, zusätzliche Tests hinzuzufügen, um zu überprüfen, wie die Methode auf ungültige Eingaben reagiert.
+
+### 5.4 Code Coverage
+
+*TODO UML*
+
+### 5.5 Fakes und Mocks
+
+*TODO UML*
+
+## 6. Domain Driven Design
+
+## 6.1. Ubiquitous Language
+
+| Bezeichnung | Bedeutung | Begründung |
+|---|---|---|
+| User | Ein registrierter Nutzer in der Anwendung | "User" ist ein Begriff, der überall in der Anwendung verwendet wird, um sich auf eine Person zu beziehen, die sich registriert hat und die Anwendung nutzt. Es ist ein grundlegender Begriff, der von allen Teammitgliedern verstanden und verwendet wird. |
+| UserService | Ein Service, der alle Operationen im Zusammenhang mit einem User verwaltet | "UserService" ist ein zentrales Konzept in der Anwendung, das die Geschäftslogik für Operationen im Zusammenhang mit Usern enthält. Es wird von allen Teammitgliedern verwendet und verstanden. |
+| WeatherAPI | Ein Interface zur Kommunikation mit einem externen Wetterdienst | "WeatherAPI" ist ein konkreter Begriff, der innerhalb des Teams verwendet wird, um sich auf den externen Service zu beziehen, der Wetterdaten bereitstellt. Es ist ein wichtiger Teil des Kontextes unserer Anwendung. |
+| UserRepository | Ein Repository zur Verwaltung von User-Daten in einer Datenbank | "UserRepository" ist ein Begriff, der spezifisch in unserem Kontext verwendet wird, um die Komponente zu bezeichnen, die für die dauerhafte Speicherung und Abfrage von User-Daten zuständig ist. Es ist ein universeller Begriff, der von allen Teammitgliedern verstanden und genutzt wird. |
+
+## 6.2. Entities
+
+*TODO UML*
+
+Die `User`-Klasse ist ein fundamentales Konzept in der Anwendung, das eine registrierte Person repräsentiert. Es hat Eigenschaften wie username, password und email, die den Zustand des Benutzers definieren. Entities sind Objekte, die über einen längeren Zeitraum kontinuierlich existieren und eine eindeutige Identität haben. In diesem Fall ist die User-Klasse eine Entity, weil sie eine eindeutige Identität in Form des username oder email hat und über einen längeren Zeitraum in der Anwendung existiert. Sie wird in verschiedenen Teilen der Anwendung verwendet, um Aktionen im Namen des Benutzers durchzuführen. Beispielsweise könnte das System den Benutzer authentifizieren, seine Daten ändern, seine Aktivitäten anzeigen oder ihn aus dem System entfernen, indem es auf diese Entity zugreift.
+
+## 6.3. Value Objects
+
+*TODO UML*
+
+Die `Weather`-Klasse stellt die Wetterinformationen für eine bestimmte Stadt dar. Sie hat Eigenschaften wie city, main, description und temp, die den aktuellen Wetterzustand der Stadt darstellen. Value Objects sind unveränderliche Objekte, deren Identität durch ihre Attribute und nicht durch eine eindeutige Kennung bestimmt wird. In diesem Fall ist Weather ein Value Object, da sein Wert vollständig durch seine Attribute definiert wird. Zwei Weather-Objekte können als gleich betrachtet werden, wenn sie die gleiche city, main, description und temp haben, unabhängig davon, ob sie verschiedene Instanzen sind. Dies ist nützlich in Szenarien, in denen Sie die Wetterdaten für eine bestimmte Stadt darstellen möchten, ohne sich um Identität oder Zustandsänderungen kümmern zu müssen. Die Unveränderlichkeit dieser Objekte macht sie auch sicher in Bezug auf Nebenläufigkeitsprobleme, da sie nach ihrer Erstellung nicht geändert werden können.
+
+## 6.4. Aggregates
+
+*TODO UML*
+
+Die `UserService`-Klasse ist ein Aggregat, das eine Menge von User-Objekten verwaltet. Sie bietet Methoden zum Erstellen und Entfernen von Benutzern sowie zum Überprüfen der Existenz von Benutzern anhand von Benutzernamen oder E-Mail-Adressen. Ein Aggregate ist in DDD ein Muster, das dazu dient, die Konsistenz von Änderungen an zusammengehörigen Objekten zu gewährleisten. In diesem Fall sorgt UserService dafür, dass alle Änderungen an User-Objekten konsistent sind. Beispielsweise stellt es sicher, dass kein User-Objekt mit einem bereits vorhandenen Benutzernamen oder einer bereits vorhandenen E-Mail-Adresse erstellt wird. Es kapselt die Regeln und Geschäftslogik rund um User-Objekte ein, was die Verwaltung von Benutzern in der Anwendung vereinfacht. Dadurch wird sichergestellt, dass alle Regeln eingehalten werden, unabhängig davon, wo im Code ein User-Objekt manipuliert wird.
+
+## 7. Refactoring
+
+### 7.1. Code Smells
+
+*TODO*
+
+### 7.2. 2 Refactoring Beispiele
+
+*TODO*
+
+## 8. Entwurfsmuster
+
+*TODO*
