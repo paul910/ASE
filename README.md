@@ -79,16 +79,16 @@ Um ein besseres Verständnis von dieser Regel zu erlangen, betrachten wir zwei K
 
 **Positiv-Beispiel:** WeatherAPI
 
-Die WeatherAPI-Klasse ist ein guter Fall für die Einhaltung der Dependency Rule in der Clean Architecture. Diese Klasse ist in einer niedrigeren Schicht unserer Anwendung platziert und definiert nur, wie eine Wetter-API-Anfrage ausgeführt wird. Das bedeutet, sie ist für die Kommunikation mit der externen Wetter-API verantwortlich und kümmert sich nicht um Details der oberen Schichten oder um die Art der Daten, die von der API zurückgegeben werden.
+Die `WeatherAPI`-Klasse ist ein guter Fall für die Einhaltung der Dependency Rule in der Clean Architecture. Diese Klasse ist in einer niedrigeren Schicht unserer Anwendung platziert und definiert nur, wie eine Wetter-API-Anfrage ausgeführt wird. Das bedeutet, sie ist für die Kommunikation mit der externen Wetter-API verantwortlich und kümmert sich nicht um Details der oberen Schichten oder um die Art der Daten, die von der API zurückgegeben werden.
 
 Abhängigkeiten von WeatherAPI: Da sie sich in der äußersten Schicht der Anwendung befindet, hat sie keine Abhängigkeiten von anderen internen Klassen der Anwendung. Ihre einzige Abhängigkeit könnte eine externe Bibliothek oder ein Framework sein, das für die Kommunikation mit der Wetter-API verwendet wird. Diese Art von Abhängigkeit ist jedoch in Ordnung, da sie nicht die Trennung zwischen den Schichten der Anwendung beeinträchtigt.
 Abhängigkeiten zu WeatherAPI: Die WeatherService-Klasse in einer höheren Schicht hängt von WeatherAPI ab. Sie nutzt WeatherAPI, um Wetterdaten zu holen und diese Daten dann für die spezifischen Bedürfnisse der Anwendung zu verarbeiten. Die Abhängigkeit ist hier von der höheren zur niedrigeren Schicht gerichtet, was der Dependency Rule entspricht.
 
 **Negativ-Beispiel:** Travel
 
-Die Travel-Klasse stellt ein Domainobjekt dar und sollte daher keine direkte Abhängigkeit von TravelRepository haben, einer Klasse, die für die Datenpersistenz zuständig ist. Die Kopplung dieser beiden Klassen verringert die Flexibilität und Testbarkeit der Anwendung.
+Die `Travel`-Klasse stellt ein Domainobjekt dar und sollte daher keine direkte Abhängigkeit von TravelRepository haben, einer Klasse, die für die Datenpersistenz zuständig ist. Die Kopplung dieser beiden Klassen verringert die Flexibilität und Testbarkeit der Anwendung.
 
-Abhängigkeiten von Travel: Die Travel-Klasse hat eine direkte Abhängigkeit von TravelRepository, was bedeutet, dass sie sich um Details der Datenpersistenz kümmert. Das widerspricht der Dependency Rule, da Domainobjekte unabhängig von solchen Details bleiben sollten. Ihre Hauptaufgabe ist es, Geschäftsregeln zu definieren und durchzusetzen, und sie sollten durch Services oder andere Mechanismen auf persistente Daten zugreifen können.
+Abhängigkeiten von Travel: Die `Travel`-Klasse hat eine direkte Abhängigkeit von TravelRepository, was bedeutet, dass sie sich um Details der Datenpersistenz kümmert. Das widerspricht der Dependency Rule, da Domainobjekte unabhängig von solchen Details bleiben sollten. Ihre Hauptaufgabe ist es, Geschäftsregeln zu definieren und durchzusetzen, und sie sollten durch Services oder andere Mechanismen auf persistente Daten zugreifen können.
 Abhängigkeiten zu Travel: Services oder andere Domain-Objekte könnten von Travel abhängen, um Geschäftsaktionen auszuführen oder um Daten zu verarbeiten, die sie benötigen. In einer gut strukturierten Anwendung wäre diese Art von Abhängigkeit von der oberen zur unteren Schicht gerichtet, was der Dependency Rule entspricht.
 
 ### 2.3. Analyse der Schichten
@@ -97,26 +97,80 @@ Abhängigkeiten zu Travel: Services oder andere Domain-Objekte könnten von Trav
 
 **Klasse: Travel**
 
-Die Travel-Klasse repräsentiert eine Reise, die von einem Benutzer erstellt wurde. Jede Reise hat eine eindeutige ID, einen Ersteller, ein Erstellungsdatum, eine Stadt, ein Budget, ein Start- und Enddatum sowie ein letztes Änderungsdatum.
+Die `Travel`-Klasse repräsentiert eine Reise, die von einem Benutzer erstellt wurde. Jede Reise hat eine eindeutige ID, einen Ersteller, ein Erstellungsdatum, eine Stadt, ein Budget, ein Start- und Enddatum sowie ein letztes Änderungsdatum.
 
-Die Travel-Klasse enthält Methoden zur Verwaltung dieser Eigenschaften, einschließlich Setzen und Abrufen von Werten, sowie zur Konvertierung der Reise in eine CSV-Zeichenkette. Sie holt auch eine neue eindeutige ID vom TravelRepository ab.
+Die `Travel`-Klasse enthält Methoden zur Verwaltung dieser Eigenschaften, einschließlich Setzen und Abrufen von Werten, sowie zur Konvertierung der Reise in eine CSV-Zeichenkette. Sie holt auch eine neue eindeutige ID vom TravelRepository ab.
 
 **Einordnung in die Clean-Architecture:**
 
-Die Travel-Klasse gehört zur Schicht der "Entities" in der Clean Architecture. Die Entities repräsentieren die Geschäftsobjekte der Anwendung und enthalten die Geschäftsregeln, die für die Anwendung relevant sind.
+Die `Travel`-Klasse gehört zur Schicht der "Entities" in der Clean Architecture. Die Entities repräsentieren die Geschäftsobjekte der Anwendung und enthalten die Geschäftsregeln, die für die Anwendung relevant sind.
 
-Die Travel-Klasse repräsentiert ein Geschäftsobjekt, nämlich eine Reise. Sie enthält Geschäftsregeln wie das Format der Reisedaten und das Format des Datums. Sie enthält jedoch auch eine direkte Abhängigkeit zum TravelRepository, was gegen die Dependency Rule in der Clean Architecture verstößt, da die Entities nicht von den äußeren Schichten wie der Datenzugriffsschicht abhängig sein sollten. Dies sollte durch Verwendung eines Interfaces oder einer abstrakten Klasse korrigiert werden, um die direkte Abhängigkeit von Travel zu TravelRepository zu entfernen.
+Die `Travel`-Klasse repräsentiert ein Geschäftsobjekt, nämlich eine Reise. Sie enthält Geschäftsregeln wie das Format der Reisedaten und das Format des Datums. Sie enthält jedoch auch eine direkte Abhängigkeit zum TravelRepository, was gegen die Dependency Rule in der Clean Architecture verstößt, da die Entities nicht von den äußeren Schichten wie der Datenzugriffsschicht abhängig sein sollten. Dies sollte durch Verwendung eines Interfaces oder einer abstrakten Klasse korrigiert werden, um die direkte Abhängigkeit von Travel zu TravelRepository zu entfernen.
 
 #### Schicht: Interface Adapters
 
 **Klasse: WeatherAPI**
 
-Die WeatherAPI-Klasse ist ein Adapter, der es der Anwendung ermöglicht, mit der OpenWeatherMap API zu interagieren. Sie enthält Methoden zur Erstellung einer API-Anfrage und zur Rückgabe der Antwort als String.
+Die `WeatherAPI`-Klasse ist ein Adapter, der es der Anwendung ermöglicht, mit der OpenWeatherMap API zu interagieren. Sie enthält Methoden zur Erstellung einer API-Anfrage und zur Rückgabe der Antwort als String.
 
-Die WeatherAPI-Klasse hat eine request-Methode, die einen Städtenamen als Eingabe nimmt und eine HTTP-GET-Anfrage an die OpenWeatherMap API sendet. Sie verarbeitet die Antwort, prüft den Antwortcode und gibt den Antwort-String zurück.
+Die `WeatherAPI`-Klasse hat eine request-Methode, die einen Städtenamen als Eingabe nimmt und eine HTTP-GET-Anfrage an die OpenWeatherMap API sendet. Sie verarbeitet die Antwort, prüft den Antwortcode und gibt den Antwort-String zurück.
 
 **Einordnung in die Clean-Architecture:**
 
 Die WeatherAPI-Klasse gehört zur Schicht der "Interface Adapters" in der Clean Architecture. Diese Schicht beinhaltet Adapter, die das Außen- und Innensystem miteinander verbinden, wobei das Innensystem die Business-Logik und die Anwendungsfall-Schicht darstellt, während das Außensystem Dinge wie externe APIs, Datenbanken und Web-Frameworks darstellt.
 
 In diesem Fall dient die WeatherAPI-Klasse als Adapter zur OpenWeatherMap API. Sie konvertiert die Details der HTTP-Kommunikation (ein Detail, das für die innere Anwendungslogik irrelevant ist) in eine einfache Methode, die von der Anwendung verwendet werden kann, um Wetterdaten zu erhalten. Daher kann diese Klasse als "Interface Adapter" klassifiziert werden, da sie das Interface (die API) zur Außenwelt bereitstellt und anpasst, um es den inneren Schichten leichter zu machen, damit zu interagieren.
+
+## 3. SOLID
+
+### 3.1. Analyse Single-Responsibility-Principle (SRP)
+
+**Positives Beispiel: PasswordHasher**
+
+*TODO: UML*
+
+Die `PasswordHasher`-Klasse hat nur eine einzige Verantwortung: Sie stellt eine Methode zur Verfügung, um ein Passwort zu hashen. Daher hält sie das Single-Responsibility-Principle ein.
+
+**Negatives Beispiel: UserService**
+
+*TODO: UML*
+
+Die `UserService`-Klasse ist verantwortlich für eine Vielzahl von Aufgaben. Sie kümmert sich sowohl um die Verwaltung von Usern (Erstellen, Löschen), als auch um Authentifizierungsfunktionen (Login, Passwortprüfung). Obwohl diese Funktionen eng miteinander verbunden sind, handelt es sich dabei um unterschiedliche Verantwortlichkeiten.
+
+**Lösungsweg:** Um die Einhaltung des Single-Responsibility-Prinzips sicherzustellen, könnten wir die Authentifizierungsaufgaben in eine separate Klasse verschieben. Diese neue Klasse könnte UserAuthenticationService heißen und wäre dann ausschließlich für die Authentifizierung von Benutzern verantwortlich. Methoden wie login und isPasswordCorrect wären dann in dieser neuen Klasse angesiedelt.
+
+Die UserService Klasse würde dann nur noch für die Verwaltung von User-Objekten verantwortlich sein, also für das Erstellen und Löschen von Usern. Durch diese Trennung der Verantwortlichkeiten wäre das Single-Responsibility-Prinzip erfüllt.
+
+### 3.2. Analyse Single-Responsibility-Principle (SRP)
+
+**Positiv-Beispiel:** `APIInterface` 
+
+*TODO: UML*
+
+Die APIInterface Schnittstelle ist ein gutes Beispiel für das Einhalten des Open-Closed-Principles. Sie definiert die Methode `request()`, die von der `ActivityAPI` Klasse implementiert wird. Wenn man eine neue API hinzufügen möchte, kann man einfach eine neue Klasse erstellen, die das APIInterface implementiert, ohne die Schnittstelle oder die bestehende `ActivityAPI` Klasse zu ändern.
+
+**Positiv-Beispiel:** `UserService` 
+
+*TODO: UML*
+
+Die `UserService` Klasse könnte als ein Beispiel gesehen werden, das das Open-Closed-Principle verletzt, weil sie in ihrer aktuellen Form nicht für Erweiterungen offen ist. Beispielsweise, wenn wir eine neue Art der Authentifizierung hinzufügen möchten (zum Beispiel durch OAuth oder Zwei-Faktor-Authentifizierung), würden wir den existierenden Code in der login() Methode verändern müssen.
+
+**Lösungsweg:** Um dieses Problem zu lösen und das Open-Closed-Principle einzuhalten, könnten wir ein Authenticator Interface einführen, das von verschiedenen Klassen implementiert werden kann, die jeweils eine bestimmte Art der Authentifizierung durchführen. Die `UserService` Klasse würde dann nicht direkt eine Authentifizierungsmethode implementieren, sondern eine Instanz eines Authenticator verwenden. Auf diese Weise könnte das Authentifizierungssystem erweitert werden, indem neue Klassen hinzugefügt werden, die das Authenticator Interface implementieren, ohne dass der Code in der `UserService` Klasse geändert werden müsste.
+
+*TODO: Nachher UML*
+
+### 3.3. Analyse Interface-Segregation-Principle (ISP) 
+
+**Positiv-Beispiel:** `ActivityAPI` 
+
+*TODO: UML*
+
+Die `ActivityAPI` Klasse implementiert das `APIInterface`, das nur eine Methode `request(city: String)` enthält. Dieses ist ein gutes Beispiel für das Interface-Segregation-Principle, da das `APIInterface` klein und spezifisch für einen bestimmten Zweck (eine HTTP-Anfrage an eine bestimmte API durchführen) ist. Das bedeutet, dass jede Klasse, die dieses Interface implementiert, nicht mit Methoden belastet wird, die sie nicht benötigt.
+
+**Positiv-Beispiel:** `UserService` 
+
+*TODO: UML*
+
+Die `UserService` Klasse kann als Negativbeispiel für das Interface-Segregation-Principle betrachtet werden, da sie viele Methoden hat, die verschiedene Aspekte der Benutzerverwaltung abdecken. Wenn wir ein Interface für diese Klasse erstellen würden, hätte es viele Methoden und würde wahrscheinlich Methoden enthalten, die nicht alle Klassen benötigen, die dieses Interface implementieren könnten.
+
+Um dieses Problem zu lösen, könnten wir mehrere spezifische Interfaces erstellen, z.B. `UserCreator`, `UserRemover`, `UserAuthenticator`, etc., die jeweils eine kleinere Anzahl von Methoden enthalten, die spezifisch für ihre Funktion sind. Die `UserService` Klasse könnte dann diese Interfaces implementieren, je nachdem welche Funktionen sie benötigt. Dies würde das Interface-Segregation-Principle erfüllen, da jede Klasse, die diese Interfaces implementiert, nur die Methoden erhält, die sie benötigt.
