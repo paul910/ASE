@@ -1,3 +1,7 @@
+Diese Dokumentation begleitet unser Software-Projekt, an dem Paul Ehrhard (Matrikel-Nr.: 6902762) und Jona Kuhn (Matrikel-Nr.: 2399244) beteiligt waren.
+Um den hohen Anforderungen an Qualität und Klarheit gerecht zu werden, wurde eine besondere Arbeitsmethode verfolgt: Pair Programming. Durch den kontinuierlichen Austausch und die gemeinsame Problemlösung konnte ein ausgewogenes Verständnis des Projekts und eine gleichmäßige Beteiligung sichergestellt werden. 
+
+
 # ASE 2023 - Travel Planner
 
 ## Kapitel 1: Einführung
@@ -63,6 +67,8 @@ Im Großen und Ganzen lässt sich Travel Planner leicht testen und bedienen, wod
 
 ### 2.1. Was ist Clean Architecture?
 
+*TODO: UML*
+
 Clean Architecture ist ein Softwarearchitektur-Konzept, das von Robert C. Martin, auch bekannt als "Uncle Bob", entwickelt wurde. Dieser Ansatz zielt darauf ab, die Entwicklung von Softwareanwendungen mit hoher Wartbarkeit, Testbarkeit und Flexibilität zu fördern, indem bestimmte Prinzipien und Designmuster eingehalten werden.
 
 Im Kern der Clean Architecture steht die Idee der Trennung von Anliegen durch Schichten. Diese Architektur besteht in der Regel aus mindestens vier konzentrischen Schichten, von innen nach außen: Entitäten, Anwendungsfall, Schnittstellenadapter und Frameworks & Treiber. Jede dieser Schichten hat eine bestimmte Rolle und Verantwortung und sollte voneinander unabhängig sein. Dies wird als Regel der Abhängigkeiten bezeichnet, was bedeutet, dass die Abhängigkeiten immer von den äußeren Schichten zu den inneren Schichten gerichtet sind.
@@ -79,12 +85,16 @@ Um ein besseres Verständnis von dieser Regel zu erlangen, betrachten wir zwei K
 
 #### 2.2.1 Positiv-Beispiel: WeatherAPI
 
+*TODO: UML*
+
 Die `WeatherAPI`-Klasse ist ein guter Fall für die Einhaltung der Dependency Rule in der Clean Architecture. Diese Klasse ist in einer niedrigeren Schicht unserer Anwendung platziert und definiert nur, wie eine Wetter-API-Anfrage ausgeführt wird. Das bedeutet, sie ist für die Kommunikation mit der externen Wetter-API verantwortlich und kümmert sich nicht um Details der oberen Schichten oder um die Art der Daten, die von der API zurückgegeben werden.
 
 Abhängigkeiten von WeatherAPI: Da sie sich in der äußersten Schicht der Anwendung befindet, hat sie keine Abhängigkeiten von anderen internen Klassen der Anwendung. Ihre einzige Abhängigkeit könnte eine externe Bibliothek oder ein Framework sein, das für die Kommunikation mit der Wetter-API verwendet wird. Diese Art von Abhängigkeit ist jedoch in Ordnung, da sie nicht die Trennung zwischen den Schichten der Anwendung beeinträchtigt.
 Abhängigkeiten zu WeatherAPI: Die `WeatherService`-Klasse in einer höheren Schicht hängt von WeatherAPI ab. Sie nutzt WeatherAPI, um Wetterdaten zu holen und diese Daten dann für die spezifischen Bedürfnisse der Anwendung zu verarbeiten. Die Abhängigkeit ist hier von der höheren zur niedrigeren Schicht gerichtet, was der Dependency Rule entspricht.
 
 #### 2.2.2 Negativ-Beispiel: Travel
+
+*TODO: UML*
 
 Die `Travel`-Klasse stellt ein Domainobjekt dar und sollte daher keine direkte Abhängigkeit von TravelRepository haben, einer Klasse, die für die Datenpersistenz zuständig ist. Die Kopplung dieser beiden Klassen verringert die Flexibilität und Testbarkeit der Anwendung.
 
@@ -97,6 +107,8 @@ Abhängigkeiten zu Travel: Services oder andere Domain-Objekte könnten von Trav
 
 **Klasse: Travel**
 
+*TODO: UML*
+
 Die `Travel`-Klasse repräsentiert eine Reise, die von einem Benutzer erstellt wurde. Jede Reise hat eine eindeutige ID, einen Ersteller, ein Erstellungsdatum, eine Stadt, ein Budget, ein Start- und Enddatum sowie ein letztes Änderungsdatum.
 
 Die `Travel`-Klasse enthält Methoden zur Verwaltung dieser Eigenschaften, einschließlich Setzen und Abrufen von Werten, sowie zur Konvertierung der Reise in eine CSV-Zeichenkette. Sie holt auch eine neue eindeutige ID vom TravelRepository ab.
@@ -108,6 +120,8 @@ Die `Travel`-Klasse gehört zur Schicht der "Entities" in der Clean Architecture
 #### Schicht: Interface Adapters
 
 **Klasse: WeatherAPI**
+
+*TODO: UML*
 
 Die `WeatherAPI`-Klasse ist ein Adapter, der es der Anwendung ermöglicht, mit der OpenWeatherMap API zu interagieren. Sie enthält Methoden zur Erstellung einer API-Anfrage und zur Rückgabe der Antwort als String. Die `WeatherAPI`-Klasse hat eine request-Methode, die einen Städtenamen als Eingabe nimmt und eine HTTP-GET-Anfrage an die OpenWeatherMap API sendet. Sie verarbeitet die Antwort, prüft den Antwortcode und gibt den Antwort-String zurück.
 
@@ -310,7 +324,7 @@ Obwohl dieser Test korrekt funktioniert, könnte er als weniger professionell an
 
 ## 6. Domain Driven Design
 
-## 6.1. Ubiquitous Language
+### 6.1. Ubiquitous Language
 
 | Bezeichnung | Bedeutung | Begründung |
 |---|---|---|
@@ -319,19 +333,19 @@ Obwohl dieser Test korrekt funktioniert, könnte er als weniger professionell an
 | WeatherAPI | Ein Interface zur Kommunikation mit einem externen Wetterdienst | "WeatherAPI" ist ein konkreter Begriff, der innerhalb des Teams verwendet wird, um sich auf den externen Service zu beziehen, der Wetterdaten bereitstellt. Es ist ein wichtiger Teil des Kontextes unserer Anwendung. |
 | UserRepository | Ein Repository zur Verwaltung von User-Daten in einer Datenbank | "UserRepository" ist ein Begriff, der spezifisch in unserem Kontext verwendet wird, um die Komponente zu bezeichnen, die für die dauerhafte Speicherung und Abfrage von User-Daten zuständig ist. Es ist ein universeller Begriff, der von allen Teammitgliedern verstanden und genutzt wird. |
 
-## 6.2. Entities
+### 6.2. Entities
 
 *TODO UML*
 
 Die `User`-Klasse ist ein fundamentales Konzept in der Anwendung, das eine registrierte Person repräsentiert. Es hat Eigenschaften wie username, password und email, die den Zustand des Benutzers definieren. Entities sind Objekte, die über einen längeren Zeitraum kontinuierlich existieren und eine eindeutige Identität haben. In diesem Fall ist die `User`-Klasse eine Entity, weil sie eine eindeutige Identität in Form des username oder email hat und über einen längeren Zeitraum in der Anwendung existiert. Sie wird in verschiedenen Teilen der Anwendung verwendet, um Aktionen im Namen des Benutzers durchzuführen. Beispielsweise könnte das System den Benutzer authentifizieren, seine Daten ändern, seine Aktivitäten anzeigen oder ihn aus dem System entfernen, indem es auf diese Entity zugreift.
 
-## 6.3. Value Objects
+### 6.3. Value Objects
 
 *TODO UML*
 
 Die `Weather`-Klasse stellt die Wetterinformationen für eine bestimmte Stadt dar. Sie hat Eigenschaften wie city, main, description und temp, die den aktuellen Wetterzustand der Stadt darstellen. Value Objects sind unveränderliche Objekte, deren Identität durch ihre Attribute und nicht durch eine eindeutige Kennung bestimmt wird. In diesem Fall ist Weather ein Value Object, da sein Wert vollständig durch seine Attribute definiert wird. Zwei Weather-Objekte können als gleich betrachtet werden, wenn sie die gleiche city, main, description und temp haben, unabhängig davon, ob sie verschiedene Instanzen sind. Dies ist nützlich in Szenarien, in denen Sie die Wetterdaten für eine bestimmte Stadt darstellen möchten, ohne sich um Identität oder Zustandsänderungen kümmern zu müssen. Die Unveränderlichkeit dieser Objekte macht sie auch sicher in Bezug auf Nebenläufigkeitsprobleme, da sie nach ihrer Erstellung nicht geändert werden können.
 
-## 6.4. Aggregates
+### 6.4. Aggregates
 
 *TODO UML*
 
