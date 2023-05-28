@@ -425,7 +425,7 @@ Die `UserService`-Klasse ist ein Aggregat, das eine Menge von User-Objekten verw
 
 ### 7.1. Code Smells
 
-Code Smell: Dead Code ([Commit](https://github.com/paul910/ASE/commit/dfd7fc1c0c674046ef230e95347488180608d652))
+#### Code Smell 1: Dead Code ([Commit](https://github.com/paul910/ASE/commit/dfd7fc1c0c674046ef230e95347488180608d652))
 
 vorher: 
 
@@ -449,7 +449,66 @@ public void loadActivities() {
  }
 ```
 
+
+
+
 Die vorliegende Code-Optimierung beseitigt einen überflüssigen Codeabschnitt, auch bekannt als "Dead Code", in der Klasse `ActivityService`. Besonders zu beachten ist hierbei die Methode `loadActivitiesByCity`, die ursprünglich entwickelt wurde, allerdings im weiteren Verlauf des Programms keine Verwendung findet. Durch diese Bereinigung wird der Code schlanker und effizienter.
+
+#### Code Smell 2: Duplicate Code ([Commit](https://github.com/paul910/ASE/commit/da6d3db738b4355eb3dfa4b0c4c6461eddf4d440))
+
+vorher:
+```java
+private User getUserByUsername(String username) {
+        for (User user : this.users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        logger.info("User not found with username: " + username);
+        return null;
+    }
+
+    private User getUserByEmail(String emailAddress) {
+        for (User user : this.users) {
+            if (user.getEmail().equals(emailAddress)) {
+                return user;
+            }
+        }
+        logger.info("User not found with email: " + emailAddress);
+        return null;
+    }
+```
+
+nachher:
+
+```java
+private User getUserByUsername(String username) {
+        return findUser("username", username);
+    }
+
+    private User getUserByEmail(String emailAddress) {
+        return findUser("email", emailAddress);
+    }
+
+    private User findUser(String identifier, String value) {
+        for (User user : this.users) {
+            if (identifier.equals("username") && user.getUsername().equals(value)) {
+                return user;
+            }
+            if (identifier.equals("email") && user.getEmail().equals(value)) {
+                return user;
+            }
+        }
+        logger.info("User not found with " + identifier + ": " + value);
+        return null;
+    }
+```
+
+In der ursprünglichen Version der ``UserService``-Klasse gab es separate Methoden, um einen Benutzer nach Benutzername und nach E-Mail-Adresse zu suchen. Diese beiden Methoden hatten ähnliche Implementierungen und führten zu Code-Wiederholungen. Um diesen Code zu verbessern und die Wiederholungen zu reduzieren, wurden die Methoden zusammengefasst und eine neue Methode ``findUser`` eingeführt.
+
+Die neue Methode ``findUser`` nimmt einen ``identifier`` (Entweder ``username`` oder ``email``) und einen value (den entsprechenden Benutzernamen oder die E-Mail-Adresse) entgegen. Sie durchläuft die Liste der Benutzer und sucht nach einem Benutzer, der den angegebenen Wert im entsprechenden Attribut (``username`` oder ``email``) hat. Wenn ein passender Benutzer gefunden wird, wird dieser zurückgegeben. Andernfalls wird eine Protokollmeldung ausgegeben und ``null`` zurückgegeben.
+
+Diese Änderung verbessert die Lesbarkeit und Wartbarkeit des Codes, da Code-Duplizierung vermieden wird. Durch die Verwendung der ``findUser``-Methode anstelle von separaten Methoden wird der Code konsistenter und leichter zu verstehen.
 
 ### 7.2. 2 Refactoring Beispiele
 
