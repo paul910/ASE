@@ -619,4 +619,14 @@ Im Fall von ``WeatherBuilder`` wird dieses Muster verwendet, um ein ``Weather``-
 
 Die ``build``-Methode ist das Herzstück des Builders und erzeugt das fertige Objekt.
 
-### Entwurfsmuster: 
+### Entwurfsmuster: Decorator
+
+<img src="./UML/Decorator.png" alt="UML Diagram" width="200" />
+
+Das Dekorierer-Entwurfsmuster (oder Decorator Pattern) ist ein Entwurfsmuster, das eine alternative Methode zur Erweiterung der Funktionalität einer Klasse bietet, ohne dass diese geerbt oder ihre Quellcode geändert werden muss. Es gehört zur Kategorie der Strukturmuster und bietet eine flexible Alternative zur Unterklassenbildung für eine erweiterte Funktionalität.
+
+Ein Dekorierer hat die gleiche Schnittstelle wie das Objekt, das er dekoriert (das sogenannte "dekorierte Objekt"). Der Dekorierer leitet Anfragen an das dekorierte Objekt weiter und kann zusätzliche Verantwortlichkeiten vor oder nach dem Weiterleiten hinzufügen. Auf diese Weise können Dekorierer auf dynamische und transparente Weise verwendet werden, um Objekte zu erweitern.
+
+Mit dem Ansatz des Decorators wird das Verhalten der ``UserService``-Klasse dekoriert, ohne ihre Implementierung zu ändern. Es ermöglicht eine höhere Flexibilität und Erweiterbarkeit, da beliebige weitere Dekorierer erstellt werden können und diese in jeder gewünschten Kombination angewendet werden können.
+
+Die ``IUserService``-Klasse dient dabei als Interface für den eigentlichen ``UserService`` sowie die Dekorator Klasse (``UserServiceDecorator``).
