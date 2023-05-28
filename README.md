@@ -37,8 +37,8 @@ git clone https://github.com/paul910/ASE.git
 Die Anwendung kann dann im nächsten Schritt über ein Konsolenfenster mit dem folgenden Befehl gestartet werden:
 
 ```bash
-cd ASE/src/main/java/org/example
-java -jar Main.java
+mvn clean install
+java -jar target/ASE-1.0.jar
 ```
 
 Im Anschluss kann mit der gestarteten Anwendung interagiert werden.
