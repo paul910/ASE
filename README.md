@@ -367,7 +367,15 @@ Obwohl dieser Test korrekt funktioniert, könnte er als weniger professionell an
 
 ### 5.4 Code Coverage
 
-*TODO UML*
+<img src="./coverage.png" alt="UML Diagram" width="400" />
+
+Die Gesamt-Testabdeckung für unser Projekt liegt bei 26,3% für Zeilen, 30% für Methoden und 40,7% für Klassen. Auf den ersten Blick mag dies niedrig erscheinen, es gibt jedoch spezifische Gründe für diese Werte, die wir im Folgenden erläutern werden.
+
+Unser org.planner Package zeigt eine hohe Code Coverage, was auf die Wichtigkeit und die ausgiebigen Tests der Kernfunktionen dieses Packages hinweist. Das org.planner.api Package hat auch eine ziemlich hohe Testabdeckung. Diese Klasse enthält viele wichtige Funktionen, die für die Benutzerschnittstelle verantwortlich sind, daher haben wir mehrere Tests durchgeführt, um sicherzustellen, dass die Benutzererfahrung wie erwartet ist. Die Testabdeckung von org.planner.console und org.planner.session ist niedrig, weil diese Packages hauptsächlich Interaktionen mit dem Benutzer und Session-Management-Funktionen enthalten, die schwer zu testen sind oder wo Unit-Tests weniger effektiv sind. Statt Unittests würden hier eher Integrationstests oder End-to-End-Tests einen größeren Nutzen liefern.
+Das org.planner.domain und org.planner.helper Packages haben moderate Testabdeckungswerte. Die darin enthaltenen Klassen und Methoden sind hauptsächlich Hilfsfunktionen und einfache Datenstrukturen, die weniger anfällig für Fehler sind, daher war es nicht notwendig, sie so intensiv zu testen wie andere Teile des Codes.
+In org.planner.persistence und org.planner.service befinden sich viele unserer wichtigsten Business-Logik und Datenverwaltungs-Funktionen. Trotz der geringeren Testabdeckung in diesen Bereichen sind wir zuversichtlich in ihrer Zuverlässigkeit, da die implementierten Tests sorgfältig ausgewählt wurden, um kritische Funktionen und potenzielle Fehlerquellen abzudecken.
+
+Insgesamt haben wir uns bei der Teststrategie auf die kritischsten und fehleranfälligsten Bereiche des Codes konzentriert. Wir sind der Ansicht, dass unsere aktuellen Tests ausreichend sind, um die Qualität und Zuverlässigkeit unserer Software zu gewährleisten. Dennoch arbeiten wir ständig an der Erweiterung unserer Testabdeckung, um die Qualität unserer Software weiter zu verbessern.
 
 ### 5.5 Fakes und Mocks
 
