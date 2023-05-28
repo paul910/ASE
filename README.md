@@ -584,15 +584,15 @@ nachher:
 
 ```java
 public List<User> filterOutExistingUser(List<User> users) {
-        List<User> usersToSave = new CopyOnWriteArrayList<>();
-        for (User user : users) {
-            if (!existsInFile(user)) {
-                usersToSave.add(user);
-            }
-        }
-        logger.info("User list filtered successfully.");
-        return usersToSave;
-    }
+     List<User> usersToSave = new CopyOnWriteArrayList<>();
+     for (User user : users) {
+         if (!existsInFile(user)) {
+             usersToSave.add(user);
+         }
+     }
+     logger.info("User list filtered successfully.");
+     return usersToSave;
+ }
 ```
 
 Die Methode ``filterExistingUserOut`` wurde in ``filterOutExistingUsers`` umbenannt.
@@ -609,4 +609,14 @@ Die Umbenennung der Methode trägt zu mehreren Verbesserungen in unserer Codebas
 
 ## 8. Entwurfsmuster
 
-*TODO*
+### Entwurfsmuster: Builder
+
+<img src="./UML/Builder.png" alt="UML Diagram" width="200" />
+
+Das Builder-Entwurfsmuster wird verwendet, um die Konstruktion komplexer Objekte zu vereinfachen und zu organisieren, insbesondere wenn das Objekt viele Eigenschaften hat oder wenn einige dieser Eigenschaften optional sind.
+
+Im Fall von ``WeatherBuilder`` wird dieses Muster verwendet, um ein ``Weather``-Objekt zu erstellen. Dieses Muster ist besonders nützlich, da ein ``Weather``-Objekt viele Eigenschaften hat und es unpraktisch und verwirrend wäre, einen Konstruktor mit vielen Parametern zu verwenden.
+
+Die ``build``-Methode ist das Herzstück des Builders und erzeugt das fertige Objekt.
+
+### Entwurfsmuster: 
