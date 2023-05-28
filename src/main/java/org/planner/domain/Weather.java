@@ -32,37 +32,22 @@ public class Weather {
     private final Date sysSunrise;
     private final Date sysSunset;
 
-    public Weather(Map<String, Object> obj) {
-        Map<String, Object> weather = (Map<String, Object>) ((List<Object>) obj.get("weather")).get(0);
-        {
-            this.main = (String) weather.get("main");
-            this.description = (String) weather.get("description");
-        }
-        Map<String, Object> main = (Map<String, Object>) obj.get("main");
-        {
-            this.temp = (double) main.get("temp");
-            this.feelsLike = (double) main.get("feels_like");
-            this.pressure = Long.valueOf((long) main.get("pressure")).intValue();
-            this.humidity = Long.valueOf((long) main.get("humidity")).intValue();
-            this.tempMin = (double) main.get("temp_min");
-            this.tempMax = (double) main.get("temp_max");
-        }
-        this.visibility = Long.valueOf((long) obj.get("visibility")).intValue();
-        Map<String, Object> wind = (Map<String, Object>) obj.get("wind");
-        {
-            this.windSpeed = (double) (wind.get("speed") != null ? wind.get("speed") : 0.0);
-            this.windDeg = Long.valueOf((long) wind.get("deg")).intValue();
-            this.windGust = (double) (wind.get("gust") != null ? wind.get("gust") : 0.0);
-        }
-        Map<String, Object> clouds = (Map<String, Object>) obj.get("clouds");
-        {
-            this.cloudsAll = Long.valueOf((long) clouds.get("all")).intValue();
-        }
-        Map<String, Object> sys = (Map<String, Object>) obj.get("sys");
-        {
-            this.sysSunrise = new Date((long) sys.get("sunrise") * 1000);
-            this.sysSunset = new Date((long) sys.get("sunset") * 1000);
-        }
+    protected Weather(String main, String description, double temp, double feelsLike, int pressure, int humidity, double tempMin, double tempMax, int visibility, double windSpeed, int windDeg, double windGust, int cloudsAll, Date sysSunrise, Date sysSunset) {
+        this.main = main;
+        this.description = description;
+        this.temp = temp;
+        this.feelsLike = feelsLike;
+        this.pressure = pressure;
+        this.humidity = humidity;
+        this.tempMin = tempMin;
+        this.tempMax = tempMax;
+        this.visibility = visibility;
+        this.windSpeed = windSpeed;
+        this.windDeg = windDeg;
+        this.windGust = windGust;
+        this.cloudsAll = cloudsAll;
+        this.sysSunrise = sysSunrise;
+        this.sysSunset = sysSunset;
     }
 
     public String getMain() {

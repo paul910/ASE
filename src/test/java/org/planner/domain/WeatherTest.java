@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.planner.helper.JsonParser;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,7 +17,43 @@ public class WeatherTest {
     @BeforeEach
     void setUp() {
         String jsonString = "{\"coord\":{\"lon\":-122.08,\"lat\":37.39},\"weather\":[{\"id\":800,\"main\":\"Clear\",\"description\":\"clear sky\",\"icon\":\"01d\"}],\"base\":\"stations\",\"main\":{\"temp\":282.55,\"feels_like\":281.86,\"temp_min\":280.37,\"temp_max\":284.26,\"pressure\":1023,\"humidity\":100},\"visibility\":16093,\"wind\":{\"speed\":1.5,\"deg\":350, \"gust\":2.68},\"clouds\":{\"all\":1},\"dt\":1560350645,\"sys\":{\"type\":1,\"id\":5122,\"message\":0.0139,\"country\":\"US\",\"sunrise\":1560343627,\"sunset\":1560396563},\"timezone\":-25200,\"id\":420006353,\"name\":\"Mountain View\",\"cod\":200}";
-        this.weather = new Weather(new JsonParser(jsonString).parseObject());
+
+        Map<String, Object> obj = new JsonParser(jsonString).parseObject();
+
+        WeatherBuilder weatherBuilder = new WeatherBuilder();
+
+        Map<String, Object> weather = (Map<String, Object>) ((List<Object>) obj.get("weather")).get(0);
+        {
+            weatherBuilder.setMain((String) weather.get("main"));
+            weatherBuilder.setDescription((String) weather.get("description"));
+        }
+        Map<String, Object> main = (Map<String, Object>) obj.get("main");
+        {
+            weatherBuilder.setTemp((double) main.get("temp"));
+            weatherBuilder.setFeelsLike((double) main.get("feels_like"));
+            weatherBuilder.setPressure(Long.valueOf((long) main.get("pressure")).intValue());
+            weatherBuilder.setHumidity(Long.valueOf((long) main.get("humidity")).intValue());
+            weatherBuilder.setTempMin((double) main.get("temp_min"));
+            weatherBuilder.setTempMax((double) main.get("temp_max"));
+        }
+        weatherBuilder.setVisibility(Long.valueOf((long) obj.get("visibility")).intValue());
+        Map<String, Object> wind = (Map<String, Object>) obj.get("wind");
+        {
+            weatherBuilder.setWindSpeed((double) (wind.get("speed") != null ? wind.get("speed") : 0.0));
+            weatherBuilder.setWindDeg(Long.valueOf((long) wind.get("deg")).intValue());
+            weatherBuilder.setWindGust((double) (wind.get("gust") != null ? wind.get("gust") : 0.0));
+        }
+        Map<String, Object> clouds = (Map<String, Object>) obj.get("clouds");
+        {
+            weatherBuilder.setCloudsAll(Long.valueOf((long) clouds.get("all")).intValue());
+        }
+        Map<String, Object> sys = (Map<String, Object>) obj.get("sys");
+        {
+            weatherBuilder.setSysSunrise(new Date((long) sys.get("sunrise") * 1000));
+            weatherBuilder.setSysSunset(new Date((long) sys.get("sunset") * 1000));
+        }
+
+        this.weather = weatherBuilder.build();
     }
 
     @Test
