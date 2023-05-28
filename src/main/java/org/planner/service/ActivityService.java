@@ -39,11 +39,6 @@ public class ActivityService {
         this.activities.addAll(this.activityRepository.loadList());
     }
 
-    public void loadActivitiesByCity(String city) {
-        this.activities.clear();
-        this.activities.addAll(this.activityRepository.loadListByCity(city));
-    }
-
     //API
     public void fetchActivitiesByCity(String city) {
         String activityString = this.activityAPI.request(city);

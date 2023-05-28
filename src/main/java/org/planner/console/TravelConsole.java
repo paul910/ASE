@@ -5,7 +5,7 @@ import org.planner.api.ActivityAPI;
 import org.planner.domain.Activity;
 import org.planner.domain.Travel;
 import org.planner.domain.User;
-import org.planner.persistence.ActivityRepository;
+import org.planner.persistence.TravelRepository;
 import org.planner.service.ActivityService;
 import org.planner.service.TravelService;
 
@@ -44,7 +44,7 @@ public class TravelConsole implements ConsoleInterface {
             Double budget = Double.parseDouble(this.consoleHelper.readFromConsole("Enter budget: "));
             Date startDate = Travel.DATE_FORMAT.parse(this.consoleHelper.readFromConsole("Enter start date (yyyy-MM-dd): "));
             Date endDate = Travel.DATE_FORMAT.parse(this.consoleHelper.readFromConsole("Enter end date (yyyy-MM-dd): "));
-            travel = new Travel(this.travelService.getActiveUser(), city, budget, startDate, endDate);
+            travel = new Travel(TravelRepository.getNewId(), this.travelService.getActiveUser(), city, budget, startDate, endDate);
         } catch (ParseException e) {
             consoleHelper.printError("Invalid input.");
             return;

@@ -1,7 +1,5 @@
 package org.planner.domain;
 
-import org.planner.persistence.TravelRepository;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -17,8 +15,8 @@ public class Travel {
     private Date endDate;
     private Date lastModifiedDate;
 
-    public Travel(User user, String city, double budget, Date startDate, Date endDate) {
-        this.id = setId();
+    public Travel(Long id, User user, String city, double budget, Date startDate, Date endDate) {
+        this.id = id;
         this.createdBy = user.getUsername();
         this.city = city;
         this.budget = budget;
@@ -42,11 +40,6 @@ public class Travel {
     public static String getColumns() {
         return "id,createdBy,city,budget,startDate,endDate,createdDate,lastModifiedDate";
     }
-
-    private Long setId() {
-        return TravelRepository.getNewId();
-    }
-
     public Long getId() {
         return id;
     }
