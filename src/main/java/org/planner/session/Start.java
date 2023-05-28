@@ -3,12 +3,13 @@ package org.planner.session;
 import org.planner.console.ConsoleInterface;
 import org.planner.domain.User;
 import org.planner.service.UserService;
+import org.planner.service.UserServiceDecorator;
 
 public class Start implements ConsoleInterface {
-    private final UserService userService;
+    private final UserServiceDecorator userServiceDecorator;
 
     public Start() {
-        this.userService = new UserService();
+        this.userServiceDecorator = new UserServiceDecorator(new UserService());
 
         consoleHelper.printWelcomeLogo();
         while (true) {
@@ -40,7 +41,7 @@ public class Start implements ConsoleInterface {
         String password = consoleHelper.readFromConsole("Enter password: ");
         String email = consoleHelper.readFromConsole("Enter email: ");
 
-        User user = this.userService.createUser(username, password, email);
+        User user = this.userServiceDecorator.createUser(username, password, email);
         if (user != null) {
             consoleHelper.printSuccess("Successfully registered.\nLogin now.");
             this.login();
@@ -54,7 +55,7 @@ public class Start implements ConsoleInterface {
         String username = consoleHelper.readFromConsole("Enter username: ");
         String password = consoleHelper.readFromConsole("Enter password: ");
 
-        User user = this.userService.login(username, password);
+        User user = this.userServiceDecorator.login(username, password);
 
         if (user != null) {
             consoleHelper.printSuccess("Successfully logged in.");

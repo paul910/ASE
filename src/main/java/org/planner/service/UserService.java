@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
-public class UserService {
+public class UserService implements IUserService{
     private final Logger logger;
     private final UserRepository userRepository;
     private final List<User> users;
