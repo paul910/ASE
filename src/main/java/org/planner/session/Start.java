@@ -16,6 +16,10 @@ public class Start implements ConsoleInterface {
         }
     }
 
+    public static void main(String[] args) {
+        new Start();
+    }
+
     private void printMenu() {
         String input = consoleHelper.readFromConsole("1. Register new user\n" + "2. Login\n" + "3. Exit\n" + "Enter: ");
 

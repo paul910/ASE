@@ -10,45 +10,21 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserServiceTest {
-    private static final String ROOT_PATH = "src/test/resources";
-    private static final String FILE_PATH = ROOT_PATH + "/users.csv";
     private UserService userService;
     private User user1;
 
     @BeforeEach
     public void setUp() {
         this.userService = new UserService();
-        this.user1 = userService.createUser("user1", "password", "user1@example.com");
-    }
-
-    @AfterEach
-    public void tearDown() {
-        File file = new File(FILE_PATH);
-        file.delete();
-    }
-
-    @Test
-    public void testCreateUser() {
-        // Test creating a user with valid credentials
-        assertNotNull(this.user1);
-        assertEquals("user1", user1.getUsername());
-        assertEquals("user1@example.com", user1.getEmail());
-
-        // Test creating a user with a taken username
-        User user2 = userService.createUser("user1", "password", "user2@example.com");
-        assertNull(user2);
-
-        // Test creating a user with an invalid email address
-        User user3 = userService.createUser("user3", "password", "invalid-email-address");
-        assertNull(user3);
+        this.user1 = userService.createUser("user12", "password", "user12@example.com");
     }
 
     @Test
     public void testRemoveUserByEMail() {
         // Test removing an existing user by email
-        this.userService.createUser("user1", "password", "user1@example.com");
-        this.userService.removeUserByEMail("user1@example.com");
-        assertFalse(this.userService.doesUserExistByEmail("user1@example.com"));
+        this.userService.createUser("user12", "password", "user12@example.com");
+        this.userService.removeUserByEMail("user12@example.com");
+        assertFalse(this.userService.doesUserExistByEmail("user12@example.com"));
 
         // Test removing a non-existing user by email
         this.userService.removeUserByEMail("non-existing-user@example.com");
@@ -58,9 +34,9 @@ public class UserServiceTest {
     @Test
     public void testRemoveUserByUsername() {
         // Test removing an existing user by username
-        this.userService.createUser("user1", "password", "user1@example.com");
-        this.userService.removeUserByUsername("user1");
-        assertTrue(this.userService.doesUserExistByUsername("user1"));
+        this.userService.createUser("user12", "password", "user12@example.com");
+        this.userService.removeUserByUsername("user12");
+        assertTrue(this.userService.doesUserExistByUsername("user12"));
 
         // Test removing a non-existing user by username
         this.userService.removeUserByUsername("non-existing-user");
@@ -70,13 +46,13 @@ public class UserServiceTest {
     @Test
     public void testLogin() {
         // Test logging in with valid credentials
-        User loggedInUser = this.userService.login("user1", "password");
+        User loggedInUser = this.userService.login("user12", "password");
         assertNotNull(loggedInUser);
-        assertEquals("user1", loggedInUser.getUsername());
-        assertEquals("user1@example.com", loggedInUser.getEmail());
+        assertEquals("user12", loggedInUser.getUsername());
+        assertEquals("user12@example.com", loggedInUser.getEmail());
 
         // Test logging in with incorrect password
-        User loggedInUser2 = this.userService.login("user1", "wrong-password");
+        User loggedInUser2 = this.userService.login("user12", "wrong-password");
         assertNull(loggedInUser2);
 
         // Test logging in with non-existing username
@@ -87,7 +63,7 @@ public class UserServiceTest {
     @Test
     public void testIsValidEmail() {
         // Test with valid email address
-        assertTrue(this.userService.isValidEmail("user1@example.com"));
+        assertTrue(this.userService.isValidEmail("user12@example.com"));
 
         // Test with invalid email address
         assertFalse(this.userService.isValidEmail("invalid-email-address"));

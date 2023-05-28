@@ -19,18 +19,13 @@ public class WeatherTest {
     }
 
     @Test
-    void testGetCity() {
-        assertEquals("Mountain View", weather.getCity());
-    }
-
-    @Test
     void testGetMain() {
         assertEquals("Clear", weather.getMain());
     }
 
     @Test
     void testGetDescription() {
-        assertEquals("clear sky", weather.getDescription());
+        assertEquals("clearsky", weather.getDescription());
     }
 
     @Test

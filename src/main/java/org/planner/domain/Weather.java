@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Weather {
-    private String city;
     // Weather
     private final String main;
     private final String description;
@@ -64,10 +63,6 @@ public class Weather {
             this.sysSunrise = new Date((long) sys.get("sunrise") * 1000);
             this.sysSunset = new Date((long) sys.get("sunset") * 1000);
         }
-    }
-
-    public String getCity() {
-        return city;
     }
 
     public String getMain() {
