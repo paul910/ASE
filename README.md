@@ -83,7 +83,7 @@ Um ein besseres Verständnis von dieser Regel zu erlangen, betrachten wir zwei K
 
 #### 2.2.1 Positiv-Beispiel: WeatherAPI
 
-*TODO: UML*
+<img src="./UML/WeatherAPI.png" alt="UML Diagram" width="200" />
 
 Die `WeatherAPI`-Klasse ist ein guter Fall für die Einhaltung der Dependency Rule in der Clean Architecture. Diese Klasse ist in einer niedrigeren Schicht unserer Anwendung platziert und definiert nur, wie eine Wetter-API-Anfrage ausgeführt wird. Das bedeutet, sie ist für die Kommunikation mit der externen Wetter-API verantwortlich und kümmert sich nicht um Details der oberen Schichten oder um die Art der Daten, die von der API zurückgegeben werden.
 
@@ -92,7 +92,7 @@ Abhängigkeiten zu WeatherAPI: Die `WeatherService`-Klasse in einer höheren Sch
 
 #### 2.2.2 Negativ-Beispiel: Travel
 
-*TODO: UML*
+<img src="./UML/Travel.png" alt="UML Diagram" width="200" />
 
 Die `Travel`-Klasse stellt ein Domainobjekt dar und sollte daher keine direkte Abhängigkeit von TravelRepository haben, einer Klasse, die für die Datenpersistenz zuständig ist. Die Kopplung dieser beiden Klassen verringert die Flexibilität und Testbarkeit der Anwendung.
 
@@ -105,7 +105,7 @@ Abhängigkeiten zu Travel: Services oder andere Domain-Objekte könnten von Trav
 
 **Klasse: Travel**
 
-*TODO: UML*
+<img src="./UML/Travel.png" alt="UML Diagram" width="200" />
 
 Die `Travel`-Klasse repräsentiert eine Reise, die von einem Benutzer erstellt wurde. Jede Reise hat eine eindeutige ID, einen Ersteller, ein Erstellungsdatum, eine Stadt, ein Budget, ein Start- und Enddatum sowie ein letztes Änderungsdatum.
 
@@ -119,7 +119,7 @@ Die `Travel`-Klasse gehört zur Schicht der "Entities" in der Clean Architecture
 
 **Klasse: WeatherAPI**
 
-*TODO: UML*
+<img src="./UML/WeatherAPI.png" alt="UML Diagram" width="200" />
 
 Die `WeatherAPI`-Klasse ist ein Adapter, der es der Anwendung ermöglicht, mit der OpenWeatherMap API zu interagieren. Sie enthält Methoden zur Erstellung einer API-Anfrage und zur Rückgabe der Antwort als String. Die `WeatherAPI`-Klasse hat eine request-Methode, die einen Städtenamen als Eingabe nimmt und eine HTTP-GET-Anfrage an die OpenWeatherMap API sendet. Sie verarbeitet die Antwort, prüft den Antwortcode und gibt den Antwort-String zurück.
 
@@ -135,13 +135,13 @@ In diesem Fall dient die `WeatherAPI`-Klasse als Adapter zur OpenWeatherMap API.
 
 #### 3.1.1 Positives Beispiel: `PasswordHasher`
 
-*TODO: UML*
+<img src="./UML/PasswordHasher.png" alt="UML Diagram" width="200" />
 
 Die `PasswordHasher`-Klasse hat nur eine einzige Verantwortung: Sie stellt eine Methode zur Verfügung, um ein Passwort zu hashen. Daher hält sie das Single-Responsibility-Principle ein.
 
 #### 3.1.2 Negatives Beispiel: `UserService`
 
-*TODO: UML*
+<img src="./UML/UserService.png" alt="UML Diagram" width="200" />
 
 Die `UserService`-Klasse ist verantwortlich für eine Vielzahl von Aufgaben. Sie kümmert sich sowohl um die Verwaltung von Usern (Erstellen, Löschen), als auch um Authentifizierungsfunktionen (Login, Passwortprüfung). Obwohl diese Funktionen eng miteinander verbunden sind, handelt es sich dabei um unterschiedliche Verantwortlichkeiten.
 
@@ -153,13 +153,13 @@ Die `UserService` Klasse würde dann nur noch für die Verwaltung von User-Objek
 
 #### 3.2.1 Positiv-Beispiel: `APIInterface` 
 
-*TODO: UML*
+<img src="./UML/APIInterface.png" alt="UML Diagram" width="200" />
 
 Die APIInterface Schnittstelle ist ein gutes Beispiel für das Einhalten des Open-Closed-Principles. Sie definiert die Methode `request()`, die von der `ActivityAPI` Klasse implementiert wird. Wenn man eine neue API hinzufügen möchte, kann man einfach eine neue Klasse erstellen, die das APIInterface implementiert, ohne die Schnittstelle oder die bestehende `ActivityAPI` Klasse zu ändern.
 
 #### 3.2.2 Negativ-Beispiel: `UserService` 
 
-*TODO: UML*
+<img src="./UML/UserService.png" alt="UML Diagram" width="200" />
 
 Die `UserService` Klasse könnte als ein Beispiel gesehen werden, das das Open-Closed-Principle verletzt, weil sie in ihrer aktuellen Form nicht für Erweiterungen offen ist. Beispielsweise, wenn wir eine neue Art der Authentifizierung hinzufügen möchten (zum Beispiel durch OAuth oder Zwei-Faktor-Authentifizierung), würden wir den existierenden Code in der login() Methode verändern müssen.
 
@@ -171,13 +171,13 @@ Die `UserService` Klasse könnte als ein Beispiel gesehen werden, das das Open-C
 
 #### 3.3.1 Positiv-Beispiel: `ActivityAPI` 
 
-*TODO: UML*
+<img src="./UML/ActivityService.png" alt="UML Diagram" width="200" />
 
 Die `ActivityAPI` Klasse implementiert das `APIInterface`, das nur eine Methode `request(city: String)` enthält. Dieses ist ein gutes Beispiel für das Interface-Segregation-Principle, da das `APIInterface` klein und spezifisch für einen bestimmten Zweck (eine HTTP-Anfrage an eine bestimmte API durchführen) ist. Das bedeutet, dass jede Klasse, die dieses Interface implementiert, nicht mit Methoden belastet wird, die sie nicht benötigt.
 
 #### 3.3.2 Negativ-Beispiel: `UserService` 
 
-*TODO: UML*
+<img src="./UML/UserService.png" alt="UML Diagram" width="200" />
 
 Die `UserService` Klasse kann als Negativbeispiel für das Interface-Segregation-Principle betrachtet werden, da sie viele Methoden hat, die verschiedene Aspekte der Benutzerverwaltung abdecken. Wenn wir ein Interface für diese Klasse erstellen würden, hätte es viele Methoden und würde wahrscheinlich Methoden enthalten, die nicht alle Klassen benötigen, die dieses Interface implementieren könnten.
 
@@ -189,23 +189,25 @@ Um dieses Problem zu lösen, könnten wir mehrere spezifische Interfaces erstell
 
 #### 4.1.1. Positiv-Beispiel: `User`
 
-*TODO: UML*
+<img src="./UML/User.png" alt="UML Diagram" width="200" />
 
 Die `User` Klasse ist ein gutes Beispiel für geringe Kopplung. Sie repräsentiert einen Nutzer und hat nur Informationen und Methoden, die direkt mit den Eigenschaften eines Nutzers zusammenhängen (wie Username, Passwort und Email-Adresse). Sie ist nicht von anderen Klassen abhängig, was sie zu einer unabhängigen und gut entkoppelten Klasse macht.
 
-#### 4.1.2. Negativ-Beispiel `TripService` 
+#### 4.1.2. Negativ-Beispiel `TravelService` 
 
-*TODO: UML*
+<img src="./UML/Travel.png" alt="UML Diagram" width="200" />
 
-Die `TripService` Klasse könnte ein Beispiel für hohe Kopplung sein. Diese Klasse könnte die Aufgabe haben, Reisen zu organisieren, was bedeutet, dass sie mit vielen anderen Klassen wie `User`, `Travel`, `WeatherAPI`, `ActivityAPI` usw. interagieren müsste. Diese hohe Kopplung könnte dazu führen, dass Änderungen in einer Klasse Auswirkungen auf die `TripService` Klasse haben, was zu weniger stabilen und schwerer zu wartenden Code führen könnte.
+Die `TravelService` Klasse zeigt ein Beispiel für eine hohe Kopplung in unserem System. Diese Klasse hat direkte Abhängigkeiten zu drei verschiedenen Repository-Klassen: `TravelRepository`, `ActivityRepository` und `TravelActivitiesRepository`. Darüber hinaus verwaltet sie den Zustand mehrerer Entitäten, einschließlich einer Liste von Travel-Objekten und einem User-Objekt.
 
-Um die hohe Kopplung der `TripService` Klasse zu reduzieren, könnte man das Prinzip der Inversion of Control (IoC) anwenden, beispielsweise durch den Einsatz eines Dependency Injection Frameworks. Dadurch könnte man die Abhängigkeiten zur Laufzeit konfigurieren, was zu einer flexibleren und weniger eng gekoppelten Architektur führt. Ein weiterer Ansatz wäre die Verwendung des Mediator-Designmusters, das zur Reduzierung der direkten Kommunikation zwischen den Klassen beitragen könnte.
+Die hohe Kopplung in dieser Klasse kann zu mehreren Problemen führen. Änderungen in einem der Repository-Klassen könnten dazu führen, dass wir auch Änderungen in der `TravelService` Klasse vornehmen müssen. Darüber hinaus könnte die Komplexität dieser Klasse mit der Zeit zunehmen, da sie verschiedene Aspekte des Systems verwaltet.
+
+Um diese hohe Kopplung zu reduzieren, könnten wir verschiedene Techniken anwenden. Eine davon könnte die Anwendung des Single Responsibility Principle (SRP) sein, indem wir separate Service-Klassen für unterschiedliche Verantwortlichkeiten erstellen. Zum Beispiel könnten wir eine `UserService` Klasse für die Verwaltung von Benutzern und eine `ActivityService` Klasse für die Verwaltung von Aktivitäten erstellen.
 
 ### 4.2. Analyse GRASP: Hohe Kohäsion
 
 #### 4.2.1. Positiv-Beispiel: `User`
 
-*TODO: UML*
+<img src="./UML/User.png" alt="UML Diagram" width="200" />
 
 Die `User` Klasse ist ein gutes Beispiel für hohe Kohäsion in der objektorientierten Programmierung. Diese Klasse ist dafür verantwortlich, den Zustand und das Verhalten eines Nutzers zu repräsentieren. Alle ihre Attribute und Methoden sind eng miteinander verbunden und arbeiten gemeinsam auf ein einheitliches Ziel hin: die Verwaltung der Nutzerinformationen. Diese starke Zusammengehörigkeit der Teile innerhalb der Klasse zeigt eine hohe Kohäsion.
 
@@ -333,19 +335,19 @@ Obwohl dieser Test korrekt funktioniert, könnte er als weniger professionell an
 
 ### 6.2. Entities
 
-*TODO UML*
+<img src="./UML/User.png" alt="UML Diagram" width="200" />
 
 Die `User`-Klasse ist ein fundamentales Konzept in der Anwendung, das eine registrierte Person repräsentiert. Es hat Eigenschaften wie username, password und email, die den Zustand des Benutzers definieren. Entities sind Objekte, die über einen längeren Zeitraum kontinuierlich existieren und eine eindeutige Identität haben. In diesem Fall ist die `User`-Klasse eine Entity, weil sie eine eindeutige Identität in Form des username oder email hat und über einen längeren Zeitraum in der Anwendung existiert. Sie wird in verschiedenen Teilen der Anwendung verwendet, um Aktionen im Namen des Benutzers durchzuführen. Beispielsweise könnte das System den Benutzer authentifizieren, seine Daten ändern, seine Aktivitäten anzeigen oder ihn aus dem System entfernen, indem es auf diese Entity zugreift.
 
 ### 6.3. Value Objects
 
-*TODO UML*
+<img src="./UML/WeatherAPI.png" alt="UML Diagram" width="200" />
 
 Die `Weather`-Klasse stellt die Wetterinformationen für eine bestimmte Stadt dar. Sie hat Eigenschaften wie city, main, description und temp, die den aktuellen Wetterzustand der Stadt darstellen. Value Objects sind unveränderliche Objekte, deren Identität durch ihre Attribute und nicht durch eine eindeutige Kennung bestimmt wird. In diesem Fall ist Weather ein Value Object, da sein Wert vollständig durch seine Attribute definiert wird. Zwei Weather-Objekte können als gleich betrachtet werden, wenn sie die gleiche city, main, description und temp haben, unabhängig davon, ob sie verschiedene Instanzen sind. Dies ist nützlich in Szenarien, in denen Sie die Wetterdaten für eine bestimmte Stadt darstellen möchten, ohne sich um Identität oder Zustandsänderungen kümmern zu müssen. Die Unveränderlichkeit dieser Objekte macht sie auch sicher in Bezug auf Nebenläufigkeitsprobleme, da sie nach ihrer Erstellung nicht geändert werden können.
 
 ### 6.4. Aggregates
 
-*TODO UML*
+<img src="./UML/UserService.png" alt="UML Diagram" width="200" />
 
 Die `UserService`-Klasse ist ein Aggregat, das eine Menge von User-Objekten verwaltet. Sie bietet Methoden zum Erstellen und Entfernen von Benutzern sowie zum Überprüfen der Existenz von Benutzern anhand von Benutzernamen oder E-Mail-Adressen. Ein Aggregate ist in DDD ein Muster, das dazu dient, die Konsistenz von Änderungen an zusammengehörigen Objekten zu gewährleisten. In diesem Fall sorgt UserService dafür, dass alle Änderungen an User-Objekten konsistent sind. Beispielsweise stellt es sicher, dass kein User-Objekt mit einem bereits vorhandenen Benutzernamen oder einer bereits vorhandenen E-Mail-Adresse erstellt wird. Es kapselt die Regeln und Geschäftslogik rund um User-Objekte ein, was die Verwaltung von Benutzern in der Anwendung vereinfacht. Dadurch wird sichergestellt, dass alle Regeln eingehalten werden, unabhängig davon, wo im Code ein User-Objekt manipuliert wird.
 
