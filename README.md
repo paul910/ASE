@@ -341,11 +341,128 @@ Die `UserService`-Klasse ist ein Aggregat, das eine Menge von User-Objekten verw
 
 ### 7.1. Code Smells
 
-*TODO*
+Code Smell: Dead Code ([Commit](https://github.com/paul910/ASE/commit/dfd7fc1c0c674046ef230e95347488180608d652))
+
+vorher: 
+
+```java
+ public void loadActivities() {
+     this.activities.clear();
+     this.activities.addAll(this.activityRepository.loadList());
+ }
+
+ public void loadActivitiesByCity(String city) {
+     this.activities.clear();
+     this.activities.addAll(this.activityRepository.loadListByCity(city));
+ }
+```
+
+nachher:
+```java
+public void loadActivities() {
+     this.activities.clear();
+     this.activities.addAll(this.activityRepository.loadList());
+ }
+```
+
+Die vorliegende Code-Optimierung beseitigt einen überflüssigen Codeabschnitt, auch bekannt als "Dead Code", in der Klasse `ActivityService`. Besonders zu beachten ist hierbei die Methode `loadActivitiesByCity`, die ursprünglich entwickelt wurde, allerdings im weiteren Verlauf des Programms keine Verwendung findet. Durch diese Bereinigung wird der Code schlanker und effizienter.
 
 ### 7.2. 2 Refactoring Beispiele
 
-*TODO*
+#### Refactoring 1:  Verletzung der Kapselung ([Commit](https://github.com/paul910/ASE/commit/c743392a8814e9e88954ef27c684998860b8319b))
+
+vorher:
+```java
+
+package org.planner.domain;
+
+import org.planner.persistence.TravelRepository;
+
+...
+
+public class Travel {
+   ...
+
+    public Travel(User user, String city, double budget, Date startDate, Date endDate) {
+        this.id = setId();
+        ...
+    }
+    
+   ...
+
+    private Long setId() {
+        return TravelRepository.getNewId();
+    }
+    
+   ...
+}
+```
+
+nachher: 
+
+```java
+   package org.planner.domain;
+
+   ...
+
+   public class Travel {
+      ...
+   
+       public Travel(String id, User user, String city, double budget, Date startDate, Date endDate) {
+           this.id = id;
+           ...
+       }
+       
+      ...
+   }
+
+```
+
+Im gegebenen Fall, wo die `Travel`-Klasse direkt auf das `TravelRepository` zugreift, wird die Trennung der Schichten verletzt. Dies kann zu Problemen mit Testbarkeit, Wartbarkeit und Flexibilität führen. Es ist besser, die Verantwortung für die Persistenz von Travel-Objekten an eine Service Klasse zu delegieren, das außerhalb der `Travel`-Klasse liegt. Im refactorten Code wird dies genau umgesetzt und die ID im Konstruktor übergeben.
+
+#### Refactoring2: Umbennenen der Methode ([Commit](https://github.com/paul910/ASE/commit/3930aba749c24a9510eedd09b6a706a292e50f21))
+
+vorher: 
+
+```java
+public List<User> filterExistingUserOut(List<User> users) {
+     List<User> usersToSave = new CopyOnWriteArrayList<>();
+     for (User user : users) {
+         if (!existsInFile(user)) {
+             usersToSave.add(user);
+         }
+     }
+     logger.info("User list filtered successfully.");
+     return usersToSave;
+ }
+```
+
+nachher:
+
+```java
+public List<User> filterOutExistingUser(List<User> users) {
+        List<User> usersToSave = new CopyOnWriteArrayList<>();
+        for (User user : users) {
+            if (!existsInFile(user)) {
+                usersToSave.add(user);
+            }
+        }
+        logger.info("User list filtered successfully.");
+        return usersToSave;
+    }
+```
+
+Die Methode ``filterExistingUserOut`` wurde in ``filterOutExistingUsers`` umbenannt.
+
+Die Umbenennung der Methode trägt zu mehreren Verbesserungen in unserer Codebasis bei:
+
+- Semantische Klarheit: Der neue Name ``filterOutExistingUsers`` stellt klar, dass die Methode bestehende Benutzer aus der übergebenen Liste filtert. Diese Änderung verbessert die Lesbarkeit des Codes und die Verständlichkeit dessen, was die Methode tatsächlich tut.
+
+- Konsistenz: Unsere Codebase folgt einer Namenskonvention, bei der Verben vor Substantiven platziert werden. Die Umbenennung der Methode folgt diesem Standard und trägt zu einer konsistenteren Codebasis bei.
+
+- Einheitlichkeit: Die Einheitlichkeit in der Benennung von Methoden ist wichtig. Durch die Umbenennung folgen wir der Konvention, Methodennamen mit einem Verb zu beginnen. Dies verbessert die Einheitlichkeit und die Vorhersehbarkeit unseres Codes.
+
+- Sprachliche Genauigkeit: Der neue Name ``filterOutExistingUsers`` ist grammatikalisch korrekter und natürlicher in der englischen Sprache. Dies verbessert die Verständlichkeit des Codes für alle, die ihn lesen und damit arbeiten.
 
 ## 8. Entwurfsmuster
 
