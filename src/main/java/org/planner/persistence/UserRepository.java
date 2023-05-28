@@ -1,8 +1,6 @@
 package org.planner.persistence;
 
-import org.planner.domain.Activity;
 import org.planner.domain.User;
-import org.planner.service.ActivityService;
 
 import java.io.*;
 import java.util.List;
@@ -15,7 +13,7 @@ public class UserRepository extends Repository {
     }
 
     public void persistUserList(List<User> users) {
-        List<User> usersToSave = filterExistingUserOut(users);
+        List<User> usersToSave = filterOutExistingUser(users);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
             for (User user : usersToSave) {
@@ -46,7 +44,7 @@ public class UserRepository extends Repository {
         return users;
     }
 
-    public List<User> filterExistingUserOut(List<User> users) {
+    public List<User> filterOutExistingUser(List<User> users) {
         List<User> usersToSave = new CopyOnWriteArrayList<>();
         for (User user : users) {
             if (!existsInFile(user)) {
