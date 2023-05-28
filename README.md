@@ -379,7 +379,18 @@ Insgesamt haben wir uns bei der Teststrategie auf die kritischsten und fehleranf
 
 ### 5.5 Fakes und Mocks
 
-*TODO UML*
+1. Mock WeatherAPI in WeatherServiceTest
+
+<img src="./UML/WeatherTest.png" alt="UML Diagram" width="200" />
+
+Im WeatherServiceTest wird das WeatherAPI-Objekt gemockt. Das erlaubt es, das Verhalten des WeatherAPI-Objekts in einer kontrollierten Weise zu simulieren. Dies ist besonders nützlich, da die WeatherAPI in der realen Welt Netzwerkanfragen machen würde, die schwer zu replizieren und zu kontrollieren sind, besonders in einem Testumfeld.
+
+2. Mock UserService in UserServiceTest
+
+<img src="./UML/UserServiceTest.png" alt="UML Diagram" width="200" />
+
+In der UserServiceTest-Klasse wird eine Instanz von UserService erstellt und verwendet, um verschiedene Methoden zu testen. Obwohl dieses Beispiel kein klassisches Mocking ist, könnte es leicht erweitert werden, um Mocking oder Spies zu verwenden. Beispielsweise könnte eine Methode, die eine Datenbankanfrage erfordert, gemockt werden, um eine vordefinierte Antwort zurückzugeben, um die Unvorhersehbarkeit und mögliche Langsamkeit der Datenbankanfrage zu vermeiden.
+
 
 ## 6. Domain Driven Design
 
