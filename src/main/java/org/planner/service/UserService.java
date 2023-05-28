@@ -90,22 +90,23 @@ public class UserService {
     }
 
     private User getUserByUsername(String username) {
-        for (User user : this.users) {
-            if (user.getUsername().equals(username)) {
-                return user;
-            }
-        }
-        logger.info("User not found with username: " + username);
-        return null;
+        return findUser("username", username);
     }
 
     private User getUserByEmail(String emailAddress) {
+        return findUser("email", emailAddress);
+    }
+
+    private User findUser(String identifier, String value) {
         for (User user : this.users) {
-            if (user.getEmail().equals(emailAddress)) {
+            if (identifier.equals("username") && user.getUsername().equals(value)) {
+                return user;
+            }
+            if (identifier.equals("email") && user.getEmail().equals(value)) {
                 return user;
             }
         }
-        logger.info("User not found with email: " + emailAddress);
+        logger.info("User not found with " + identifier + ": " + value);
         return null;
     }
 
